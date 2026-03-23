@@ -3,54 +3,84 @@
 const projectData = [
   {
     id: 1,
-    title: "KidsKorner - E-Commerce Platform",
-    description: `Niche retailers often lose mobile shoppers due to cluttered, non-responsive interfaces that make it difficult for parents to find specific products quickly. 
-    • Optimized the user journey by implementing a responsive grid layout and custom filtering logic to ensure a frictionless path to purchase. 
-    • Maximized site performance and load times by leveraging vanilla JavaScript for interactive elements, providing a high-speed experience without framework overhead.`,
+    title: "KidsKorner",
+    description: "A vibrant front-end e-commerce interface designed for children's retail. Features a responsive grid layout, product filtering logic, and interactive shopping elements built entirely with vanilla JavaScript and CSS3.",
     tech: ["HTML5", "CSS3", "JavaScript"],
-    liveLink: "https://ziesevilla.github.io/kidskorner.github.io/",
-    repoLink: "https://github.com/ziesevilla/kidskorner.github.io.git"
+    liveLink: "#",
+    repoLink: "#"
   },
   {
     id: 2,
-    title: "HappyCart - E-Commerce Platform",
-    description: `Small businesses frequently suffer from revenue loss when front-end catalogs and back-end inventory systems fail to synchronize in real-time. 
-    • Eliminated data silos by architecting a seamless integration between a React-driven customer interface and a Laravel-powered administrative backend. 
-    • Ensured high-reliability transactions by engineering a persistent shopping cart system that maintains data integrity across various user sessions and devices.`,
-    tech: ["React", "JavaScript", "HTML5", "CSS3", "Laravel", "Bootstrap", "Git"],
-    liveLink: "https://ziesevilla.github.io/happy-cart/",
-    repoLink: "https://github.com/ziesevilla/happy-cart.git"
+    title: "TaskFlow",
+    description: "A productivity dashboard allowing users to create, track, and manage daily tasks. Utilizes React state management for real-time updates and Bootstrap for a clean, mobile-friendly interface.",
+    tech: ["React", "JavaScript", "HTML5", "CSS3", "Git", "Bootstrap"],
+    liveLink: "#",
+    repoLink: "#"
   },
   {
     id: 3,
-    title: "Taskflow - Task Management",
-    description: `Individual contributors lose significant productivity to "context switching" and fragmented workflows caused by slow-responding or complex management tools. 
-    • Eliminated input lag and manual refreshing by utilizing React’s state management for instantaneous, real-time dashboard updates. 
-    • Guaranteed 100% workflow continuity for mobile-first users through a responsive Bootstrap-driven interface designed for high-speed navigation.`,
-    tech: ["React", "JavaScript", "HTML5", "CSS3", "Git", "Bootstrap"],
-    liveLink: "https://ziesevilla.github.io/taskflow-app/",
-    repoLink: "https://github.com/ziesevilla/taskflow-app.git"
+    title: "SonicPath",
+    description: "An educational phonics adventure prototype developed as a Software Engineering project, specifically designed to assist learners with dyslexia through interactive gameplay.",
+    tech: ["Game Design", "Software Engineering", "Phonics"],
+    liveLink: "#",
+    repoLink: "#"
   },
   {
     id: 4,
-    title: "Tensorflow Product",
-    description: `Organizations face high infrastructure costs and data privacy concerns when forced to process sensitive AI inference on external cloud servers. 
-    • Reduced operational latency and server costs by deploying machine learning models directly within the client’s browser using TensorFlow.js. 
-    • Enhanced user data security by ensuring 100% local AI processing, removing the need for sensitive data transmission to third-party servers.`,
-    tech: ["React", "Tensorflow", "HTML5", "CSS", "JavaScript"],
-    liveLink: "https://tensorflow-product-gtjf.vercel.app/",
-    repoLink: "https://github.com/ziesevilla/tensorflow-product.git"
+    title: "RedQuest",
+    description: "An on-demand logistics platform developed for emergency blood donations, connecting blood requestors with potential donors in real-time.",
+    tech: ["React", "Laravel", "Logistics", "UI/UX"],
+    liveLink: "#",
+    repoLink: "#"
   },
   {
     id: 5,
-    title: "Reflections - Mystery Game",
-    description: `Digital media platforms struggle to maintain audience retention when narrative-driven content lacks the immersive depth required to compete in the attention economy. 
-    • Increased user engagement through complex, non-linear narrative branching and puzzle mechanics powered by advanced DOM manipulation. 
-    • Delivered a high-fidelity experience with zero-asset-weight CSS animations, ensuring smooth performance even on low-bandwidth connections.`,
-    tech: ["HTML5", "CSS3", "JavaScript"],
-    liveLink: "https://ziesevilla.github.io/reflection/",
-    repoLink: "https://github.com/ziesevilla/reflection.git"
+    title: "Toka",
+    description: "A gamified household economy and task management application designed for Technopreneurship to encourage collaborative productivity.",
+    tech: ["React", "Laravel", "Gamification", "Database Design"],
+    liveLink: "#",
+    repoLink: "#"
   },
+  {
+    id: 6,
+    title: "Kumpirma",
+    description: "A sophisticated AI-enhanced blockchain framework developed for secure signature verification and document authentication for thesis research.",
+    tech: ["AI", "Blockchain", "Security", "Document Authentication"],
+    liveLink: "#",
+    repoLink: "#"
+  },
+  {
+    id: 7,
+    title: "LifeInPixels",
+    description: "A comprehensive personal journaling application featuring mood tracking in a 'pixel' format, alongside finance and media consumption trackers.",
+    tech: ["React", "JavaScript", "Data Visualization", "Local Storage"],
+    liveLink: "#",
+    repoLink: "#"
+  },
+  {
+    id: 8,
+    title: "VPPartnerFund Workspace",
+    description: "A professional repository of strategies and outcomes from serving as the Vice President of Partnership and Fundraising for DEVCON Laguna, focusing on venue partnerships and sponsorships.",
+    tech: ["Strategic Planning", "Partnership Management", "Fundraising"],
+    liveLink: "#",
+    repoLink: "#"
+  },
+  {
+    id: 9,
+    title: "Prioritask",
+    description: "An algorithmic solution for school work scheduling, utilizing advanced complexity analysis to optimize student study cycles and task prioritization.",
+    tech: ["Algorithms", "Complexity Analysis", "Optimization"],
+    liveLink: "#",
+    repoLink: "#"
+  },
+  {
+    id: 10,
+    title: "Message Encryption and Decryption Algorithm",
+    description: "Implementation of secure cryptographic algorithms designed for the safe transmission and reception of digital messages.",
+    tech: ["Cryptography", "Data Security", "Algorithms"],
+    liveLink: "#",
+    repoLink: "#"
+  }
 ];
 
 export default projectData;
