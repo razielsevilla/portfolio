@@ -2,16 +2,15 @@
 
 const heroData = {
   // Personal Details
-  name: "Raziel Lloyd Sevilla",
-  title: "A Computer Science Student",
-  
+  name: "Raziel Sevilla", // Cleaned up for a more professional brand
+  title: "Full-Stack Developer",
+
   // Summary/Introduction Paragraph
-  description: "I build modern, responsive web applications using React, MySQL, and Bootstrap. I am passionate about clean code and excellent user experiences.",
-  
+  description: "I build for the web, tinker with Machine Learning, and ship things that work. From AI-enhanced blockchain frameworks to gamified task management, I turn complex problems into functional, high-impact code.",
+
   // Action Button Links
-  resumeLink: "https://drive.google.com/file/d/10YNp2hVRkVbMhXxuDt5HebIJht6Bzmq1/view?usp=sharing", // Replace with your actual resume link
-  contactAnchor: "#contact" // Anchor tag for scrolling to the contact section
+  resumeLink: "https://drive.google.com/file/d/10YNp2hVRkVbMhXxuDt5HebIJht6Bzmq1/view?usp=sharing",
+  contactAnchor: "#contact"
 };
 
-// Use 'export default' to allow this data to be imported easily
 export default heroData;
