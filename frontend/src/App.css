@@ -1,91 +1,170 @@
-/* src/App.css (Global Styles) */
+/* src/App.css — Global Design System */
 
-/* --- Theme Variables (Default/Light) --- */
+/* ============================================================
+   THEME TOKENS — Default (Light)
+   ============================================================ */
 :root {
-  --background-color: #f8eaf8; 
-  --text-color: #3b003b; 
-  --header-bg: #5b005b; 
-  --card-bg: #ffffff; 
-  --accent-color: #8A2BE2;
-  --neon-accent: #5252d4; /* Cyan/Aqua */
+  --bg:           #f0f0f5;
+  --bg-surface:   #e8e8f0;
+  --text:         #1a1a2e;
+  --text-muted:   #6b6b8a;
+  --accent:       #7c3aed;          /* Violet — primary CTA */
+  --accent-glow:  rgba(124,58,237,0.25);
+  --neon:         #06b6d4;          /* Cyan — decorative accent */
+  --neon-glow:    rgba(6,182,212,0.2);
+  --border:       rgba(26,26,46,0.12);
+  --card-bg:      rgba(255,255,255,0.7);
+
+  /* Legacy aliases — keep for component compatibility */
+  --background-color: var(--bg);
+  --text-color:       var(--text);
+  --header-bg:        #1a1a2e;
+  --accent-color:     var(--accent);
+  --neon-accent:      var(--neon);
 }
 
-/* --- Dark Theme Variables --- */
+/* ============================================================
+   THEME TOKENS — Dark
+   ============================================================ */
 body.dark-theme {
-  --background-color: #3b003b; /* Deep Violet Background */
-  --text-color: #ffffff; /* White Text */
-  --header-bg: #1a001a;
-  --card-bg: #5b005b; /* Dark Plum Cards */
-  --accent-color: #8A2BE2; /* Hot Pink Accent */
-  
-  /* Additional Neon Accent for strong emphasis (e.g., in a hover state) */
-  --neon-accent: #00ffff; /* Cyan/Aqua */
+  --bg:           #0d0d1a;
+  --bg-surface:   #12122a;
+  --text:         #e2e2f0;
+  --text-muted:   #8888aa;
+  --accent:       #a855f7;
+  --accent-glow:  rgba(168,85,247,0.3);
+  --neon:         #22d3ee;
+  --neon-glow:    rgba(34,211,238,0.2);
+  --border:       rgba(255,255,255,0.08);
+  --card-bg:      rgba(255,255,255,0.04);
+
+  /* Legacy aliases */
+  --background-color: var(--bg);
+  --text-color:       var(--text);
+  --header-bg:        #060610;
+  --accent-color:     var(--accent);
+  --neon-accent:      var(--neon);
 }
 
-.card, .bg-light, .bg-white {
-    background-color: var(--card-bg) !important;
-    color: var(--text-color) !important;
-}
-
-.text-dark, .text-secondary {
-    color: var(--text-color) !important;
-}
-
-
-
-/* Reset basic margin and padding */
-* {
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
 body {
-  font-family: 'M PLUS 1p', sans-serif;
-  line-height: 1.8;
-  background-color: var(--background-color);
-  color: var(--text-color);
-  transition: background-color 0.5s, color 0.5s;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.75;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.4s ease, color 0.4s ease;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Style the main container that wraps the whole portfolio */
+/* ============================================================
+   TYPOGRAPHY SYSTEM
+   
+   Syne:         Statement font — hero H1, section titles.
+                 Geometric, high x-height, distinctly technical.
+   Space Grotesk: Workhorse — body, cards, nav, buttons.
+                  Readable at all sizes, modern but not cold.
+   Press Start 2P: Accent-only — decorators like // # >>
+   ============================================================ */
+
+h1, h2 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--text);
+}
+
+h3, h4, h5, h6 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+p, li, a, span, button, label {
+  font-family: 'Space Grotesk', sans-serif;
+  color: var(--text);
+}
+
+/* The pixel font is accent-only — decorative text nodes */
+.title-decoration {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.55em;
+  color: var(--neon);
+  vertical-align: middle;
+  margin: 0 12px;
+  opacity: 0.8;
+}
+
+/* ============================================================
+   GLOBAL BACKGROUND — Dot Grid
+   Zero CPU, renders as a CSS radial-gradient.
+   Communicates "systems / engineering" without animation noise.
+   ============================================================ */
 .portfolio-app {
-  max-width: 100%;
-  margin: 0 auto; /* Center the content */
   min-height: 100vh;
+  /* Dot grid: a small circle repeated at 28px intervals */
+  background-color: var(--bg);
+  background-image: radial-gradient(
+    circle,
+    var(--border) 1px,
+    transparent 1px
+  );
+  background-size: 28px 28px;
 }
 
-h1, h2, h3, h4, .navbar-brand {
-    font-family: 'Press Start 2P', cursive;
-}
-
-h1, h2, h3, h4, p, a {
-    color: var(--text-color); /* Overridden by specific component styles but good practice */
-}
-
-
-.btn-primary {
-    background-color: var(--accent-color) !important;
-    border-color: var(--accent-color) !important;
-    color: var(--header-bg) !important; /* Dark text on bright button */
-    transition: background-color 0.3s, box-shadow 0.3s;
-}
-
-.btn-primary:hover {
-    background-color: var(--neon-accent) !important;
-    border-color: var(--neon-accent) !important;
-    box-shadow: 0 0 10px var(--neon-accent) !important; /* Glow effect! */
-}
-
-.btn-outline-dark {
-    background-color: transparent !important;
-}
-
+/* Fade-in after preloader */
 .fade-in-content {
-  animation: fadeIn 1.5s ease-in-out;
+  animation: fadeIn 0.8s ease-out both;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   GLOBAL BUTTON TOKENS
+   (component styles own their specifics — no !important here)
+   ============================================================ */
+.btn-primary {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: background-color 0.25s, box-shadow 0.25s, transform 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: var(--neon);
+  border-color: var(--neon);
+  box-shadow: 0 0 16px var(--neon-glow);
+  transform: translateY(-1px);
+}
+
+/* ============================================================
+   UTILITY
+   ============================================================ */
+.card, .bg-light, .bg-white {
+  background-color: var(--card-bg);
+  color: var(--text);
+}
+
+.text-dark, .text-secondary {
+  color: var(--text-muted);
+}
+
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
 }

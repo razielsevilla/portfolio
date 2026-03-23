@@ -4,105 +4,153 @@ import React, { useState } from 'react';
 import projectData from '../data/projectData';
 import '../styles/Projects.css';
 
+// Status config: badge label, CSS class, CTA logic
+const STATUS_CONFIG = {
+  'live':        { label: 'LIVE',        cls: 'status-live',        showRepo: true,  showLive: true  },
+  'in-progress': { label: 'IN PROGRESS', cls: 'status-in-progress', showRepo: false, showLive: false },
+  'case-study':  { label: 'CASE STUDY',  cls: 'status-case-study',  showRepo: true,  showLive: false },
+  'archived':    { label: 'ARCHIVED',    cls: 'status-archived',    showRepo: true,  showLive: false },
+};
+
+const ProjectCard = ({ project }) => {
+  const cfg = STATUS_CONFIG[project.status] || STATUS_CONFIG['archived'];
+  const isInProgress = project.status === 'in-progress';
+
+  return (
+    <div className={`project-card ${project.highlight ? 'card-featured' : ''} ${isInProgress ? 'card-wip' : ''}`}>
+
+      {/* Header row */}
+      <div className="card-top">
+        <i className="fas fa-folder-open card-folder-icon" aria-hidden="true" />
+        <span className={`status-badge ${cfg.cls}`}>{cfg.label}</span>
+      </div>
+
+      {/* Title + tagline */}
+      <h3 className="card-title">{project.title}</h3>
+      <p className="card-tagline">{project.tagline}</p>
+
+      {/* Description */}
+      <p className="card-desc">{project.description}</p>
+
+      {/* Tech stack */}
+      <div className="tech-stack">
+        {project.tech.map(t => (
+          <span key={t} className="tech-pill">{t}</span>
+        ))}
+      </div>
+
+      {/* Footer CTA — context-aware */}
+      <div className="card-footer-cta">
+        {cfg.showRepo && project.repoLink && (
+          <a href={project.repoLink} target="_blank" rel="noopener noreferrer" className="cta-link">
+            <i className="fab fa-github" aria-hidden="true" /> Code
+          </a>
+        )}
+        {cfg.showLive && project.liveLink && (
+          <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="cta-link cta-live">
+            <i className="fas fa-external-link-alt" aria-hidden="true" /> Demo
+          </a>
+        )}
+        {isInProgress && (
+          <span className="cta-wip">
+            <i className="fas fa-lock" aria-hidden="true" /> Repo private — launching soon
+          </span>
+        )}
+      </div>
+
+    </div>
+  );
+};
+
 const Projects = () => {
   const [selectedTechs, setSelectedTechs] = useState([]);
+  const [showAll, setShowAll] = useState(false);
 
-  // Get all unique technologies for the filter bar
-  const allTechStack = ["All", ...new Set(projectData.flatMap(p => p.tech))].sort();
+  const allTechStack = ['All', ...new Set(projectData.flatMap(p => p.tech))].sort();
 
-  // TOGGLE FUNCTION
   const handleFilterClick = (tech) => {
-    if (tech === "All") {
+    if (tech === 'All') {
       setSelectedTechs([]);
     } else {
-      if (selectedTechs.includes(tech)) {
-        setSelectedTechs(selectedTechs.filter(t => t !== tech));
-      } else {
-        setSelectedTechs([...selectedTechs, tech]);
-      }
+      setSelectedTechs(prev =>
+        prev.includes(tech) ? prev.filter(t => t !== tech) : [...prev, tech]
+      );
     }
   };
 
-  // MULTI-FILTER LOGIC
   const filteredProjects = selectedTechs.length === 0
-    ? projectData 
-    : projectData.filter(project => 
-        project.tech.some(t => selectedTechs.includes(t))
-      );
+    ? projectData
+    : projectData.filter(p => p.tech.some(t => selectedTechs.includes(t)));
+
+  // Featured cards always show; non-featured hidden behind "Show all" toggle
+  const featured   = filteredProjects.filter(p => p.highlight);
+  const secondary  = filteredProjects.filter(p => !p.highlight);
+  const visibleSecondary = showAll ? secondary : secondary.slice(0, 3);
 
   return (
-    <section id="projects" className="projects-section container-fluid py-5">
-      
-      {/* 💡 NEW: ANIMATED WIREFRAME GRID BACKGROUND */}
-      <div className="project-bg-grid"></div>
+    <section id="projects" className="projects-section">
+      <div className="project-bg-grid" aria-hidden="true" />
 
-      {/* Main Content Container (z-index ensures it sits above background) */}
       <div className="container position-relative" style={{ zIndex: 2 }}>
-        
-        <h2 className="text-center display-4 mb-2 section-title">
-          <span className="title-decoration">{'//'}</span> Project Archive <span className="title-decoration">{'//'}</span>
+        <h2 className="section-title text-center">
+          <span className="title-decoration">{'//'}</span>
+          Project Archive
+          <span className="title-decoration">{'//'}</span>
         </h2>
-        
-        {/* FILTER STREAM */}
+
+        {/* Filter bar */}
         <div className="filter-scroll-container mb-5">
           <div className="filter-track">
             {allTechStack.map(tech => {
-              const isActive = tech === "All" 
-                ? selectedTechs.length === 0 
+              const isActive = tech === 'All'
+                ? selectedTechs.length === 0
                 : selectedTechs.includes(tech);
-
               return (
-                <button 
+                <button
                   key={tech}
                   className={`btn filter-btn ${isActive ? 'active' : ''}`}
                   onClick={() => handleFilterClick(tech)}
                 >
-                  <span className="status-dot"></span> {tech}
+                  <span className="status-dot" aria-hidden="true" /> {tech}
                 </button>
               );
             })}
           </div>
         </div>
 
-        {/* PROJECTS GRID */}
-        <div className="row g-4"> 
-          {filteredProjects.length > 0 ? (
-            filteredProjects.map(project => (
-              <div key={project.id} className="col-12 col-md-6 col-lg-4"> 
-                <div className="card h-100 project-card-retro"> 
-                  <div className="card-body">
-                    <div className="d-flex justify-content-between align-items-start mb-3">
-                        <h3 className="card-title">{project.title}</h3>
-                        <i className="fas fa-folder-open folder-icon"></i>
-                    </div>
-                    
-                    <p className="card-text">{project.description}</p>
-                    
-                    <div className="tech-stack mb-3">
-                      {project.tech.map(t => (
-                        <span key={t} className="tech-pill">{t}</span> 
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div className="card-footer bg-transparent border-0 d-flex justify-content-between">
-                    <a href={project.repoLink} target="_blank" rel="noopener noreferrer" className="project-link">
-                      <i className="fab fa-github me-2"></i> Code
-                    </a>
-                    <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="project-link live-link">
-                      <i className="fas fa-external-link-alt me-2"></i> Demo
-                    </a>
-                  </div>
-                </div>
-              </div>
-            ))
-          ) : (
-            <div className="col-12 text-center text-muted mt-5">
-              <p>No projects found matching these filters.</p>
-            </div>
-          )}
-        </div>
+        {/* Featured row */}
+        {featured.length > 0 && (
+          <div className="featured-grid mb-4">
+            {featured.map(p => <ProjectCard key={p.id} project={p} />)}
+          </div>
+        )}
 
+        {/* Secondary grid */}
+        {secondary.length > 0 && (
+          <>
+            <div className="projects-grid">
+              {visibleSecondary.map(p => <ProjectCard key={p.id} project={p} />)}
+            </div>
+
+            {secondary.length > 3 && (
+              <div className="text-center mt-4">
+                <button
+                  className="btn btn-show-more"
+                  onClick={() => setShowAll(v => !v)}
+                >
+                  {showAll
+                    ? <><i className="fas fa-chevron-up me-2" />Show Less</>
+                    : <><i className="fas fa-chevron-down me-2" />Show {secondary.length - 3} More Projects</>
+                  }
+                </button>
+              </div>
+            )}
+          </>
+        )}
+
+        {filteredProjects.length === 0 && (
+          <p className="text-center text-muted mt-5">No projects match these filters.</p>
+        )}
       </div>
     </section>
   );

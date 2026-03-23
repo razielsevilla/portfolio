@@ -17,20 +17,12 @@ import Skills from './components/Skills';
 function App() {
   const [loading, setLoading] = useState(true);
 
-  // 💡 Memoize the complete handler to prevent unnecessary re-renders 
-  // and ensure stable behavior during testing
-  const handleLoadingComplete = useCallback(() => {
-    setLoading(false);
-  }, []);
-
   return (
     <>
       {loading ? (
-        <Preloader onComplete={handleLoadingComplete} />
+        <Preloader onComplete={() => setLoading(false)} />
       ) : (
         <div className="portfolio-app fade-in-content">
-
-          <PixelTrail />
           <Header />
 
           <main>

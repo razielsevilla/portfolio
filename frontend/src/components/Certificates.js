@@ -1,14 +1,14 @@
 // src/components/Certificates.js
 
 import React, { useState, useRef } from 'react';
-import certificateData from '../data/certificateData'; 
-import '../styles/Certificates.css'; 
+import certificateData from '../data/certificateData';
+import '../styles/Certificates.css';
 
 const Certificates = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const scrollContainerRef = useRef(null);
 
-  const filteredCerts = certificateData.filter(cert => 
+  const filteredCerts = certificateData.filter(cert =>
     cert.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     cert.issuer.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -23,24 +23,10 @@ const Certificates = () => {
 
   return (
     <section id="certificates" className="certificates-section container-fluid">
-      
-      {/* 💡 NEW: SUBTLE FLOATING PARTICLES */}
-      <div className="bg-particles">
-        <div className="particle p-1"></div>
-        <div className="particle p-2"></div>
-        <div className="particle p-3"></div>
-        <div className="particle p-4"></div>
-        <div className="particle p-5"></div>
-        <div className="particle p-6"></div>
-        <div className="particle p-7"></div>
-        <div className="particle p-8"></div>
-        <div className="particle p-9"></div>
-        <div className="particle p-10"></div>
-      </div>
 
       {/* Main Content (z-index 2) */}
       <div className="cert-content-wrapper position-relative" style={{ zIndex: 2 }}>
-        
+
         <div className="text-center mb-4">
           <h2 className="display-4 section-title">
             <span className="title-decoration">#</span> Certificates <span className="title-decoration">#</span>
@@ -48,12 +34,12 @@ const Certificates = () => {
           <p className="text-muted">
             Unlocked Credentials ({certificateData.length})
           </p>
-          
+
           <div className="search-container mt-3">
             <i className="fas fa-search search-icon"></i>
-            <input 
-              type="text" 
-              placeholder="Filter..." 
+            <input
+              type="text"
+              placeholder="Filter..."
               className="cert-search-input"
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -69,7 +55,7 @@ const Certificates = () => {
             {filteredCerts.map(cert => (
               <div key={cert.id} className="cert-card-wrapper">
                 <div className="cert-card">
-                  
+
                   <div className="cert-content">
                     <div className="icon-box">
                       <i className={`${cert.icon} fa-3x`}></i>
@@ -81,7 +67,7 @@ const Certificates = () => {
                   <div className="cert-overlay">
                     <div className="overlay-content">
                       <p className="cert-date">Issued: {cert.date}</p>
-                      <a href={cert.link} target="_blank" rel="noopener noreferrer" 
+                      <a href={cert.link} target="_blank" rel="noopener noreferrer"
                         className="btn btn-sm btn-view-credential">
                         Verify <i className="fas fa-external-link-alt ms-1"></i>
                       </a>
@@ -93,7 +79,7 @@ const Certificates = () => {
                 </div>
               </div>
             ))}
-            
+
             {filteredCerts.length === 0 && (
               <div className="text-center w-100 text-muted">No credentials found.</div>
             )}
