@@ -1,6 +1,6 @@
 // src/App.js
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import './App.css';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -17,10 +17,16 @@ import Skills from './components/Skills';
 function App() {
   const [loading, setLoading] = useState(true);
 
+  // 💡 Memoize the complete handler to prevent unnecessary re-renders 
+  // and ensure stable behavior during testing
+  const handleLoadingComplete = useCallback(() => {
+    setLoading(false);
+  }, []);
+
   return (
     <>
       {loading ? (
-        <Preloader onComplete={() => setLoading(false)} />
+        <Preloader onComplete={handleLoadingComplete} />
       ) : (
         <div className="portfolio-app fade-in-content">
 
@@ -28,11 +34,7 @@ function App() {
           <Header />
 
           <main>
-            {/* 💡 Wrap each section in ScrollReveal */}
-
-            {/* Hero usually doesn't need scroll reveal as it's already visible, 
-                but you can wrap it if you want the text to slide up on load. 
-                Let's leave Hero static for instant impact, and animate the rest. */}
+            {/* Hero is usually static for instant impact upon loading */}
             <Hero />
 
             <ScrollReveal>
