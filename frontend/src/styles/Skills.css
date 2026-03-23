@@ -1,0 +1,30 @@
+/* src/styles/Skills.css */
+
+.skills-section {
+  padding: 60px 0;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.skill-category-card {
+  padding: 20px;
+  border-radius: 8px;
+  background: var(--bg-secondary, #f8f9fa); /* Adjust based on your theme */
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+.skill-badge {
+  display: inline-block;
+  background: #007bff;
+  color: white;
+  padding: 5px 12px;
+  margin: 4px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
