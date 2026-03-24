@@ -1,113 +1,231 @@
-/* src/styles/Header.css */
+/* src/styles/Header.css — Frosted Glass Nav */
 
-/* --- HEADER CONTAINER --- */
+/* ============================================================
+   HEADER SHELL — frosted glass, no Bootstrap bg-dark
+   ============================================================ */
 .main-header {
-  /* Use the dark header background color set in App.css */
-  background-color: var(--header-bg); 
-  color: var(--text-color);
-  padding: 15px 0;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
-  position: fixed; /* Use 'fixed' instead of 'sticky' with fixed-top class */
+  position: fixed;
   top: 0;
-  width: 100%; /* Ensures it spans the full width when fixed */
+  left: 0;
+  width: 100%;
   z-index: 1000;
-  /* Optional: Add transparency, using rgba based on --header-bg: #1a001a or #5b005b */
-  background-color: rgba(26, 0, 26, 0.95); 
-}
-
-/* --- CLICKABLE CURSOR FIX --- */
-/* Apply the pointer cursor to all interactive navigation elements */
-.main-header .navbar-brand,
-.main-header .nav-link,
-.main-header .nav-item .nav-link,
-.main-header .nav-item button {
-    cursor: pointer !important; 
-}
-
-/* --- UNIFIED NAVBAR BRAND STYLING (The Fix) --- */
-.navbar-brand {
-    /* Font style is handled globally, but ensuring it's the correct color and glow */
-    color: var(--neon-accent) !important;
-    
-    /* UNIFIED GLOW: Apply subtle neon glow effect in both modes for consistency */
-    text-shadow: 0 0 5px var(--neon-accent); 
-    
-    font-size: 1.2em !important;
-    transition: color 0.3s, text-shadow 0.3s;
-}
-
-/* --- NAVIGATION LINKS --- */
-
-/* Base style for all links inside the collapse menu */
-.nav-links a {
-    text-decoration: none;
-    margin-left: 20px;
-    padding: 5px 10px;
-    transition: color 0.3s, text-shadow 0.3s, border-bottom 0.3s;
-}
-
-/* 💡 LIGHT MODE (Header background is dark) - Links are white */
-body:not(.dark-theme) .nav-link {
-    color: white !important; 
-}
-
-/* 💡 DARK MODE (Header background is dark) - Links are white */
-body.dark-theme .nav-link {
-    color: white !important;
-}
-
-/* 💡 ACTIVE/HOVER STYLING (Unified) */
-.nav-links a:hover,
-.nav-links .active { /* .active is applied by react-scroll */
-    color: var(--neon-accent) !important;
-    border-bottom: 2px solid var(--neon-accent);
-    
-    /* Apply neon glow on hover/active in both themes */
-    text-shadow: 0 0 5px var(--neon-accent); 
-}
-
-/* --- UTILITY CLASSES (Kept for reference, but mainly use Bootstrap classes in JSX) --- */
-/*
-.nav-bar {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 24px;
+  height: 64px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+
+  /* Frosted glass — reads the dot-grid through it */
+  background: rgba(250, 249, 246, 0.82);   /* Light: warm parchment glass */
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+
+  /* Border-bottom instead of box-shadow — cleaner */
+  border-bottom: 1px solid var(--border);
+
+  transition: background 0.5s ease, border-color 0.5s ease;
 }
-*/
 
-/* --- 📱 MOBILE RESPONSIVENESS (Append to bottom) --- */
+/* Dark mode: deep navy glass */
+body.dark-theme .main-header {
+  background: rgba(8, 12, 24, 0.80);
+  border-bottom-color: var(--border);
+}
 
-@media (max-width: 991px) { /* Bootstrap breakpoint */
+/* ============================================================
+   INNER LAYOUT — stretch the contents
+   ============================================================ */
+.main-header > .container-fluid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+/* Desktop: collapse is always visible as a flex row */
+@media (min-width: 992px) {
   .navbar-collapse {
-    /* Give the mobile menu a solid background */
-    background-color: rgba(0, 0, 0, 0.95); 
-    backdrop-filter: blur(10px);
-    padding: 20px;
-    border-radius: 0 0 10px 10px;
-    border-bottom: 2px solid var(--neon-accent);
+    display: flex !important;  /* override Bootstrap's collapse:hidden */
+    flex: 1;                   /* grow to fill remaining header space */
+    align-items: center;
+    justify-content: flex-end; /* push nav to the right */
+  }
+
+  .navbar-nav {
+    flex-direction: row !important; /* Bootstrap resets this to column */
+    align-items: center;
+  }
+}
+
+/* ============================================================
+   BRAND / LOGO AREA
+   ============================================================ */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--text) !important;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.navbar-brand:hover {
+  opacity: 0.75;
+  text-shadow: none;
+}
+
+/* ============================================================
+   NAV LINKS — Delight #1: magnetic underline from center
+   ============================================================ */
+.navbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-nav .nav-link {
+  position: relative;
+  display: inline-block;
+  padding: 6px 12px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-muted) !important;
+  text-decoration: none;
+  text-transform: capitalize;
+  letter-spacing: 0.02em;
+  transition: color 0.2s ease;
+  cursor: pointer;
+}
+
+/* The sliding underline — pseudo-element, not border */
+.navbar-nav .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 1px;
+  transform: translateX(-50%);
+  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hover: underline expands from center outward */
+.navbar-nav .nav-link:hover {
+  color: var(--text) !important;
+}
+
+.navbar-nav .nav-link:hover::after {
+  width: calc(100% - 24px);
+}
+
+/* Active link (set by react-scroll's activeClass) */
+.navbar-nav .nav-active {
+  color: var(--accent) !important;
+}
+
+.navbar-nav .nav-active::after {
+  width: calc(100% - 24px);
+  background: var(--accent);
+}
+
+/* ============================================================
+   HAMBURGER TOGGLER
+   ============================================================ */
+.navbar-toggler {
+  display: none;
+  background: none;
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.navbar-toggler-icon {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--text);
+  position: relative;
+  transition: background 0.2s;
+}
+
+.navbar-toggler-icon::before,
+.navbar-toggler-icon::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--text);
+  transition: transform 0.2s;
+}
+
+.navbar-toggler-icon::before { top: -6px; }
+.navbar-toggler-icon::after  { top:  6px; }
+
+/* ============================================================
+   MOBILE NAV
+   ============================================================ */
+@media (max-width: 991px) {
+  .navbar-toggler {
+    display: block;
+  }
+
+  .navbar-collapse {
+    display: none;
     position: absolute;
-    top: 100%;
+    top: 64px;
     left: 0;
     width: 100%;
+    padding: 16px 24px 24px;
+    background: rgba(250, 249, 246, 0.96);
+    backdrop-filter: blur(20px);
+    border-bottom: 2px solid var(--accent);
   }
 
-  .nav-item {
-    margin: 10px 0;
-    text-align: center;
+  body.dark-theme .navbar-collapse {
+    background: rgba(8, 12, 24, 0.96);
   }
 
-  /* Make links bigger for touch */
-  .nav-link {
-    font-size: 1.2rem;
-    padding: 10px !important;
-  }
-  
-  /* Center the theme toggle */
-  .theme-toggle-button {
-    margin: 20px auto 0 auto;
+  .navbar-collapse.collapse.show,
+  .navbar-collapse.collapsing {
     display: block;
+  }
+
+  .navbar-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .navbar-nav .nav-link {
+    padding: 12px 0;
+    font-size: 1.1rem;
+    width: 100%;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .navbar-nav .nav-link:last-child {
+    border-bottom: none;
+  }
+
+  .navbar-nav .nav-link::after {
+    display: none; /* no underline trick on mobile — too cramped */
+  }
+
+  /* Theme toggle spacing */
+  .navbar-nav .nav-item:last-child {
+    margin-top: 16px;
+    border-bottom: none;
   }
 }

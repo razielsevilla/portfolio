@@ -1,47 +1,58 @@
 /* src/App.css — Global Design System */
 
 /* ============================================================
-   THEME TOKENS — Default (Light)
+   THEME TOKENS — Light: "Parchment & Ink"
+   Warm, analogue, high-productivity — like a premium notebook.
    ============================================================ */
 :root {
-  --bg:           #f0f0f5;
-  --bg-surface:   #e8e8f0;
-  --text:         #1a1a2e;
-  --text-muted:   #6b6b8a;
-  --accent:       #7c3aed;          /* Violet — primary CTA */
-  --accent-glow:  rgba(124,58,237,0.25);
-  --neon:         #06b6d4;          /* Cyan — decorative accent */
-  --neon-glow:    rgba(6,182,212,0.2);
-  --border:       rgba(26,26,46,0.12);
-  --card-bg:      rgba(255,255,255,0.7);
+  --bg:              #FAF9F6;          /* Warm off-white — quality paper */
+  --bg-surface:      #F2F0EB;          /* Slightly darker lift for card backgrounds */
+  --bg-raised:       #FFFFFF;          /* Pure white for focal surfaces */
+  --text:            #1C1917;          /* Warm near-black — not harsh pure black */
+  --text-muted:      #78716C;          /* Warm stone gray */
+  --accent:          #6D28D9;          /* Deep violet — deliberate, not default purple */
+  --accent-glow:     rgba(109,40,217,0.18);
+  --neon:            #0891B2;          /* Deep cyan — calmer in daylight */
+  --neon-glow:       rgba(8,145,178,0.15);
+  --border:          rgba(28,25,23,0.10);
+  --border-strong:   rgba(28,25,23,0.18);
+  --shadow:          rgba(28,25,23,0.07);
+  --shadow-elevated: rgba(28,25,23,0.12);
+  --card-bg:         var(--bg-raised);
 
   /* Legacy aliases — keep for component compatibility */
   --background-color: var(--bg);
   --text-color:       var(--text);
-  --header-bg:        #1a1a2e;
+  --header-bg:        var(--bg);
   --accent-color:     var(--accent);
   --neon-accent:      var(--neon);
 }
 
 /* ============================================================
-   THEME TOKENS — Dark
+   THEME TOKENS — Dark: "Midnight Indigo"
+   Deep navy, not purple-black. Cool & focused, like a
+   well-lit IDE at 2am. 3 readable surface levels.
    ============================================================ */
 body.dark-theme {
-  --bg:           #0d0d1a;
-  --bg-surface:   #12122a;
-  --text:         #e2e2f0;
-  --text-muted:   #8888aa;
-  --accent:       #a855f7;
-  --accent-glow:  rgba(168,85,247,0.3);
-  --neon:         #22d3ee;
-  --neon-glow:    rgba(34,211,238,0.2);
-  --border:       rgba(255,255,255,0.08);
-  --card-bg:      rgba(255,255,255,0.04);
+  --bg:              #080C18;          /* Deep navy — the void is blue, not purple */
+  --bg-surface:      #0F1629;          /* Step 1 up — visible card floor */
+  --bg-raised:       #1A2540;          /* Step 2 up — clearly differentiated card face */
+  --text:            #E8EAF0;          /* Cool off-white — easier than pure #FFF */
+  --text-muted:      #8892A4;          /* Slate-gray, clearly readable against --bg-raised */
+  --accent:          #818CF8;          /* Indigo-400 — harmonises with the navy base */
+  --accent-glow:     rgba(129,140,248,0.25);
+  --neon:            #34D399;          /* Emerald — contrasts accent, reads as "go/active" */
+  --neon-glow:       rgba(52,211,153,0.20);
+  --border:          rgba(232,234,240,0.08);
+  --border-strong:   rgba(232,234,240,0.15);
+  --shadow:          rgba(0,0,0,0.35);
+  --shadow-elevated: rgba(0,0,0,0.55);
+  --card-bg:         var(--bg-raised);
 
   /* Legacy aliases */
   --background-color: var(--bg);
   --text-color:       var(--text);
-  --header-bg:        #060610;
+  --header-bg:        var(--bg);
   --accent-color:     var(--accent);
   --neon-accent:      var(--neon);
 }
@@ -55,24 +66,23 @@ body.dark-theme {
   padding: 0;
 }
 
+html { scroll-behavior: smooth; }
+
 body {
   font-family: 'Space Grotesk', system-ui, sans-serif;
   font-size: 1rem;
   line-height: 1.75;
   background-color: var(--bg);
   color: var(--text);
-  transition: background-color 0.4s ease, color 0.4s ease;
+  transition: background-color 0.5s ease, color 0.4s ease;
   -webkit-font-smoothing: antialiased;
 }
 
 /* ============================================================
    TYPOGRAPHY SYSTEM
-   
-   Syne:         Statement font — hero H1, section titles.
-                 Geometric, high x-height, distinctly technical.
-   Space Grotesk: Workhorse — body, cards, nav, buttons.
-                  Readable at all sizes, modern but not cold.
-   Press Start 2P: Accent-only — decorators like // # >>
+   Syne:              Statement — H1, H2, section titles.
+   Space Grotesk:     Workhorse — body, card text, nav, buttons.
+   Press Start 2P:    Accent-only — the // and # decorators.
    ============================================================ */
 
 h1, h2 {
@@ -95,30 +105,26 @@ p, li, a, span, button, label {
   color: var(--text);
 }
 
-/* The pixel font is accent-only — decorative text nodes */
+/* Pixel font: accent-only for decorative markers */
 .title-decoration {
   font-family: 'Press Start 2P', cursive;
-  font-size: 0.55em;
+  font-size: 0.5em;
   color: var(--neon);
   vertical-align: middle;
   margin: 0 12px;
-  opacity: 0.8;
+  opacity: 0.75;
 }
 
 /* ============================================================
    GLOBAL BACKGROUND — Dot Grid
-   Zero CPU, renders as a CSS radial-gradient.
-   Communicates "systems / engineering" without animation noise.
+   Static CSS radial-gradient. Zero CPU. Signals "blueprint."
+   In light mode: warm ink dots on parchment.
+   In dark mode: indigo dots on navy.
    ============================================================ */
 .portfolio-app {
   min-height: 100vh;
-  /* Dot grid: a small circle repeated at 28px intervals */
   background-color: var(--bg);
-  background-image: radial-gradient(
-    circle,
-    var(--border) 1px,
-    transparent 1px
-  );
+  background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
   background-size: 28px 28px;
 }
 
@@ -128,32 +134,43 @@ p, li, a, span, button, label {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
+  from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ============================================================
+   SECTION STANDARD SPACING
+   ============================================================ */
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  color: var(--text);
+}
+
+/* ============================================================
    GLOBAL BUTTON TOKENS
-   (component styles own their specifics — no !important here)
    ============================================================ */
 .btn-primary {
   background-color: var(--accent);
   border-color: var(--accent);
   color: #fff;
-  border-radius: 4px;
+  border-radius: 6px;
+  font-family: 'Space Grotesk', sans-serif;
   font-weight: 600;
+  letter-spacing: 0.01em;
   transition: background-color 0.25s, box-shadow 0.25s, transform 0.2s;
 }
 
 .btn-primary:hover {
   background-color: var(--neon);
   border-color: var(--neon);
-  box-shadow: 0 0 16px var(--neon-glow);
-  transform: translateY(-1px);
+  box-shadow: 0 6px 20px var(--neon-glow);
+  transform: translateY(-2px);
+  color: #fff;
 }
 
 /* ============================================================
-   UTILITY
+   UTILITIES — Bootstrap overrides (no !important on bg-dark)
    ============================================================ */
 .card, .bg-light, .bg-white {
   background-color: var(--card-bg);
@@ -161,10 +178,5 @@ p, li, a, span, button, label {
 }
 
 .text-dark, .text-secondary {
-  color: var(--text-muted);
-}
-
-.section-title {
-  font-family: 'Syne', sans-serif;
-  font-weight: 800;
+  color: var(--text-muted) !important;
 }

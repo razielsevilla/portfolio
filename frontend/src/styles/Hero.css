@@ -1,277 +1,167 @@
 /* src/styles/Hero.css */
 
+/* ============================================================
+   HERO SECTION
+   Transparent background — inherits the dot-grid from .portfolio-app.
+   The scanline overlay is kept as a subtle texture on top.
+   ============================================================ */
+
 .hero-section {
-  /* 💡 IMPROVEMENT: Apply the animated gradient */
-  background: linear-gradient(
-      135deg, 
-      var(--background-color), 
-      var(--card-bg), 
-      var(--background-color)
-  );
-  background-size: 400% 400%; /* Makes the gradient huge */
-  animation: gradient-shift 30s ease infinite; /* Slow, infinite animation */
-  
-  /* Setup for scanline overlay */
-  position: relative; 
+  position: relative;
   overflow: hidden;
-
-
-  /* 💡 IMPROVEMENT: Set to full viewport height and center content */
   min-height: 100vh;
+  min-height: 100dvh;  /* mobile browser address bar safe */
   display: flex;
   flex-direction: column;
   justify-content: center;
-  
-  /* Reset margin/padding for full bleed effect */
-  padding: 0 20px;
-  margin: 0 auto; 
-
-  /* Use main background color from theme */
-  background-color: var(--background-color); 
-  color: var(--text-color);
-  transition: background-color 0.3s, color 0.3s;
-  cursor: default;
+  padding: 80px 20px 40px; /* top padding clears fixed header */
+  background-color: transparent; /* inherit from .portfolio-app dot grid */
+  color: var(--text);
 }
 
-/* 💡 IMPROVEMENT: Scanline Overlay Effect (Vaporwave Aesthetic) */
+/* Subtle scanline overlay — single line of texture */
 .hero-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* Subtle dark horizontal lines */
-    background: repeating-linear-gradient(
-        transparent 0,
-        rgba(0, 0, 0, 0.1) 1px,
-        transparent 2px
-    );
-    pointer-events: none; 
-    opacity: 0.6;
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    transparent 0,
+    rgba(0, 0, 0, 0.018) 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.6;
 }
 
-/* --- TEXT STYLING --- */
-
-.hero-section h1 {
-  /* 💡 IMPROVEMENT: Increase size slightly for impact */
-  font-size: 4em;
-  margin-bottom: 25px;
+/* Content sits above scanlines */
+.hero-section > * {
+  position: relative;
+  z-index: 2;
 }
+
+/* ============================================================
+   HERO TEXT
+   ============================================================ */
 
 .hero-section h2 {
-    /* Use neon accent color for high contrast */
-    color: var(--text-color) !important;
-    font-size: 1.8em;
-    margin-bottom: 15px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  font-weight: 400;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  margin-bottom: 12px;
 }
 
-.hero-section p {
-    font-size: 1.2em;
-    max-width: 800px;
-    margin: 0 auto 40px auto;
-    color: var(--text-color);
-    /* 💡 IMPROVEMENT: Subtle glow for main paragraph */
-    text-shadow: 0 0 1px var(--text-color);
+.hero-section h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.4rem, 6vw, 5rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  margin-bottom: 24px;
+  color: var(--text);
 }
 
-/* --- SECONDARY BUTTON STYLING (Neon Outline) --- */
+.hero-section p.lead {
+  font-size: clamp(1rem, 1.8vw, 1.15rem);
+  max-width: 640px;
+  margin: 0 auto 40px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
 
+/* ============================================================
+   HERO BUTTONS
+   ============================================================ */
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Primary button glow pulse */
+@keyframes pulse {
+  0%   { box-shadow: 0 0  8px var(--accent-glow); }
+  50%  { box-shadow: 0 0 22px var(--accent-glow), 0 0 6px var(--accent-glow); }
+  100% { box-shadow: 0 0  8px var(--accent-glow); }
+}
+
+.pulsing-glow {
+  animation: pulse 2.5s ease-in-out infinite;
+}
+
+/* Secondary / outline button */
 .secondary-btn {
-    /* 💡 CORE FIX: Set background to transparent in all modes */
-    background-color: transparent !important; 
-    
-    /* Ensure the border and text are the Neon color */
-    color: var(--neon-accent) !important;
-    border: 2px solid var(--neon-accent) !important;
-    
-    /* Initial subtle neon glow */
-    box-shadow: 0 0 5px var(--neon-accent); 
-    
-    /* Retain square look and transition */
-    border-radius: 0; 
-    transition: all 0.3s ease-in-out;
+  background-color: transparent;
+  color: var(--neon);
+  border: 2px solid var(--neon);
+  border-radius: 6px;
+  font-weight: 600;
+  transition: all 0.25s ease;
 }
 
 .secondary-btn:hover {
-    /* Full neon sign effect on hover */
-    background-color: var(--neon-accent) !important;
-    
-    /* 💡 CORE FIX: Ensure text is the dark header color when button is filled */
-    color: var(--header-bg) !important; 
-    
-    box-shadow: 0 0 15px var(--neon-accent);
-    transform: translateY(-2px);
+  background-color: var(--neon);
+  color: var(--bg);
+  box-shadow: 0 6px 20px var(--neon-glow);
+  transform: translateY(-2px);
 }
 
-/* src/styles/Hero.css (Additions for Pulsing Glow Button) */
-
-/* 💡 New Keyframes for Pulsing Glow */
-@keyframes pulse {
-    0% { box-shadow: 0 0 10px var(--accent-color); }
-    50% { box-shadow: 0 0 20px var(--accent-color), 0 0 5px var(--accent-color); }
-    100% { box-shadow: 0 0 10px var(--accent-color); }
-}
-
-/* Apply pulse animation to the Primary Button */
-.pulsing-glow {
-    animation: pulse 2s infinite alternate; /* Slow, repeating pulse */
-}
-
-/* Ensure icons and text inside buttons use the correct color */
-.btn i, .btn {
-    /* Ensure icon color adapts to the button's primary color or its hover color */
-    color: inherit; 
-}
-
-/* Reset border-radius to 0 on primary button for retro feel */
-.btn-primary {
-    border-radius: 0 !important;
-}
-
-/* src/styles/Hero.css */
-
-/* ... (Keep all your existing CSS) ... */
-
-/* --- 💡 NEW: ANIMATED BACKGROUND SHAPES --- */
+/* ============================================================
+   FLOATING SHAPES — kept but toned down to complement palette
+   ============================================================ */
 
 .background-shapes {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: 1; /* Behind text (z-index 2), but above gradient */
-    pointer-events: none; /* Ensure they aren't clickable */
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 1;
+  pointer-events: none;
 }
 
 .shape {
-    position: absolute;
-    bottom: -100px; /* Start below screen */
-    background: transparent;
-    border: 2px solid rgba(255, 255, 255, 0.1); /* Very subtle by default */
-    animation: floatUp 15s linear infinite;
+  position: absolute;
+  bottom: -100px;
+  background: transparent;
+  border: 1.5px solid var(--border-strong);
+  animation: floatUp 18s linear infinite;
 }
 
-/* Keyframes for floating upwards and rotating */
 @keyframes floatUp {
-    0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 0;
-    }
-    10% {
-        opacity: 0.5;
-    }
-    90% {
-        opacity: 0.5;
-    }
-    100% {
-        transform: translateY(-120vh) rotate(360deg); /* Move way up and spin */
-        opacity: 0;
-    }
+  0%   { transform: translateY(0) rotate(0deg);    opacity: 0; }
+  10%  { opacity: 0.4; }
+  90%  { opacity: 0.4; }
+  100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
 }
 
-/* --- SHAPE VARIATIONS (Randomizing the look) --- */
+.shape-1 { left: 10%; width: 70px;  height: 70px;  border-color: var(--accent); opacity: 0.15; animation-duration: 14s; }
+.shape-2 { left: 45%; width: 44px;  height: 44px;  border-radius: 50%; border-color: var(--neon); animation-duration: 20s; animation-delay: 2s; }
+.shape-3 { left: 82%; width: 36px;  height: 36px;  border-color: var(--accent); animation-duration: 16s; animation-delay: 5s; }
+.shape-4 { left: 72%; width: 90px;  height: 90px;  border-radius: 50%; border-color: var(--text-muted); opacity: 0.08; animation-duration: 24s; animation-delay: 1s; }
+.shape-5 { left:  5%; width: 16px;  height: 16px;  background: var(--neon); border: none; opacity: 0.2; animation-duration: 22s; animation-delay: 7s; }
 
-/* Shape 1: A large hollow square on the left */
-.shape-1 {
-    left: 10%;
-    width: 80px;
-    height: 80px;
-    border-color: var(--neon-accent); /* Use neon color */
-    opacity: 0.2;
-    animation-duration: 12s;
-    animation-delay: 0s;
-}
-
-/* Shape 2: A circle in the middle */
-.shape-2 {
-    left: 45%;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border-color: var(--accent-color); /* Use primary purple */
-    animation-duration: 18s;
-    animation-delay: 2s;
-}
-
-/* Shape 3: A small square on the right */
-.shape-3 {
-    left: 85%;
-    width: 40px;
-    height: 40px;
-    border-color: var(--neon-accent);
-    animation-duration: 15s;
-    animation-delay: 5s;
-}
-
-/* Shape 4: A large circle on the far right */
-.shape-4 {
-    left: 75%;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border-color: var(--text-color);
-    opacity: 0.1;
-    animation-duration: 22s;
-    animation-delay: 1s;
-}
-
-/* Shape 5: A small fast square on the far left */
-.shape-5 {
-    left: 5%;
-    width: 20px;
-    height: 20px;
-    background-color: var(--neon-accent); /* Solid filled shape */
-    border: none;
-    opacity: 0.3;
-    animation-duration: 25s;
-    animation-delay: 7s;
-}
-
-/* Ensure the scanlines sit ON TOP of these shapes */
-.hero-section::before {
-    z-index: 2;
-}
-
-/* --- 📱 MOBILE RESPONSIVENESS (Append to bottom) --- */
+/* ============================================================
+   MOBILE
+   ============================================================ */
 
 @media (max-width: 768px) {
-  .hero-section {
-    padding: 0 15px;
-    /* Fix height issue on mobile browsers with address bars */
-    min-height: 100dvh; 
-  }
+  .hero-section { padding: 100px 20px 60px; }
 
-  .hero-section h1 {
-    font-size: 2.2rem; /* Smaller Title */
-    margin-bottom: 15px;
-  }
+  .hero-section h1 { font-size: 2.4rem; }
+  .hero-section h2 { font-size: 1rem; }
 
-  .hero-section h2 {
-    font-size: 1.2rem;
-  }
-
-  .hero-section p {
-    font-size: 1rem;
-    margin-bottom: 30px;
-  }
-
-  /* Stack buttons vertically on mobile */
   .hero-actions {
-    display: flex;
     flex-direction: column;
-    gap: 15px;
     width: 100%;
-    max-width: 300px;
-    margin-left: auto;
-    margin-right: auto;
+    max-width: 280px;
+    margin: 0 auto;
   }
 
   .hero-actions .btn {
-    margin: 0 !important; /* Remove side margins */
-    width: 100%; /* Full width buttons */
+    width: 100%;
     display: block;
   }
 }

@@ -1,10 +1,10 @@
 // src/components/Projects.js
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import projectData from '../data/projectData';
 import '../styles/Projects.css';
 
-// Status config: badge label, CSS class, CTA logic
+// Status config: badge label, CSS modifier class, CTA visibility
 const STATUS_CONFIG = {
   'live':        { label: 'LIVE',        cls: 'status-live',        showRepo: true,  showLive: true  },
   'in-progress': { label: 'IN PROGRESS', cls: 'status-in-progress', showRepo: false, showLive: false },
@@ -12,13 +12,66 @@ const STATUS_CONFIG = {
   'archived':    { label: 'ARCHIVED',    cls: 'status-archived',    showRepo: true,  showLive: false },
 };
 
+/* ============================================================
+   Delight #2 — 3D Tilt Card
+   Pure CSS perspective + JS mouse tracking.
+   No library. ~20 lines of logic.
+   ============================================================ */
+const TiltCard = ({ children, className = '' }) => {
+  const cardRef = useRef(null);
+  const rafRef  = useRef(null);
+
+  const handleMouseMove = useCallback((e) => {
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+
+    rafRef.current = requestAnimationFrame(() => {
+      const card = cardRef.current;
+      if (!card) return;
+
+      const rect   = card.getBoundingClientRect();
+      const cx     = rect.left + rect.width  / 2;
+      const cy     = rect.top  + rect.height / 2;
+      const dx     = (e.clientX - cx) / (rect.width  / 2);   // -1 → 1
+      const dy     = (e.clientY - cy) / (rect.height / 2);   // -1 → 1
+
+      // Max tilt: 8deg. Light, not nauseating.
+      const rotX = (-dy * 8).toFixed(2);
+      const rotY = (dx  * 8).toFixed(2);
+
+      card.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(4px)`;
+      card.style.transition = 'transform 0.05s linear';
+    });
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    const card = cardRef.current;
+    if (!card) return;
+    card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+    card.style.transition = 'transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+  }, []);
+
+  return (
+    <div
+      ref={cardRef}
+      className={`tilt-card ${className}`}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      {children}
+    </div>
+  );
+};
+
+/* ============================================================
+   Project Card
+   ============================================================ */
 const ProjectCard = ({ project }) => {
   const cfg = STATUS_CONFIG[project.status] || STATUS_CONFIG['archived'];
   const isInProgress = project.status === 'in-progress';
 
   return (
-    <div className={`project-card ${project.highlight ? 'card-featured' : ''} ${isInProgress ? 'card-wip' : ''}`}>
-
+    <TiltCard className={`project-card ${project.highlight ? 'card-featured' : ''} ${isInProgress ? 'card-wip' : ''}`}>
       {/* Header row */}
       <div className="card-top">
         <i className="fas fa-folder-open card-folder-icon" aria-hidden="true" />
@@ -57,11 +110,13 @@ const ProjectCard = ({ project }) => {
           </span>
         )}
       </div>
-
-    </div>
+    </TiltCard>
   );
 };
 
+/* ============================================================
+   Projects Section
+   ============================================================ */
 const Projects = () => {
   const [selectedTechs, setSelectedTechs] = useState([]);
   const [showAll, setShowAll] = useState(false);
@@ -82,10 +137,9 @@ const Projects = () => {
     ? projectData
     : projectData.filter(p => p.tech.some(t => selectedTechs.includes(t)));
 
-  // Featured cards always show; non-featured hidden behind "Show all" toggle
-  const featured   = filteredProjects.filter(p => p.highlight);
-  const secondary  = filteredProjects.filter(p => !p.highlight);
-  const visibleSecondary = showAll ? secondary : secondary.slice(0, 3);
+  const featured          = filteredProjects.filter(p => p.highlight);
+  const secondary         = filteredProjects.filter(p => !p.highlight);
+  const visibleSecondary  = showAll ? secondary : secondary.slice(0, 3);
 
   return (
     <section id="projects" className="projects-section">
@@ -125,7 +179,7 @@ const Projects = () => {
           </div>
         )}
 
-        {/* Secondary grid */}
+        {/* Standard grid */}
         {secondary.length > 0 && (
           <>
             <div className="projects-grid">

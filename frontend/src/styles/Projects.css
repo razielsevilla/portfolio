@@ -13,7 +13,7 @@
 }
 
 /* ============================================================
-   DOT GRID BACKGROUND (same pattern as App.css, tinted)
+   DOT GRID BACKGROUND
    ============================================================ */
 
 .project-bg-grid {
@@ -23,7 +23,6 @@
   z-index: 1;
   background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
   background-size: 28px 28px;
-  /* Vignette so it fades at edges */
   -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 40%, transparent 100%);
   mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 40%, transparent 100%);
 }
@@ -38,7 +37,6 @@
   font-weight: 800;
   color: var(--text);
   margin-bottom: 12px;
-  text-transform: none;  /* Syne doesn't need ALL CAPS to feel strong */
 }
 
 /* ============================================================
@@ -100,7 +98,7 @@
 }
 .filter-btn:hover .status-dot {
   background: var(--neon);
-  box-shadow: 0 0 6px var(--neon);
+  box-shadow: 0 0 6px var(--neon-glow);
 }
 
 .filter-btn.active {
@@ -114,10 +112,10 @@
 }
 
 /* ============================================================
-   PROJECT GRIDS
+   GRIDS
    ============================================================ */
 
-/* Featured: 2 columns, larger cards */
+/* Featured: 2 columns, wider cards */
 .featured-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -125,7 +123,7 @@
   margin-bottom: 24px;
 }
 
-/* Standard 3-column grid */
+/* Standard 3-column */
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -133,12 +131,21 @@
 }
 
 @media (max-width: 992px) {
-  .projects-grid { grid-template-columns: repeat(2, 1fr); }
-  .featured-grid { grid-template-columns: 1fr; }
+  .projects-grid   { grid-template-columns: repeat(2, 1fr); }
+  .featured-grid   { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .projects-grid   { grid-template-columns: 1fr; }
 }
 
-@media (max-width: 640px) {
-  .projects-grid { grid-template-columns: 1fr; }
+/* ============================================================
+   TILT CARD WRAPPER — Delight #2
+   The perspective is set here; the JS sets rotateX/Y inline.
+   transform-style: preserve-3d lets inner elements catch depth.
+   ============================================================ */
+.tilt-card {
+  transform-style: preserve-3d;
+  will-change: transform;    /* promotes to GPU layer */
 }
 
 /* ============================================================
@@ -153,30 +160,37 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  transition: transform 0.25s ease, border-color 0.25s, box-shadow 0.25s;
   position: relative;
   overflow: hidden;
+  /* Transition only on mouseleave (JS overrides on mousemove) */
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+/* Phase 3: Featured card — elevated visual weight */
+.card-featured {
+  border-left: 3px solid var(--accent);
+  /* Subtle glow — more pronounced in dark mode */
+  box-shadow: 0 4px 24px var(--shadow);
+}
+
+/* Dark mode: glow halo behind featured cards */
+body.dark-theme .card-featured {
+  box-shadow: 0 0 40px -8px var(--accent-glow), 0 4px 24px var(--shadow);
 }
 
 .project-card:hover {
-  transform: translateY(-6px);
   border-color: var(--accent);
-  box-shadow: 0 12px 32px var(--accent-glow);
 }
 
-/* Featured card: left accent stripe */
-.card-featured {
-  border-left: 3px solid var(--accent);
-}
-
-/* WIP card: slightly muted to signal "not done" without hiding it */
 .card-wip {
   opacity: 0.88;
 }
 .card-wip:hover {
   opacity: 1;
   border-color: var(--neon);
-  box-shadow: 0 12px 32px var(--neon-glow);
+}
+body.dark-theme .card-wip:hover {
+  box-shadow: 0 0 30px -8px var(--neon-glow);
 }
 
 /* ============================================================
@@ -191,12 +205,11 @@
 }
 
 .card-folder-icon {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: var(--text-muted);
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
-/* Status badges */
 .status-badge {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 0.62rem;
@@ -212,42 +225,43 @@
   background: rgba(16,185,129,0.12);
   border: 1px solid rgba(16,185,129,0.3);
 }
-
 .status-in-progress {
   color: var(--neon);
   background: var(--neon-glow);
   border: 1px solid var(--neon);
 }
-
 .status-case-study {
   color: var(--accent);
   background: var(--accent-glow);
   border: 1px solid var(--accent);
 }
-
 .status-archived {
   color: var(--text-muted);
   background: transparent;
   border: 1px solid var(--border);
 }
 
-/* Card text */
 .card-title {
   font-family: 'Syne', sans-serif;
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   font-weight: 800;
   color: var(--text);
   margin: 0;
   line-height: 1.2;
 }
 
+/* Featured cards get a larger title */
+.card-featured .card-title {
+  font-size: 1.45rem;
+}
+
 .card-tagline {
-  font-size: 0.82rem;
-  font-weight: 600;
+  font-size: 0.78rem;
+  font-weight: 700;
   color: var(--accent);
   margin: 0;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.07em;
 }
 
 .card-desc {
@@ -255,7 +269,7 @@
   color: var(--text-muted);
   line-height: 1.65;
   margin: 0;
-  flex: 1;       /* Pushes tech stack + footer to bottom */
+  flex: 1;
 }
 
 /* Tech stack pills */
@@ -277,7 +291,7 @@
 }
 
 /* ============================================================
-   CARD FOOTER — context-aware CTA
+   CARD FOOTER CTA
    ============================================================ */
 
 .card-footer-cta {
@@ -300,15 +314,9 @@
   transition: color 0.2s;
 }
 
-.cta-link:hover {
-  color: var(--neon);
-}
+.cta-link:hover { color: var(--neon); }
+.cta-live       { color: var(--neon); }
 
-.cta-live {
-  color: var(--neon);
-}
-
-/* WIP lock message */
 .cta-wip {
   display: flex;
   align-items: center;
@@ -316,10 +324,6 @@
   font-size: 0.78rem;
   color: var(--text-muted);
   font-style: italic;
-}
-
-.cta-wip i {
-  font-size: 0.7rem;
 }
 
 /* ============================================================
