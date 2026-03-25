@@ -1,20 +1,25 @@
-# Personal Portfolio Repository
+# Living Codex — Personal Portfolio
 
-This repository contains the source code for a modern, responsive personal portfolio website designed to showcase web development projects, technical experience, and machine learning experiments.
+This repository contains the source code for a high-end, production-grade personal portfolio designed as an interactive "Living Codex." It features a custom book-flip engine, modular architecture, and a centralized data-driven system for long-term scalability.
 
-## Project Overview
-The portfolio is a single-page application (SPA) that features interactive UI elements, a centralized data-driven architecture for easy content updates, and a professional layout for displaying a developer's journey.
+## 📖 Project Overview
+The portfolio is designed as a digital manuscript that chronicles a professional journey. It moves away from traditional scrolling layouts in favor of an immersive Page-Flip experience, utilizing modern React patterns and a utility-first design system.
 
-## Repository Structure
-- **`/frontend`**: Contains the React 19 application, including all UI components, styles, and portfolio data.
-- **`README.md`**: This file, providing a high-level overview of the repository.
+## 📂 Repository Structure
+- **`/frontend`**: The core React 19 application, featuring the "Living Codex" engine.
+- **`MAINTENANCE.md`**: Your go-to guide for updating content, projects, and skills.
+- **`README.md`**: High-level repository overview.
 
-## Tech Stack
-- **Frontend:** React 19, Bootstrap 5.
-- **Styling:** CSS3 with custom animations (Scroll Reveal, Pixel Trail).
-- **Tools:** React Scroll for smooth navigation and TensorFlow.js for client-side AI integration.
+## 🛠️ Tech Stack
+- **Frontend:** React 19 (Hooks, Ref-based navigation).
+- **Engine:** `react-pageflip` with custom audio and state management.
+- **Styling:** Vanilla CSS3 (Utility-first design system, no external UI frameworks like Bootstrap).
+- **Animations:** `framer-motion` for complex transitions and custom CSS keyframes.
 
-## Quick Start
+## 🚀 Quick Start
 1. Clone the repository.
-2. Navigate to the `frontend` directory.
-3. Follow the instructions in the `frontend/README.md` to install dependencies and run the app.
+2. Navigate to the `frontend` directory: `cd frontend`.
+3. Install dependencies: `npm install`.
+4. Start the development server: `npm start`.
+
+Refer to **[MAINTENANCE.md](./MAINTENANCE.md)** for instructions on how to scale and update your content.

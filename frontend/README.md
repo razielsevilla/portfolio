@@ -1,30 +1,45 @@
-# Portfolio Frontend
+# Portfolio Frontend — The Living Codex
 
-This is the React-based frontend for the personal portfolio website. It is designed to be a fast, responsive, and interactive showcase of professional work, technical skills, and creative projects.
+This is the React-based frontend for the "Living Codex" portfolio. It is a highly modular, performant, and documentation-focused engine designed to showcase engineering expertise with a premium, tactile feel.
 
-## 🚀 Features
+## 🚀 New Architecture Features
 
-- **Interactive UI**: Includes a custom pixel-trail mouse effect and smooth scroll-reveal animations.
-- **Dynamic Content**: Project, experience, and certificate data are managed through centralized data files for easy updates.
-- **Theme Support**: Integrated light and dark mode toggling.
-- **Responsive Design**: Built with a mobile-first approach using Bootstrap 5 and custom CSS.
-- **Preloader**: A custom loading screen for a polished first-impression.
+- **Page-Flip Engine**: An immersive 18-page digital manuscript layout.
+- **Modular Components**: Each chapter and entry is its own sub-component for maximum maintainability.
+- **Zero-Boilerplate Scaling**: Add projects or experiences by simply updating JSON data files.
+- **Tactile UX**: Includes custom page-turn audio and "Ink-Reveal" transitions.
+- **Ref-Based Navigation**: Uses safe React refs for TOC and bookmark jumps (no global state hacks).
+- **Utility CSS**: A custom-built, lightweight CSS system that replaces heavy frameworks like Bootstrap.
 
 ## 🛠️ Tech Stack
 
 - **Framework**: [React 19](https://react.dev/)
-- **Styling**: [Bootstrap 5](https://getbootstrap.com/), CSS3 (Custom Modules)
-- **Icons**: [Font Awesome](https://fontawesome.com/)
-- **Animations**: Custom CSS Keyframes & Intersection Observer API
-- **Navigation**: [React Scroll](https://www.npmjs.com/package/react-scroll)
+- **State/Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Engine**: [React PageFlip](https://stpage.github.io/react-pageflip/)
+- **Icons**: [Font Awesome 6](https://fontawesome.com/)
+- **Typography**: Google Fonts (Inter, Outfit, Fira Code)
 
 ## 📁 Project Structure
 
 ```text
 src/
-├── components/      # Reusable UI components (Hero, Projects, Contact, etc.)
-├── data/            # Static data files for easy content management
-├── styles/          # Component-specific CSS files
-├── App.js           # Main application logic and layout
-└── index.js         # Entry point
+├── components/
+│   ├── book/        # Core flip-engine, shell, and navigation components
+│   └── pages/       # Individual page layouts and entry sub-components
+├── data/            # CENTRAL DATA: experience, projects, skills, and manifest
+├── hooks/           # Custom hooks (e.g., usePageSound for audio logic)
+├── styles/          # Central CSS design system (book-system-v2.css)
+├── App.js           # Main application entry
+└── constants.js     # GLOBAL CONFIG: dimensions, audio, and UI keys
+```
+
+## 🛠️ Development
+
+To start the project:
+```bash
+npm install
+npm start
+```
+
+For content updates, refer to the **[MAINTENANCE.md](../MAINTENANCE.md)** file in the root directory.
 
