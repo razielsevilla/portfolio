@@ -1,61 +1,15 @@
 // src/App.js
+// The Living Codex — root application entry point.
+// All old components replaced by the BookShell architecture.
 
-import React, { useState, useCallback } from 'react';
-import './App.css';
-import Header from './components/Header';
-import Hero from './components/Hero';
-import Experience from './components/Experience';
-import Projects from './components/Projects';
-import Certificates from './components/Certificates';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
-import PixelTrail from './components/PixelTrail';
-import Preloader from './components/Preloader';
-import ScrollReveal from './components/ScrollReveal';
-import Skills from './components/Skills';
+import React from 'react';
+import BookShell from './components/book/BookShell';
+import './styles/book-system.css';
+import './styles/book-system-v2.css';
+
 
 function App() {
-  const [loading, setLoading] = useState(true);
-
-  return (
-    <>
-      {loading ? (
-        <Preloader onComplete={() => setLoading(false)} />
-      ) : (
-        <div className="portfolio-app fade-in-content">
-          <Header />
-
-          <main>
-            {/* Hero is usually static for instant impact upon loading */}
-            <Hero />
-
-            <ScrollReveal>
-              <Experience />
-            </ScrollReveal>
-
-            <ScrollReveal>
-              <Skills />
-            </ScrollReveal>
-
-            <ScrollReveal>
-              <Projects />
-            </ScrollReveal>
-
-            <ScrollReveal>
-              <Certificates />
-            </ScrollReveal>
-
-            <ScrollReveal>
-              <Contact />
-            </ScrollReveal>
-
-          </main>
-
-          <Footer />
-        </div>
-      )}
-    </>
-  );
+  return <BookShell />;
 }
 
 export default App;

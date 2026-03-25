@@ -1,0 +1,1287 @@
+/* =============================================================
+   book-system.css
+   The Living Codex — Complete Design System
+   All CSS custom properties, typography, textures, editions.
+   ============================================================= */
+
+/* ── Google Fonts are loaded in index.html ── */
+
+/* =============================================================
+   1. CSS CUSTOM PROPERTIES — TWO EDITIONS
+   ============================================================= */
+
+:root {
+  /* === DAY EDITION (default) === */
+  --bg-page:          #F5F0E8;
+  --bg-page-left:     #EDE7D5;
+  --bg-cover:         #3B2A1A;
+  --ink-primary:      #1C1A16;
+  --ink-secondary:    #4A3F35;
+  --ink-muted:        #8A7D6E;
+  --ink-code:         #6B3E26;
+  --ink-gold:         #8B6914;
+  --accent-rust:      #8B4513;
+  --accent-sienna:    #A0522D;
+  --accent-gold:      #C9A96E;
+  --border-ink:       rgba(28, 26, 22, 0.15);
+  --border-ink-heavy: rgba(28, 26, 22, 0.35);
+  --shadow-page:      rgba(28, 26, 22, 0.18);
+  --shadow-book:      rgba(28, 26, 22, 0.35);
+  --glitch-color-1:   #00ff41;
+  --glitch-color-2:   #ff003c;
+  --margin-note-bg:   rgba(139, 69, 19, 0.06);
+  --spine-color:      #2C1A0E;
+
+  /* === Typography === */
+  --font-serif:       'EB Garamond', Georgia, serif;
+  --font-display:     'Playfair Display', 'Times New Roman', serif;
+  --font-mono:        'JetBrains Mono', 'Courier New', monospace;
+
+  /* === Sizing === */
+  --book-width:       1100px;
+  --book-height:      720px;
+  --page-width:       550px;
+  --page-padding:     52px 56px;
+  --page-padding-sm:  36px 32px;
+
+  /* === Transitions === */
+  --transition-smooth: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* === NIGHT EDITION === */
+[data-edition="night"] {
+  --bg-page:          #0E0C0A;
+  --bg-page-left:     #120F0D;
+  --bg-cover:         #0A0705;
+  --ink-primary:      #E0D8C8;
+  --ink-secondary:    #C4B89A;
+  --ink-muted:        #7A6E5E;
+  --ink-code:         #7CFC8A;
+  --ink-gold:         #C9A96E;
+  --accent-rust:      #C9A96E;
+  --accent-sienna:    #D4AA70;
+  --accent-gold:      #C9A96E;
+  --border-ink:       rgba(224, 216, 200, 0.12);
+  --border-ink-heavy: rgba(224, 216, 200, 0.28);
+  --shadow-page:      rgba(0, 0, 0, 0.5);
+  --shadow-book:      rgba(0, 0, 0, 0.75);
+  --margin-note-bg:   rgba(124, 252, 138, 0.05);
+  --spine-color:      #050302;
+}
+
+/* =============================================================
+   2. GLOBAL RESET & BASE
+   ============================================================= */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-serif);
+  background-color: var(--bg-cover);
+  color: var(--ink-primary);
+  overflow: hidden;       /* book fills viewport */
+  height: 100vh;
+  width: 100vw;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =============================================================
+   3. PAPER TEXTURE OVERLAY
+   ============================================================= */
+
+/* SVG noise grain rendered via CSS — no external file needed */
+.paper-texture {
+  position: relative;
+}
+
+.paper-texture::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0.038;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 128px 128px;
+}
+
+/* =============================================================
+   4. BOOK SHELL LAYOUT
+   ============================================================= */
+
+.book-shell {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-cover);
+  overflow: hidden;
+  transition: background 0.6s ease;
+}
+
+/* Ambient room glow */
+.book-shell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 70% 60% at 50% 50%,
+    rgba(139, 105, 20, 0.12) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+[data-edition="night"] .book-shell::before {
+  background: radial-gradient(
+    ellipse 70% 60% at 50% 50%,
+    rgba(201, 169, 110, 0.07) 0%,
+    transparent 70%
+  );
+}
+
+/* =============================================================
+   5. BOOK CONTAINER (react-pageflip wrapper)
+   ============================================================= */
+
+.book-container {
+  position: relative;
+  filter: drop-shadow(0 24px 60px var(--shadow-book));
+  transition: filter 0.6s ease;
+}
+
+/* Center spine shadow — the visual seam between pages */
+.book-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(0, 0, 0, 0.2) 30%,
+    rgba(0, 0, 0, 0.35) 50%,
+    rgba(0, 0, 0, 0.2) 70%,
+    transparent
+  );
+  pointer-events: none;
+  z-index: 50;
+}
+
+/* =============================================================
+   6. PAGE LAYOUT
+   ============================================================= */
+
+.book-page {
+  width: var(--page-width);
+  height: var(--book-height);
+  background-color: var(--bg-page);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.6s ease;
+}
+
+.book-page.page-left {
+  background-color: var(--bg-page-left);
+}
+
+.book-page-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: var(--page-padding);
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+}
+
+/* Page edge decorative border */
+.book-page::after {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border: 1px solid var(--border-ink);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* =============================================================
+   7. RUNNING HEADER
+   ============================================================= */
+
+.running-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0 16px 0;
+  border-bottom: 1px solid var(--border-ink-heavy);
+  margin-bottom: 28px;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.running-header-left  { text-align: left; }
+.running-header-right { text-align: right; }
+
+.running-header-center {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  color: var(--ink-secondary);
+  text-transform: none;
+}
+
+/* =============================================================
+   8. PAGE NUMBER
+   ============================================================= */
+
+.page-number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 14px 0 20px;
+  font-family: var(--font-serif);
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+  letter-spacing: 0.25em;
+  border-top: 1px solid var(--border-ink);
+  margin-top: auto;
+}
+
+.page-number::before { content: '— '; }
+.page-number::after  { content: ' —'; }
+
+/* =============================================================
+   9. CHAPTER TYPOGRAPHY
+   ============================================================= */
+
+.chapter-ornament {
+  text-align: center;
+  font-size: 1.4rem;
+  color: var(--accent-gold);
+  letter-spacing: 0.5em;
+  margin-bottom: 12px;
+  opacity: 0.7;
+}
+
+.chapter-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.chapter-title {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--ink-primary);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.chapter-title-italic {
+  font-style: italic;
+  font-weight: 400;
+}
+
+.chapter-subtitle {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--ink-secondary);
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.chapter-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+  color: var(--accent-gold);
+  opacity: 0.6;
+}
+
+.chapter-divider::before,
+.chapter-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: currentColor;
+}
+
+.chapter-divider-symbol {
+  font-size: 0.9rem;
+}
+
+/* Drop cap */
+.drop-cap::first-letter {
+  font-family: var(--font-display);
+  font-size: 4.2rem;
+  font-weight: 700;
+  line-height: 0.8;
+  float: left;
+  margin: 0.08em 0.12em 0 0;
+  color: var(--accent-rust);
+}
+
+/* =============================================================
+   10. BODY PROSE
+   ============================================================= */
+
+.prose {
+  font-family: var(--font-serif);
+  font-size: 0.96rem;
+  line-height: 1.75;
+  color: var(--ink-secondary);
+  text-align: justify;
+  hyphens: auto;
+}
+
+.prose p + p {
+  text-indent: 1.5em;
+}
+
+.prose strong {
+  color: var(--ink-primary);
+  font-weight: 600;
+}
+
+.prose em {
+  font-style: italic;
+}
+
+/* =============================================================
+   11. CODE / TECH ACCENT ELEMENTS
+   ============================================================= */
+
+.code-tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-code);
+  background: var(--margin-note-bg);
+  padding: 1px 6px;
+  border-radius: 2px;
+  letter-spacing: 0.03em;
+  border: 1px solid var(--border-ink);
+  white-space: nowrap;
+}
+
+[data-edition="night"] .code-tag {
+  color: var(--ink-code);  /* terminal green in night */
+  background: rgba(124, 252, 138, 0.08);
+  border-color: rgba(124, 252, 138, 0.2);
+}
+
+.code-comment {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--ink-muted);
+  opacity: 0.75;
+}
+
+[data-edition="night"] .code-comment {
+  color: var(--ink-code);
+  opacity: 0.6;
+}
+
+/* Inline terminal prompt */
+.terminal-prompt::before {
+  content: '// ';
+  font-family: var(--font-mono);
+  font-size: 0.75em;
+  color: var(--ink-code);
+  opacity: 0.8;
+}
+
+/* =============================================================
+   12. MARGIN NOTES
+   ============================================================= */
+
+.margin-note-wrapper {
+  position: relative;
+  display: inline;
+}
+
+.margin-note-trigger {
+  cursor: pointer;
+  border-bottom: 1px dashed var(--accent-rust);
+  transition: color var(--transition-smooth);
+}
+
+.margin-note-trigger:hover {
+  color: var(--accent-rust);
+}
+
+.margin-note {
+  position: absolute;
+  right: calc(100% + 16px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 136px;
+  background: var(--margin-note-bg);
+  border: 1px solid var(--border-ink);
+  padding: 6px 10px;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--ink-code);
+  line-height: 1.5;
+  border-radius: 2px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-smooth);
+  z-index: 20;
+  white-space: normal;
+}
+
+.margin-note::before {
+  content: '//';
+  display: block;
+  margin-bottom: 2px;
+  opacity: 0.5;
+}
+
+.margin-note-wrapper:hover .margin-note {
+  opacity: 1;
+}
+
+/* =============================================================
+   13. NAVIGATION CONTROLS
+   ============================================================= */
+
+.book-nav {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  z-index: 100;
+}
+
+.book-nav-btn {
+  background: var(--bg-page);
+  border: 1px solid var(--border-ink-heavy);
+  color: var(--ink-primary);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all var(--transition-smooth);
+  box-shadow: 0 4px 16px var(--shadow-page);
+}
+
+.book-nav-btn:hover {
+  background: var(--accent-rust);
+  color: var(--bg-page);
+  border-color: var(--accent-rust);
+  transform: scale(1.08);
+}
+
+.book-nav-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.book-nav-chapter {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  min-width: 160px;
+  text-align: center;
+}
+
+/* =============================================================
+   14. BOOKMARK RIBBON (ToC Trigger)
+   ============================================================= */
+
+.bookmark-ribbon {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 200;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.bookmark-ribbon-body {
+  background: var(--accent-rust);
+  width: 28px;
+  padding: 18px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transition: width var(--transition-smooth), background var(--transition-smooth);
+  box-shadow: -2px 0 12px rgba(0,0,0,0.2);
+}
+
+.bookmark-ribbon:hover .bookmark-ribbon-body {
+  width: 38px;
+  background: var(--accent-sienna);
+}
+
+.bookmark-ribbon-body::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 0;
+  width: 28px;
+  border-top: 12px solid var(--accent-rust);
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  transition: border-top-color var(--transition-smooth);
+}
+
+.bookmark-ribbon:hover .bookmark-ribbon-body::after {
+  border-top-color: var(--accent-sienna);
+}
+
+.bookmark-ribbon-icon {
+  color: #fff;
+  font-size: 0.9rem;
+  writing-mode: vertical-rl;
+  letter-spacing: 0.1em;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  text-transform: uppercase;
+}
+
+/* =============================================================
+   15. TABLE OF CONTENTS PANEL
+   ============================================================= */
+
+.toc-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 300;
+  backdrop-filter: blur(2px);
+}
+
+.toc-panel {
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 340px;
+  background: var(--bg-page);
+  border-left: 1px solid var(--border-ink-heavy);
+  z-index: 310;
+  display: flex;
+  flex-direction: column;
+  padding: 40px 36px;
+  overflow-y: auto;
+  box-shadow: -8px 0 40px var(--shadow-book);
+}
+
+.toc-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  margin-bottom: 8px;
+}
+
+.toc-subtitle {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+  margin-bottom: 32px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-ink);
+}
+
+.toc-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.toc-item {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 12px 8px;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background var(--transition-smooth);
+  border-bottom: 1px solid var(--border-ink);
+}
+
+.toc-item:hover {
+  background: var(--margin-note-bg);
+}
+
+.toc-item.active {
+  background: var(--margin-note-bg);
+}
+
+.toc-item-num {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--ink-muted);
+  min-width: 24px;
+  letter-spacing: 0.1em;
+}
+
+.toc-item-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--ink-primary);
+  font-weight: 600;
+}
+
+.toc-item-sub {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.78rem;
+  color: var(--ink-secondary);
+  margin-top: 2px;
+}
+
+.toc-item-pg {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--ink-muted);
+  margin-left: auto;
+  letter-spacing: 0.08em;
+}
+
+/* =============================================================
+   16. EDITION TOGGLE (Day / Night)
+   ============================================================= */
+
+.edition-toggle {
+  position: fixed;
+  top: 24px;
+  right: 56px;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-page);
+  border: 1px solid var(--border-ink-heavy);
+  border-radius: 99px;
+  padding: 6px 14px 6px 10px;
+  cursor: pointer;
+  box-shadow: 0 2px 12px var(--shadow-page);
+  transition: all var(--transition-smooth);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-secondary);
+}
+
+.edition-toggle:hover {
+  border-color: var(--accent-rust);
+  color: var(--ink-primary);
+}
+
+.edition-toggle-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent-gold);
+  transition: background var(--transition-smooth);
+  flex-shrink: 0;
+}
+
+[data-edition="night"] .edition-toggle-dot {
+  background: var(--ink-code);
+}
+
+/* =============================================================
+   17. GLITCH OVERLAY
+   ============================================================= */
+
+.glitch-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.glitch-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--glitch-color-1);
+  opacity: 0;
+  mix-blend-mode: screen;
+}
+
+.glitch-scanline {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 255, 65, 0.03) 2px,
+    rgba(0, 255, 65, 0.03) 4px
+  );
+  opacity: 0;
+}
+
+.glitch-rgb-shift {
+  position: absolute;
+  inset: 0;
+  background: var(--bg-page);
+  opacity: 0;
+  mix-blend-mode: difference;
+}
+
+/* =============================================================
+   18. BOOK COVER
+   ============================================================= */
+
+.book-cover-wrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--spine-color);
+}
+
+.book-cover-3d {
+  width: var(--book-width);
+  height: var(--book-height);
+  position: relative;
+  transform-style: preserve-3d;
+  perspective: 2000px;
+}
+
+.cover-front {
+  position: absolute;
+  inset: 0;
+  background: #2C1A0E;
+  border-radius: 2px 8px 8px 2px;
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+  padding: 60px;
+}
+
+/* Cover leather texture */
+.cover-front::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 8px,
+      rgba(255,255,255,0.012) 8px,
+      rgba(255,255,255,0.012) 9px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 8px,
+      rgba(255,255,255,0.008) 8px,
+      rgba(255,255,255,0.008) 9px
+    );
+  border-radius: inherit;
+}
+
+.cover-spine {
+  position: absolute;
+  left: -28px;
+  top: 0;
+  width: 28px;
+  height: 100%;
+  background: linear-gradient(to right, #1A0D05, #2C1A0E);
+  border-radius: 4px 0 0 4px;
+}
+
+.cover-title {
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  line-height: 1.1;
+}
+
+.cover-subtitle {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: rgba(201, 169, 110, 0.7);
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.cover-author {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(201, 169, 110, 0.5);
+  position: relative;
+  z-index: 2;
+  margin-top: 16px;
+  border-top: 1px solid rgba(201, 169, 110, 0.2);
+  padding-top: 12px;
+}
+
+.cover-ornament {
+  font-size: 1.8rem;
+  color: var(--accent-gold);
+  opacity: 0.5;
+  position: relative;
+  z-index: 2;
+}
+
+/* =============================================================
+   19. PROGRESS RIBBON
+   ============================================================= */
+
+.reading-progress {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--book-width);
+  height: 3px;
+  background: var(--border-ink);
+  z-index: 150;
+  overflow: hidden;
+  max-width: 100vw;
+}
+
+.reading-progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--accent-rust), var(--accent-gold));
+  transition: width 0.4s ease;
+}
+
+/* =============================================================
+   20. INVITATION PAGE (Final Spread)
+   ============================================================= */
+
+.invitation-ruled-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  flex: 1;
+  margin-top: 24px;
+}
+
+.invitation-rule {
+  height: 1px;
+  background: var(--border-ink);
+  width: 100%;
+  position: relative;
+}
+
+.invitation-quill-cursor {
+  position: absolute;
+  right: -8px;
+  top: -10px;
+}
+
+.invitation-cta-section {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.invitation-seal {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  border: 1px solid var(--border-ink-heavy);
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-secondary);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+  background: transparent;
+}
+
+.invitation-seal:hover {
+  background: var(--accent-rust);
+  color: #fff;
+  border-color: var(--accent-rust);
+}
+
+.invitation-social-row {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.invitation-social-link {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--ink-muted);
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  transition: color var(--transition-smooth);
+}
+
+.invitation-social-link:hover {
+  color: var(--accent-rust);
+}
+
+/* =============================================================
+   21. SKILLS — TOOLS OF THE TRADE
+   ============================================================= */
+
+.skill-category {
+  margin-bottom: 20px;
+}
+
+.skill-category-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.skill-category-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-ink);
+}
+
+.skill-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.skill-name {
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
+  color: var(--ink-secondary);
+  min-width: 120px;
+}
+
+.skill-bar-track {
+  flex: 1;
+  height: 3px;
+  background: var(--border-ink);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.skill-bar-fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--accent-rust), var(--accent-gold));
+  border-radius: 2px;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.skill-pct {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--ink-muted);
+  min-width: 28px;
+  text-align: right;
+}
+
+/* =============================================================
+   22. EXPERIENCE — MANUSCRIPT ENTRIES
+   ============================================================= */
+
+.manuscript-entry {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-ink);
+}
+
+.manuscript-entry:last-child {
+  border-bottom: none;
+}
+
+.manuscript-date {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.manuscript-role {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink-primary);
+  margin-bottom: 2px;
+}
+
+.manuscript-org {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.83rem;
+  color: var(--accent-rust);
+  margin-bottom: 8px;
+}
+
+.manuscript-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.manuscript-bullets li {
+  font-family: var(--font-serif);
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: var(--ink-secondary);
+  padding-left: 16px;
+  position: relative;
+}
+
+.manuscript-bullets li::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  color: var(--accent-rust);
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+/* =============================================================
+   23. PROJECTS — PUBLISHED VOLUMES
+   ============================================================= */
+
+.volume-entry {
+  margin-bottom: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border-ink);
+  cursor: pointer;
+}
+
+.volume-entry:last-child {
+  border-bottom: none;
+}
+
+.volume-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.volume-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink-primary);
+}
+
+.volume-status {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+
+.volume-tagline {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.83rem;
+  color: var(--accent-rust);
+  margin-bottom: 6px;
+}
+
+.volume-desc {
+  font-family: var(--font-serif);
+  font-size: 0.78rem;
+  line-height: 1.6;
+  color: var(--ink-secondary);
+  margin-bottom: 8px;
+}
+
+.volume-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+/* =============================================================
+   24. CODEX — PHILOSOPHY PAGE
+   ============================================================= */
+
+.codex-entry {
+  margin-bottom: 20px;
+  padding: 16px;
+  border: 1px solid var(--border-ink);
+  border-left: 3px solid var(--accent-rust);
+  background: var(--margin-note-bg);
+}
+
+.codex-label {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-code);
+  margin-bottom: 6px;
+}
+
+.codex-text {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--ink-primary);
+  line-height: 1.6;
+}
+
+.codex-note {
+  font-family: var(--font-serif);
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+  margin-top: 6px;
+  font-style: italic;
+}
+
+/* =============================================================
+   25. RESPONSIVE — MOBILE (PAPERBACK MODE)
+   ============================================================= */
+
+@media (max-width: 768px) {
+  :root {
+    --book-width: 100vw;
+    --book-height: 100vh;
+    --page-width: 100vw;
+    --page-padding: 28px 24px;
+  }
+
+  body { overflow: hidden; }
+
+  .book-container::after { display: none; }
+
+  .book-nav {
+    bottom: 16px;
+    gap: 16px;
+  }
+
+  .toc-panel { width: 100vw; }
+  .edition-toggle { right: 12px; top: 12px; }
+  .bookmark-ribbon { display: none; }
+
+  .chapter-title { font-size: 1.8rem; }
+  .drop-cap::first-letter { font-size: 3.2rem; }
+}
+
+/* =============================================================
+   26. UTILITY CLASSES
+   ============================================================= */
+
+.text-center { text-align: center; }
+.text-left   { text-align: left; }
+.text-right  { text-align: right; }
+
+.mt-1 { margin-top: 8px; }
+.mt-2 { margin-top: 16px; }
+.mt-3 { margin-top: 24px; }
+.mt-4 { margin-top: 32px; }
+
+.mb-1 { margin-bottom: 8px; }
+.mb-2 { margin-bottom: 16px; }
+.mb-3 { margin-bottom: 24px; }
+.mb-4 { margin-bottom: 32px; }
+
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-1 { gap: 8px; }
+.gap-2 { gap: 16px; }
+.flex-1 { flex: 1; }
+
+.overflow-hidden { overflow: hidden; }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
