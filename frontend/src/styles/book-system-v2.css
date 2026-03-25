@@ -253,10 +253,10 @@
   top: 10px;
   bottom: 0;
   width: 1px;
-  background: linear-gradient(to bottom, 
-    var(--accent-rust) 0%, 
-    var(--accent-gold) 50%, 
-    transparent 100%);
+  background: linear-gradient(to bottom,
+      var(--accent-rust) 0%,
+      var(--accent-gold) 50%,
+      transparent 100%);
   opacity: 0.25;
   border-radius: 1px;
 }

@@ -16,7 +16,7 @@ const PageChapter3 = ({ side, pageIndex = 0 }) => {
    */
   if (side === 'left') {
     if (pageIndex === 0) {
-      {/* Spread 5 Left: Title Page */}
+      {/* Spread 5 Left: Title Page */ }
       return (
         <div className="chapter-title-container">
           <div className="chapter-giant-num" aria-hidden="true">
@@ -51,7 +51,7 @@ const PageChapter3 = ({ side, pageIndex = 0 }) => {
     }
 
     if (pageIndex === 1) {
-      {/* Spread 6 Left: Projects 3, 4 */}
+      {/* Spread 6 Left: Projects 3, 4 */ }
       const batch = projectData.slice(2, 4);
       return (
         <div className="page-flex-col">
@@ -63,7 +63,7 @@ const PageChapter3 = ({ side, pageIndex = 0 }) => {
     }
 
     if (pageIndex === 2) {
-      {/* Spread 7 Left: Projects 7, 8 */}
+      {/* Spread 7 Left: Projects 7, 8 */ }
       const batch = projectData.slice(6, 8);
       return (
         <div className="page-flex-col">
@@ -75,7 +75,7 @@ const PageChapter3 = ({ side, pageIndex = 0 }) => {
     }
 
     if (pageIndex === 3) {
-      {/* Spread 8 Left: Projects 11, 12 */}
+      {/* Spread 8 Left: Projects 11, 12 */ }
       const batch = projectData.slice(10, 12);
       return (
         <div className="page-flex-col">
@@ -91,7 +91,7 @@ const PageChapter3 = ({ side, pageIndex = 0 }) => {
    * Handle Right Page rendering.
    */
   if (pageIndex === 0) {
-    {/* Spread 5 Right: Projects 1, 2 */}
+    {/* Spread 5 Right: Projects 1, 2 */ }
     const batch = projectData.slice(0, 2);
     return (
       <div className="page-flex-col">
@@ -103,7 +103,7 @@ const PageChapter3 = ({ side, pageIndex = 0 }) => {
   }
 
   if (pageIndex === 1) {
-    {/* Spread 6 Right: Projects 5, 6 */}
+    {/* Spread 6 Right: Projects 5, 6 */ }
     const batch = projectData.slice(4, 6);
     return (
       <div className="page-flex-col">
@@ -115,7 +115,7 @@ const PageChapter3 = ({ side, pageIndex = 0 }) => {
   }
 
   if (pageIndex === 2) {
-    {/* Spread 7 Right: Projects 9, 10 */}
+    {/* Spread 7 Right: Projects 9, 10 */ }
     const batch = projectData.slice(8, 10);
     return (
       <div className="page-flex-col">
@@ -127,7 +127,7 @@ const PageChapter3 = ({ side, pageIndex = 0 }) => {
   }
 
   if (pageIndex === 3) {
-    {/* Spread 8 Right: Empty (Project 13+ if added) */}
+    {/* Spread 8 Right: Empty (Project 13+ if added) */ }
     const batch = projectData.slice(12, 14);
     if (batch.length === 0) return <div className="page-empty" />;
     return (
