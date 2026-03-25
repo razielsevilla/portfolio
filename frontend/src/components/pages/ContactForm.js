@@ -6,10 +6,6 @@ import PaperAirplane from './PaperAirplane';
 
 const { email } = contactData;
 
-/**
- * ContactForm component — Handles the message-sending logic and UI.
- * Features an animated transition between writing, sending, and success states.
- */
 const ContactForm = () => {
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');

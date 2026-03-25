@@ -22,4 +22,4 @@ The portfolio is designed as a digital manuscript that chronicles a professional
 3. Install dependencies: `npm install`.
 4. Start the development server: `npm start`.
 
-Refer to **[MAINTENANCE.md](./MAINTENANCE.md)** for instructions on how to scale and update your content.
+Refer to **[MAINTENANCE.md](./MAINTENANCE.md)** for instructions on how to scale and update the content.

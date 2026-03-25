@@ -17,7 +17,7 @@ const PageChapter2 = ({ side, pageIndex = 0 }) => {
    */
   if (side === 'left') {
     if (pageIndex === 0) {
-      // Title page (Spread 3 Left)
+      {/* Title page (Spread 3 Left) */}
       return (
         <div className="chapter-title-container-skills">
           <p className="chapter-label">Chapter II</p>
@@ -57,7 +57,7 @@ const PageChapter2 = ({ side, pageIndex = 0 }) => {
       );
     }
 
-    // Spread 4 Left (Page 9): Extended Skills
+    {/* Spread 4 Left (Page 9): Extended Skills */}
     const extCat = skillsData.filter((c) => c.tier === 'extended');
     return (
       <div className="pillar-category-container">
@@ -72,7 +72,7 @@ const PageChapter2 = ({ side, pageIndex = 0 }) => {
    * Handle Right Page rendering.
    */
   if (pageIndex === 0) {
-    // Spread 3 Right (Page 8): Core Skills
+    {/* Spread 3 Right (Page 8): Core Skills */}
     const coreCat = skillsData.filter((c) => c.tier === 'core');
     return (
       <div className="pillar-category-container">
@@ -83,7 +83,7 @@ const PageChapter2 = ({ side, pageIndex = 0 }) => {
     );
   }
 
-  // Spread 4 Right (Page 10): Frontier Skills
+  {/* Spread 4 Right (Page 10): Frontier Skills */}
   const rsCat = skillsData.filter((c) => c.tier === 'research');
   return (
     <div className="pillar-category-container">

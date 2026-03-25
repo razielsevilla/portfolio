@@ -16,7 +16,7 @@ const PageChapter1 = ({ side, pageIndex = 0 }) => {
    */
   if (side === 'left') {
     if (pageIndex === 0) {
-      // Title page (Spread 1 Left)
+      {/* Title page (Spread 1 Left) */}
       return (
         <div className="chapter-title-container">
           <div className="chapter-giant-num" aria-hidden="true">
@@ -48,7 +48,7 @@ const PageChapter1 = ({ side, pageIndex = 0 }) => {
       );
     }
 
-    // Spread 2 Left: jobs 2, 3 (VCRO, 1st Yr Rep)
+    {/* Spread 2 Left: jobs 2, 3 (VCRO, 1st Yr Rep) */}
     const batch = experienceData.slice(2, 4);
     return (
       <div className="page-flex-col">
