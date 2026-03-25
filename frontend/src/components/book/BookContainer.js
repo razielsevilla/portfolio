@@ -1,181 +1,94 @@
-// src/components/book/BookContainer.js
-// Central page-flip engine wrapping react-pageflip's HTMLFlipBook.
-// Supports multi-page chapters: each chapter can span multiple spreads.
-// Navigation tracks spreads; ToC jumps to a chapter's first spread.
-
-import React, { useRef, useState, useEffect, useCallback, forwardRef } from 'react';
+import React, {
+  useRef,
+  useState,
+  useEffect,
+  useCallback,
+  forwardRef,
+  useImperativeHandle,
+} from 'react';
 import HTMLFlipBook from 'react-pageflip';
 import InkCodeReveal from './InkCodeReveal';
-import SpineRibbon   from './SpineRibbon';
+import SpineRibbon from './SpineRibbon';
 import { RunningHeader, PageNum } from './Page';
+import { SPREADS } from '../../data/spreads';
+import { BOOK_CONFIG } from '../../constants';
+import usePageSound from '../../hooks/usePageSound';
 
-// Chapter page imports
-import PageForeword    from '../pages/PageForeword';
-import PageChapter1    from '../pages/PageChapter1';
-import PageChapter2    from '../pages/PageChapter2';
-import PageChapter3    from '../pages/PageChapter3';
-import PageInvitation  from '../pages/PageInvitation';
-
-// Page-turn sound (loaded lazily)
-let pageTurnAudio = null;
-const getAudio = () => {
-  if (!pageTurnAudio) {
-    pageTurnAudio = new Audio('/sounds/page-turn.mp3');
-    pageTurnAudio.volume = 0.45;
-  }
-  return pageTurnAudio;
-};
-
-// ── 18-PAGE (9-SPREAD) MANIFEST ──────────────────────────────────
-export const SPREADS = [
-  // Spread 0 (Pages 1 & 2)
-  {
-    key:        'foreword-0',
-    chapter:    'foreword',
-    pageIndex:  0,
-    navLabel:   'Foreword',
-    chapterLabel: 'Foreword',
-    Component:  PageForeword,
-    isChapterStart: true,
-  },
-
-  // Spread 1 (Pages 3 & 4)
-  {
-    key:        'chapter1-0',
-    chapter:    'chapter1',
-    pageIndex:  0,
-    navLabel:   'The Story So Far',
-    chapterLabel: 'Chapter I',
-    Component:  PageChapter1,
-    isChapterStart: true,
-  },
-  // Spread 2 (Pages 5 & 6)
-  {
-    key:        'chapter1-1',
-    chapter:    'chapter1',
-    pageIndex:  1,
-    navLabel:   'The Story So Far',
-    chapterLabel: 'Chapter I — cont.',
-    Component:  PageChapter1,
-    isChapterStart: false,
-  },
-
-  // Spread 3 (Pages 7 & 8)
-  {
-    key:        'chapter2-0',
-    chapter:    'chapter2',
-    pageIndex:  0,
-    navLabel:   'Tools of the Trade',
-    chapterLabel: 'Chapter II',
-    Component:  PageChapter2,
-    isChapterStart: true,
-  },
-  // Spread 4 (Pages 9 & 10)
-  {
-    key:        'chapter2-1',
-    chapter:    'chapter2',
-    pageIndex:  1,
-    navLabel:   'Tools of the Trade',
-    chapterLabel: 'Chapter II — cont.',
-    Component:  PageChapter2,
-    isChapterStart: false,
-  },
-
-  // Spread 5 (Pages 11 & 12)
-  {
-    key:        'chapter3-0',
-    chapter:    'chapter3',
-    pageIndex:  0,
-    navLabel:   'Works Published',
-    chapterLabel: 'Chapter III',
-    Component:  PageChapter3,
-    isChapterStart: true,
-  },
-  // Spread 6 (Pages 13 & 14)
-  {
-    key:        'chapter3-1',
-    chapter:    'chapter3',
-    pageIndex:  1,
-    navLabel:   'Works Published',
-    chapterLabel: 'Chapter III — cont.',
-    Component:  PageChapter3,
-    isChapterStart: false,
-  },
-  // Spread 7 (Pages 15 & 16)
-  {
-    key:        'chapter3-2',
-    chapter:    'chapter3',
-    pageIndex:  2,
-    navLabel:   'Works Published',
-    chapterLabel: 'Chapter III — cont.',
-    Component:  PageChapter3,
-    isChapterStart: false,
-  },
-
-  // Spread 8 (Pages 17 & 18)
-  {
-    key:        'invitation-0',
-    chapter:    'invitation',
-    pageIndex:  0,
-    navLabel:   'The Next Chapter',
-    chapterLabel: 'Chapter IV — Open',
-    Component:  PageInvitation,
-    isChapterStart: true,
-  },
-];
-
-// Chapter-start spread index for ToC navigation
-export const CHAPTER_FIRST_SPREAD = SPREADS.reduce((acc, s, i) => {
-  if (s.isChapterStart) acc[s.chapter] = i;
-  return acc;
-}, {});
-
-/** Wrapper that react-pageflip can attach refs to */
+/**
+ * FlipPage component to wrap book pages for react-pageflip.
+ * Uses forwardRef to allow the flip engine to attach directly to the DOM element.
+ */
 const FlipPage = forwardRef(({ children, className }, ref) => (
-  <div ref={ref} className={className}>{children}</div>
+  <div ref={ref} className={className}>
+    {children}
+  </div>
 ));
 FlipPage.displayName = 'FlipPage';
 
-const BookContainer = ({ onSpreadChange }) => {
-  const bookRef        = useRef(null);
+/**
+ * Central page-flip engine wrapping react-pageflip's HTMLFlipBook.
+ * Manages the book's state, navigation, and rendering of spreads.
+ *
+ * @param {Object} props - Component props.
+ * @param {Function} props.onSpreadChange - Callback fired when the current spread changes.
+ * @param {React.Ref} ref - Ref to expose imperative methods (e.g., goToSpread).
+ */
+const BookContainer = forwardRef(({ onSpreadChange }, ref) => {
+  const bookRef = useRef(null);
   const [currentSpread, setCurrentSpread] = useState(0);
-  const [revealing,    setRevealing]      = useState(false);
-  const totalSpreads   = SPREADS.length;
+  const [revealing, setRevealing] = useState(false);
+  const playPageSound = usePageSound();
 
-  const handleFlip = useCallback((e) => {
-    const pageIdx   = e.data;
-    const newSpread = Math.floor(pageIdx / 2);
-    setCurrentSpread(newSpread);
-    onSpreadChange && onSpreadChange(newSpread);
+  const totalSpreads = SPREADS.length;
 
-    // Play sound
-    try { getAudio().currentTime = 0; getAudio().play().catch(() => {}); } catch {}
+  /**
+   * Expose the navigation method to parent components safely.
+   */
+  useImperativeHandle(ref, () => ({
+    goToSpread: (idx) => {
+      if (bookRef.current) {
+        bookRef.current.pageFlip().flip(idx * 2);
+      }
+    },
+    nextPage: () => bookRef.current?.pageFlip().flipNext(),
+    prevPage: () => bookRef.current?.pageFlip().flipPrev(),
+  }));
 
-    // Fire ink-code reveal
-    setRevealing(true);
-  }, [onSpreadChange]);
+  /**
+   * Handles the page flip event from the engine.
+   */
+  const handleFlip = useCallback(
+    (e) => {
+      const pageIdx = e.data;
+      const newSpread = Math.floor(pageIdx / 2);
+      setCurrentSpread(newSpread);
+      if (onSpreadChange) onSpreadChange(newSpread);
+
+      playPageSound();
+      setRevealing(true);
+    },
+    [onSpreadChange, playPageSound]
+  );
 
   const handleRevealDone = useCallback(() => setRevealing(false), []);
 
-  const goToSpread = useCallback((idx) => {
-    if (!bookRef.current) return;
-    bookRef.current.pageFlip().flip(idx * 2);
-  }, []);
-
-  useEffect(() => { window.__bookGoToSpread = goToSpread; }, [goToSpread]);
-
+  /**
+   * Keyboard navigation effect.
+   */
   useEffect(() => {
-    const onKey = (e) => {
-      if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') return;
+    const handleKeyDown = (e) => {
+      const isInput = e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT';
+      if (isInput) return;
+
       if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
         bookRef.current?.pageFlip().flipNext();
-      }
-      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
         bookRef.current?.pageFlip().flipPrev();
       }
     };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
   const progress = (currentSpread / (totalSpreads - 1)) * 100;
@@ -192,38 +105,37 @@ const BookContainer = ({ onSpreadChange }) => {
 
       <HTMLFlipBook
         ref={bookRef}
-        width={550}
-        height={720}
+        width={BOOK_CONFIG.WIDTH}
+        height={BOOK_CONFIG.HEIGHT}
         size="fixed"
-        minWidth={320}
-        maxWidth={600}
-        minHeight={480}
-        maxHeight={750}
-        maxShadowOpacity={0.55}
+        minWidth={BOOK_CONFIG.MIN_WIDTH}
+        maxWidth={BOOK_CONFIG.MAX_WIDTH}
+        minHeight={BOOK_CONFIG.MIN_HEIGHT}
+        maxHeight={BOOK_CONFIG.MAX_HEIGHT}
+        maxShadowOpacity={BOOK_CONFIG.SHADOW_OPACITY}
         showCover={false}
         mobileScrollSupport={true}
         onFlip={handleFlip}
         className="book-flip-root"
-        style={{}}
         startPage={0}
         drawShadow={true}
-        flippingTime={850}
+        flippingTime={BOOK_CONFIG.FLIP_TIME}
         usePortrait={false}
         startZIndex={0}
         autoSize={false}
         clickEventForward={true}
         useMouseEvents={true}
-        swipeDistance={50}
+        swipeDistance={BOOK_CONFIG.SWIPE_DISTANCE}
         showPageCorners={true}
         disableFlipByClick={true}
       >
         {SPREADS.map((spread, idx) => {
-          const { Component, chapterLabel, pageIndex } = spread;
-          const leftPageNum  = idx * 2 + 1;
+          const { Component, chapterLabel, pageIndex, key } = spread;
+          const leftPageNum = idx * 2 + 1;
           const rightPageNum = idx * 2 + 2;
 
           return [
-            <FlipPage key={`${spread.key}-L`} className="book-page paper-texture page-left">
+            <FlipPage key={`${key}-L`} className="book-page paper-texture page-left">
               <div className="book-page-inner">
                 <RunningHeader isLeftPage={true} leftText="Raziel Sevilla" />
                 <div className="page-content-scroll">
@@ -233,7 +145,7 @@ const BookContainer = ({ onSpreadChange }) => {
               </div>
             </FlipPage>,
 
-            <FlipPage key={`${spread.key}-R`} className="book-page paper-texture">
+            <FlipPage key={`${key}-R`} className="book-page paper-texture">
               <div className="book-page-inner">
                 <RunningHeader isLeftPage={false} rightText={chapterLabel} />
                 <div className="page-content-scroll">
@@ -277,7 +189,8 @@ const BookContainer = ({ onSpreadChange }) => {
       </div>
     </div>
   );
-};
+});
 
-export { BookContainer as default };
-export const bookGoToSpread = (idx) => window.__bookGoToSpread?.(idx);
+BookContainer.displayName = 'BookContainer';
+
+export default BookContainer;

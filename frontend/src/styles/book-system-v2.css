@@ -109,6 +109,60 @@
 }
 
 /* =============================================================
+   28b. PAGE LAYOUT UTILITIES
+   ============================================================= */
+
+.page-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex: 1;
+}
+
+.page-pt-60 { padding-top: 60px; }
+.page-pt-25 { padding-top: 25px; }
+
+.page-footer {
+  margin-top: auto;
+  padding: 10px 0;
+  border-top: 1px solid var(--border-ink);
+  text-align: left;
+  width: 100%;
+}
+
+.signature-section {
+  margin-top: 15px;
+  text-align: right;
+  padding-right: 10px;
+}
+
+.seal-container {
+  display: inline-block;
+  text-align: center;
+}
+
+.seal-btn {
+  background: var(--accent-rust);
+  color: var(--bg-page);
+  border: 1px solid var(--accent-rust);
+  box-shadow: 0 4px 12px rgba(139, 69, 19, 0.15);
+  padding: 8px 20px;
+  font-size: 0.65rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 1px;
+}
+
+.seal-btn:hover {
+  filter: brightness(1.1);
+  color: #fff;
+}
+
+/* =============================================================
    29. STRONGER VISUAL EMPHASIS & HOOKS — Issue #1
    ============================================================= */
 
@@ -189,6 +243,63 @@
   background: var(--accent-rust);
   margin: 10px auto 0;
   border-radius: 1px;
+}
+
+/* Skills / Pillar Categories */
+.pillar-category-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+}
+
+.pillar-tier-badge {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  margin-right: 8px;
+}
+
+.pillar-tag-new {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-left-width: 3px;
+  border-left-style: solid;
+  padding-left: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--ink-secondary);
+}
+
+.pillar-yoe {
+  font-size: 0.52rem;
+  opacity: 0.6;
+}
+
+.tier-legend-container {
+  margin-top: auto;
+  width: 100%;
+  padding: 12px 0;
+  border-top: 1px solid var(--border-ink);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tier-legend-item {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  text-align: left;
+}
+
+.chapter-title-container-skills {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  text-align: center;
+  gap: 10px;
 }
 
 /* Foreword name emphasis */
@@ -300,6 +411,97 @@
     var(--border-ink-heavy) calc(1.72em - 1px),
     var(--border-ink-heavy) 1.72em
   );
+}
+
+/* Projects / Volume Entries */
+.volume-entry-container {
+  padding-bottom: 14px;
+  margin-bottom: 14px;
+}
+
+.volume-header-flex {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.volume-star {
+  color: var(--accent-gold);
+  margin-right: 4px;
+}
+
+.vellum-overlay-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px;
+}
+
+.volume-preview-img {
+  width: 100%;
+  max-height: 120px;
+  object-fit: contain;
+  border-radius: 4px;
+  border: 1px solid var(--border-ink);
+}
+
+.volume-preview-placeholder {
+  width: 100%;
+  height: 100px;
+  background: var(--bg-page);
+  border: 1px dashed var(--border-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--ink-muted);
+}
+
+.volume-links {
+  display: flex;
+  gap: 16px;
+}
+
+.volume-link-btn {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-decoration: none;
+  background: var(--bg-page);
+  padding: 6px 12px;
+  border-radius: 2px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.volume-link-repo {
+  color: var(--accent-rust);
+  border: 1px solid var(--accent-rust);
+}
+
+.volume-link-repo:hover {
+  background: var(--accent-rust);
+  color: #fff;
+}
+
+.volume-link-live {
+  color: var(--ink-code);
+  border: 1px solid var(--ink-code);
+}
+
+.volume-link-live:hover {
+  background: var(--ink-code);
+  color: #fff;
+}
+
+.volume-desc-container {
+  margin-top: 6px;
+}
+
+.volume-tech-list {
+  margin-top: 6px;
 }
 
 .invitation-send-btn {
@@ -419,4 +621,71 @@
   .foreword-name-display {
     font-size: 1.6rem;
   }
+}
+
+.invitation-social-row {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.invitation-social-link {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-secondary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color var(--transition-smooth);
+}
+
+.invitation-social-link:hover {
+  color: var(--accent-rust);
+}
+
+.form-title-container {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.form-subtitle {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+  margin-top: 4px;
+}
+
+.form-footer-hint {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  color: var(--ink-muted);
+  text-align: center;
+}
+
+.success-reset-btn {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--ink-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-top: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.success-reset-btn:hover {
+  color: var(--accent-rust);
+}
+
+.prose-end-note {
+  margin-top: auto;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.72rem;
+  color: var(--ink-muted);
+  text-align: center;
 }

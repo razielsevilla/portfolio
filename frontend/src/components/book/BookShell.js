@@ -1,53 +1,79 @@
-// src/components/book/BookShell.js
-// Root wrapper for the entire Living Codex experience.
-// Manages: edition (day/night), ToC visibility, cover state,
-// and passes spread index down to BookmarkRibbon for active ToC item.
-
-import React, { useState, useCallback, useEffect } from 'react';
-import BookCover       from './BookCover';
-import BookContainer, { bookGoToSpread } from './BookContainer';
-import EditionToggle   from './EditionToggle';
-import BookmarkRibbon  from './BookmarkRibbon';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
+import BookCover from './BookCover';
+import BookContainer from './BookContainer';
+import EditionToggle from './EditionToggle';
+import BookmarkRibbon from './BookmarkRibbon';
 import TableOfContents from './TableOfContents';
+import { EDITIONS, STORAGE_KEYS } from '../../constants';
 
+/**
+ * Root wrapper for the entire Living Codex experience.
+ * Manages global application state: edition (day/night), ToC visibility,
+ * and handles navigation through the BookContainer ref.
+ */
 const BookShell = () => {
-  const [loaded,       setLoaded]       = useState(false);   // cover done
-  const [edition,      setEdition]      = useState('day');   // 'day' | 'night'
-  const [tocOpen,      setTocOpen]      = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const [edition, setEdition] = useState(EDITIONS.DAY);
+  const [tocOpen, setTocOpen] = useState(false);
   const [currentSpread, setCurrentSpread] = useState(0);
 
-  // Persist edition preference
+  const bookRef = useRef(null);
+
+  /**
+   * Persist edition preference on mount.
+   */
   useEffect(() => {
-    const saved = localStorage.getItem('codex-edition');
-    if (saved === 'day' || saved === 'night') setEdition(saved);
+    const saved = localStorage.getItem(STORAGE_KEYS.EDITION);
+    if (saved === EDITIONS.DAY || saved === EDITIONS.NIGHT) {
+      setEdition(saved);
+    }
   }, []);
 
-  // Apply edition to <html> so all CSS vars react
+  /**
+   * Apply edition to <html> and localStorage when it changes.
+   */
   useEffect(() => {
     document.documentElement.setAttribute('data-edition', edition);
-    localStorage.setItem('codex-edition', edition);
+    localStorage.setItem(STORAGE_KEYS.EDITION, edition);
   }, [edition]);
 
+  /**
+   * Toggles between day and night editions.
+   */
   const toggleEdition = useCallback(() => {
-    setEdition(prev => prev === 'day' ? 'night' : 'day');
+    setEdition((prev) => (prev === EDITIONS.DAY ? EDITIONS.NIGHT : EDITIONS.DAY));
   }, []);
 
+  /**
+   * Handles navigation to a specific spread using the BookContainer ref.
+   *
+   * @param {number} spreadIdx - The index of the spread to navigate to.
+   */
   const handleNavigate = useCallback((spreadIdx) => {
-    bookGoToSpread(spreadIdx);
+    if (bookRef.current) {
+      bookRef.current.goToSpread(spreadIdx);
+    }
     setCurrentSpread(spreadIdx);
+    setTocOpen(false); // Close ToC after navigation
   }, []);
 
   return (
     <div className="book-shell" data-edition={edition}>
       {/* Book cover preloader — shows until loaded */}
-      {!loaded && (
-        <BookCover onComplete={() => setLoaded(true)} />
-      )}
+      {!loaded && <BookCover onComplete={() => setLoaded(true)} />}
 
-      {/* Main book — always mounted so react-pageflip initialises */}
-      <div style={{ visibility: loaded ? 'visible' : 'hidden', width: '100%', height: '100%',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <BookContainer onSpreadChange={setCurrentSpread} />
+      {/* Main book — always mounted for flip-engine initialization */}
+      <div
+        style={{
+          visibility: loaded ? 'visible' : 'hidden',
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <BookContainer ref={bookRef} onSpreadChange={setCurrentSpread} />
       </div>
 
       {/* Fixed chrome — only visible once cover is gone */}

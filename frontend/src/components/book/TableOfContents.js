@@ -1,54 +1,71 @@
-// src/components/book/TableOfContents.js
 import React from 'react';
-import { CHAPTER_FIRST_SPREAD } from './BookContainer';
+import { CHAPTER_FIRST_SPREAD } from '../../data/spreads';
 
-const TOC_ITEMS = [
-  {
-    chapter: 'foreword',
-    num: '00',
-    title: 'Foreword',
-    tagline: 'A Note from the Author'
-  },
-  {
-    chapter: 'chapter1',
-    num: 'I',
-    title: 'The Story So Far',
-    tagline: 'Experience & Milestones'
-  },
-  {
-    chapter: 'chapter2',
-    num: 'II',
-    title: 'Tools of the Trade',
-    tagline: 'Skills & Pillars'
-  },
-  {
-    chapter: 'chapter3',
-    num: 'III',
-    title: 'Works Published',
-    tagline: 'Projects & Prototypes'
-  },
-  {
-    chapter: 'invitation',
-    num: 'IV',
-    title: 'The Next Chapter',
-    tagline: 'An Open Invitation'
-  }
-];
+/**
+ * TableOfContents component — A slide-over drawer for site-wide navigation.
+ * Displays a list of chapters and handles navigation jumps via the onNavigate prop.
+ *
+ * @param {Object} props - Component props.
+ * @param {boolean} props.isOpen - Whether the ToC drawer is visible.
+ * @param {Function} props.onClose - Callback to close the drawer.
+ * @param {number} props.currentSpread - The index of the currently active spread.
+ * @param {Function} props.onNavigate - Callback to trigger navigation to a spread index.
+ */
+const TableOfContents = ({ isOpen, onClose, currentSpread = 0, onNavigate }) => {
+  const TOC_ITEMS = [
+    {
+      chapter: 'foreword',
+      num: '00',
+      title: 'Foreword',
+      tagline: 'A Note from the Author',
+    },
+    {
+      chapter: 'chapter1',
+      num: 'I',
+      title: 'The Story So Far',
+      tagline: 'Experience & Milestones',
+    },
+    {
+      chapter: 'chapter2',
+      num: 'II',
+      title: 'Tools of the Trade',
+      tagline: 'Skills & Pillars',
+    },
+    {
+      chapter: 'chapter3',
+      num: 'III',
+      title: 'Works Published',
+      tagline: 'Projects & Prototypes',
+    },
+    {
+      chapter: 'invitation',
+      num: 'IV',
+      title: 'The Next Chapter',
+      tagline: 'An Open Invitation',
+    },
+  ];
 
-const TableOfContents = ({ isOpen, onClose, currentSpreadKey = 'foreword' }) => {
+  /**
+   * Triggers navigation to the first spread of a specific chapter.
+   *
+   * @param {string} chapterKey - The key of the chapter to jump to.
+   */
   const handleJump = (chapterKey) => {
     const spreadIdx = CHAPTER_FIRST_SPREAD[chapterKey];
-    if (spreadIdx !== undefined && window.__bookGoToSpread) {
-      window.__bookGoToSpread(spreadIdx);
+    if (spreadIdx !== undefined && onNavigate) {
+      onNavigate(spreadIdx);
     }
-    // Always close ToC upon jumping
     onClose();
   };
 
   return (
     <>
-      <div className={`toc-backdrop ${isOpen ? 'open' : ''}`} onClick={onClose} aria-hidden="true" />
-      
+      <div
+        className={`toc-backdrop ${isOpen ? 'open' : ''}`}
+        onClick={onClose}
+        aria-hidden="true"
+      />
+
       <aside className={`toc-drawer ${isOpen ? 'open' : ''}`} aria-label="Table of Contents">
         <header className="toc-header">
           <h2 className="toc-title">Table of Contents</h2>
@@ -60,12 +77,12 @@ const TableOfContents = ({ isOpen, onClose, currentSpreadKey = 'foreword' }) => 
           <ul className="toc-list">
             {TOC_ITEMS.map((item) => {
               const spreadIdx = CHAPTER_FIRST_SPREAD[item.chapter];
-              const pageNum   = spreadIdx !== undefined ? (spreadIdx * 2 + 1) : '';
-              const isActive  = currentSpreadKey === item.chapter;
+              const pageNum = spreadIdx !== undefined ? spreadIdx * 2 + 1 : '';
+              const isActive = currentSpread === spreadIdx;
 
               return (
                 <li key={item.chapter}>
-                  <button 
+                  <button
                     className={`toc-item ${isActive ? 'active' : ''}`}
                     onClick={() => handleJump(item.chapter)}
                   >
