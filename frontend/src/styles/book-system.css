@@ -12,40 +12,43 @@
 
 :root {
   /* ══ DAY EDITION — "Alabaster Library" ══ */
-  --bg-page:          #F4F2EE;  /* Cool off-white, hint of blue-grey */
-  --bg-page-left:     #ECEAE5;  /* Slightly cooler companion */
-  --bg-cover:         #2A1F14;
-  --ink-primary:      #18181A;
-  --ink-secondary:    #44403C;
-  --ink-muted:        #92877A;
-  --ink-code:         #7C3A1E;
-  --ink-gold:         #976114;
-  --accent-rust:      #8B4513;
-  --accent-sienna:    #9D4E22;
-  --accent-gold:      #C9A450;
-  --accent-cyan:      #0E7490;  /* Interactive accent for day mode */
-  --border-ink:       rgba(24, 24, 26, 0.13);
+  --bg-page: #F4F2EE;
+  /* Cool off-white, hint of blue-grey */
+  --bg-page-left: #ECEAE5;
+  /* Slightly cooler companion */
+  --bg-cover: #2A1F14;
+  --ink-primary: #18181A;
+  --ink-secondary: #44403C;
+  --ink-muted: #92877A;
+  --ink-code: #7C3A1E;
+  --ink-gold: #976114;
+  --accent-rust: #8B4513;
+  --accent-sienna: #9D4E22;
+  --accent-gold: #C9A450;
+  --accent-cyan: #0E7490;
+  /* Interactive accent for day mode */
+  --border-ink: rgba(24, 24, 26, 0.13);
   --border-ink-heavy: rgba(24, 24, 26, 0.30);
-  --shadow-page:      rgba(24, 24, 26, 0.14);
-  --shadow-book:      rgba(24, 24, 26, 0.32);
-  --glitch-color-1:   #00ff41;
-  --glitch-color-2:   #ff003c;
-  --margin-note-bg:   rgba(139, 69, 19, 0.055);
-  --spine-color:      #1C1208;
+  --shadow-page: rgba(24, 24, 26, 0.14);
+  --shadow-book: rgba(24, 24, 26, 0.32);
+  --glitch-color-1: #00ff41;
+  --glitch-color-2: #ff003c;
+  --margin-note-bg: rgba(139, 69, 19, 0.055);
+  --spine-color: #1C1208;
   /* Page grid overlay color */
-  --grid-line:        rgba(24, 24, 26, 0.045);
+  --grid-line: rgba(24, 24, 26, 0.045);
 
   /* ══ Typography ══ */
-  --font-serif:       'EB Garamond', Georgia, serif;
-  --font-display:     'Playfair Display', 'Times New Roman', serif;
-  --font-mono:        'JetBrains Mono', 'Courier New', monospace;
+  --font-serif: 'EB Garamond', Georgia, serif;
+  --font-display: 'Playfair Display', 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
 
   /* ══ Sizing ══ */
-  --book-width:       1100px;
-  --book-height:      720px;
-  --page-width:       550px;
-  --page-padding:     52px 56px;
-  --page-padding-sm:  36px 32px;
+  --book-width: 1100px;
+  --book-height: 720px;
+  --page-width: 550px;
+  --page-padding: 52px 56px;
+  --page-padding-sm: 36px 32px;
 
   /* ══ Transitions ══ */
   --transition-smooth: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
@@ -54,25 +57,33 @@
 
 /* ══ NIGHT EDITION — "Obsidian Terminal" ══ */
 [data-edition="night"] {
-  --bg-page:          #080809;  /* Near-true black with blue cast — kills the brown */
-  --bg-page-left:     #0C0C0F;  /* Deep midnight blue */
-  --bg-cover:         #050508;
-  --ink-primary:      #E2DBD0;
-  --ink-secondary:    #B8AF9E;
-  --ink-muted:        #6A6259;
-  --ink-code:         #7CFC8A;  /* Terminal green — keep */
-  --ink-gold:         #F5B731;  /* Neon Amber — pops on dark background */
-  --accent-rust:      #00D4FF;  /* Cyan replaces rust for interactive elements */
-  --accent-sienna:    #00BFDF;
-  --accent-gold:      #F5B731;  /* Neon Amber glow */
-  --accent-cyan:      #00D4FF;
-  --border-ink:       rgba(226, 219, 208, 0.10);
+  --bg-page: #080809;
+  /* Near-true black */
+  --bg-page-left: #0C0C0C;
+  /* Deep charcoal */
+  --bg-cover: #050505;
+  --ink-primary: #E2DBD0;
+  --ink-secondary: #B8AF9E;
+  --ink-muted: #6A6259;
+  --ink-code: #7CFC8A;
+  /* Terminal green — keep */
+  --ink-gold: #F5B731;
+  /* Neon Amber — pops on dark background */
+  --accent-rust: #CC7B32;
+  /* Warm rust-amber replaces cyan */
+  --accent-sienna: #B35E1C;
+  --accent-gold: #F5B731;
+  /* Neon Amber glow */
+  --accent-cyan: #F5B731;
+  /* Use amber instead of cyan */
+  --border-ink: rgba(226, 219, 208, 0.10);
   --border-ink-heavy: rgba(226, 219, 208, 0.22);
-  --shadow-page:      rgba(0, 0, 0, 0.55);
-  --shadow-book:      rgba(0, 0, 0, 0.80);
-  --margin-note-bg:   rgba(124, 252, 138, 0.05);
-  --spine-color:      #030305;
-  --grid-line:        rgba(0, 212, 255, 0.04);  /* Cyan tint grid in night mode */
+  --shadow-page: rgba(0, 0, 0, 0.55);
+  --shadow-book: rgba(0, 0, 0, 0.80);
+  --margin-note-bg: rgba(124, 252, 138, 0.05);
+  --spine-color: #030303;
+  --grid-line: rgba(245, 183, 49, 0.04);
+  /* Amber tint grid in night mode */
 }
 
 
@@ -100,7 +111,9 @@
    2. GLOBAL RESET & BASE
    ============================================================= */
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -117,7 +130,8 @@ body {
   font-family: var(--font-serif);
   background-color: var(--bg-cover);
   color: var(--ink-primary);
-  overflow: hidden;       /* book fills viewport */
+  overflow: hidden;
+  /* book fills viewport */
   height: 100vh;
   width: 100vw;
 }
@@ -172,20 +186,16 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(
-    ellipse 70% 60% at 50% 50%,
-    rgba(151, 97, 20, 0.10) 0%,
-    transparent 70%
-  );
+  background: radial-gradient(ellipse 70% 60% at 50% 50%,
+      rgba(151, 97, 20, 0.10) 0%,
+      transparent 70%);
   pointer-events: none;
 }
 
 [data-edition="night"] .book-shell::before {
-  background: radial-gradient(
-    ellipse 70% 60% at 50% 50%,
-    rgba(0, 120, 180, 0.09) 0%,
-    transparent 70%
-  );
+  background: radial-gradient(ellipse 70% 60% at 50% 50%,
+      rgba(151, 97, 20, 0.07) 0%,
+      transparent 70%);
 }
 
 /* =============================================================
@@ -207,14 +217,12 @@ body {
   transform: translateX(-50%);
   width: 4px;
   height: 100%;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(0, 0, 0, 0.2) 30%,
-    rgba(0, 0, 0, 0.35) 50%,
-    rgba(0, 0, 0, 0.2) 70%,
-    transparent
-  );
+  background: linear-gradient(to right,
+      transparent,
+      rgba(0, 0, 0, 0.2) 30%,
+      rgba(0, 0, 0, 0.35) 50%,
+      rgba(0, 0, 0, 0.2) 70%,
+      transparent);
   pointer-events: none;
   z-index: 50;
 }
@@ -246,20 +254,16 @@ body {
   pointer-events: none;
   z-index: 3;
   background-image:
-    repeating-linear-gradient(
-      0deg,
+    repeating-linear-gradient(0deg,
       var(--grid-line) 0px,
       var(--grid-line) 1px,
       transparent 1px,
-      transparent 40px
-    ),
-    repeating-linear-gradient(
-      90deg,
+      transparent 40px),
+    repeating-linear-gradient(90deg,
       var(--grid-line) 0px,
       var(--grid-line) 1px,
       transparent 1px,
-      transparent 40px
-    );
+      transparent 40px);
 }
 
 .book-page-inner {
@@ -300,8 +304,13 @@ body {
   color: var(--ink-muted);
 }
 
-.running-header-left  { text-align: left; }
-.running-header-right { text-align: right; }
+.running-header-left {
+  text-align: left;
+}
+
+.running-header-right {
+  text-align: right;
+}
 
 .running-header-center {
   font-family: var(--font-display);
@@ -329,8 +338,13 @@ body {
   margin-top: auto;
 }
 
-.page-number::before { content: '— '; }
-.page-number::after  { content: ' —'; }
+.page-number::before {
+  content: '— ';
+}
+
+.page-number::after {
+  content: ' —';
+}
 
 /* =============================================================
    9. CHAPTER TYPOGRAPHY
@@ -439,7 +453,7 @@ body {
   hyphens: auto;
 }
 
-.prose p + p {
+.prose p+p {
   text-indent: 1.5em;
 }
 
@@ -469,7 +483,8 @@ body {
 }
 
 [data-edition="night"] .code-tag {
-  color: var(--ink-code);  /* terminal green in night */
+  color: var(--ink-code);
+  /* terminal green in night */
   background: rgba(124, 252, 138, 0.08);
   border-color: rgba(124, 252, 138, 0.2);
 }
@@ -606,7 +621,8 @@ body {
 
 .bookmark-ribbon {
   position: absolute;
-  right: -24px; /* Peaks out from the book edge */
+  right: -24px;
+  /* Peaks out from the book edge */
   top: 60px;
   z-index: 200;
   cursor: pointer;
@@ -629,7 +645,7 @@ body {
   align-items: center;
   gap: 8px;
   transition: width var(--transition-smooth), background var(--transition-smooth);
-  box-shadow: -2px 0 12px rgba(0,0,0,0.2);
+  box-shadow: -2px 0 12px rgba(0, 0, 0, 0.2);
 }
 
 .bookmark-ribbon:hover .bookmark-ribbon-body {
@@ -686,12 +702,13 @@ body {
 .toc-ribbon {
   position: fixed;
   right: 50px;
-  top: -100%; /* Hidden above */
+  top: -100%;
+  /* Hidden above */
   width: 260px;
   max-height: 85vh;
   background: var(--bg-page);
   border: 1px solid var(--border-ink-heavy);
-  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
   z-index: 310;
   display: flex;
   flex-direction: column;
@@ -709,7 +726,8 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: var(--paper-noise); /* If defined, or use raw SVG */
+  background-image: var(--paper-noise);
+  /* If defined, or use raw SVG */
   opacity: 0.04;
   pointer-events: none;
 }
@@ -785,7 +803,8 @@ body {
   border: none;
   border-bottom: 1px solid var(--border-ink);
   display: flex;
-  align-items: center; /* switched to center for better layout with tagline */
+  align-items: center;
+  /* switched to center for better layout with tagline */
   gap: 12px;
   padding: 12px 4px;
   width: 100%;
@@ -940,13 +959,11 @@ body {
 .glitch-scanline {
   position: absolute;
   inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0, 255, 65, 0.03) 2px,
-    rgba(0, 255, 65, 0.03) 4px
-  );
+  background: repeating-linear-gradient(0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 255, 65, 0.03) 2px,
+      rgba(0, 255, 65, 0.03) 4px);
   opacity: 0;
 }
 
@@ -1000,20 +1017,16 @@ body {
   position: absolute;
   inset: 0;
   background:
-    repeating-linear-gradient(
-      90deg,
+    repeating-linear-gradient(90deg,
       transparent,
       transparent 8px,
-      rgba(255,255,255,0.012) 8px,
-      rgba(255,255,255,0.012) 9px
-    ),
-    repeating-linear-gradient(
-      0deg,
+      rgba(255, 255, 255, 0.012) 8px,
+      rgba(255, 255, 255, 0.012) 9px),
+    repeating-linear-gradient(0deg,
       transparent,
       transparent 8px,
-      rgba(255,255,255,0.008) 8px,
-      rgba(255,255,255,0.008) 9px
-    );
+      rgba(255, 255, 255, 0.008) 8px,
+      rgba(255, 255, 255, 0.008) 9px);
   border-radius: inherit;
 }
 
@@ -1309,11 +1322,18 @@ body {
 }
 
 /* Keep legacy classes as no-ops to avoid errors if referenced anywhere */
-.skill-category     { margin-bottom: 20px; }
-.skill-category-label { display: none; }
+.skill-category {
+  margin-bottom: 20px;
+}
+
+.skill-category-label {
+  display: none;
+}
+
 .skill-item {
   scrollbar-width: none;
 }
+
 .page-content-scroll::-webkit-scrollbar {
   display: none;
 }
@@ -1328,7 +1348,8 @@ body {
 
 .page-number {
   position: absolute;
-  bottom: 15px; /* anchoring page number at the footer */
+  bottom: 15px;
+  /* anchoring page number at the footer */
   left: 0;
   width: 100%;
   text-align: center;
@@ -1339,11 +1360,25 @@ body {
 }
 
 /* --------------- CHAPTER TITLES ---------------- */
-.skill-bar-track    { display: none; }
-.skill-bar-fill     { display: none; }
-.skill-pct          { display: none; }
-.experience-tags    { display: none; }
-.project-links      { display: none; }
+.skill-bar-track {
+  display: none;
+}
+
+.skill-bar-fill {
+  display: none;
+}
+
+.skill-pct {
+  display: none;
+}
+
+.experience-tags {
+  display: none;
+}
+
+.project-links {
+  display: none;
+}
 
 /* --------------- INVITATION FORM ---------------- */
 .invitation-form {
@@ -1425,7 +1460,10 @@ body {
 
 .send-success-screen {
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1453,8 +1491,15 @@ body {
 }
 
 @keyframes popIn {
-  0% { transform: scale(0); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 /* =============================================================
@@ -1580,7 +1625,8 @@ body {
 }
 
 [data-edition="night"] .vellum-snippet {
-  color: var(--ink-code); /* terminal green */
+  color: var(--ink-code);
+  /* terminal green */
 }
 
 .volume-header {
@@ -1678,20 +1724,16 @@ body {
   position: absolute;
   inset: 0;
   background-image:
-    repeating-linear-gradient(
-      0deg,
+    repeating-linear-gradient(0deg,
       transparent,
       transparent 18px,
       var(--border-ink) 18px,
-      var(--border-ink) 19px
-    ),
-    repeating-linear-gradient(
-      90deg,
+      var(--border-ink) 19px),
+    repeating-linear-gradient(90deg,
       transparent,
       transparent 18px,
       var(--border-ink) 18px,
-      var(--border-ink) 19px
-    );
+      var(--border-ink) 19px);
   opacity: 0.4;
   pointer-events: none;
 }
@@ -1781,50 +1823,122 @@ body {
     --page-padding: 28px 24px;
   }
 
-  body { overflow: hidden; }
+  body {
+    overflow: hidden;
+  }
 
-  .book-container::after { display: none; }
+  .book-container::after {
+    display: none;
+  }
 
   .book-nav {
     bottom: 16px;
     gap: 16px;
   }
 
-  .toc-ribbon { width: 100vw; right: 0; }
-  .edition-toggle { right: 12px; top: 12px; }
-  .bookmark-ribbon { display: none; }
+  .toc-ribbon {
+    width: 100vw;
+    right: 0;
+  }
 
-  .chapter-title { font-size: 1.8rem; }
-  .drop-cap::first-letter { font-size: 3.2rem; }
+  .edition-toggle {
+    right: 12px;
+    top: 12px;
+  }
+
+  .bookmark-ribbon {
+    display: none;
+  }
+
+  .chapter-title {
+    font-size: 1.8rem;
+  }
+
+  .drop-cap::first-letter {
+    font-size: 3.2rem;
+  }
 }
 
 /* =============================================================
    26. UTILITY CLASSES
    ============================================================= */
 
-.text-center { text-align: center; }
-.text-left   { text-align: left; }
-.text-right  { text-align: right; }
+.text-center {
+  text-align: center;
+}
 
-.mt-1 { margin-top: 8px; }
-.mt-2 { margin-top: 16px; }
-.mt-3 { margin-top: 24px; }
-.mt-4 { margin-top: 32px; }
+.text-left {
+  text-align: left;
+}
 
-.mb-1 { margin-bottom: 8px; }
-.mb-2 { margin-bottom: 16px; }
-.mb-3 { margin-bottom: 24px; }
-.mb-4 { margin-bottom: 32px; }
+.text-right {
+  text-align: right;
+}
 
-.flex { display: flex; }
-.flex-col { flex-direction: column; }
-.items-center { align-items: center; }
-.justify-between { justify-content: space-between; }
-.gap-1 { gap: 8px; }
-.gap-2 { gap: 16px; }
-.flex-1 { flex: 1; }
+.mt-1 {
+  margin-top: 8px;
+}
 
-.overflow-hidden { overflow: hidden; }
+.mt-2 {
+  margin-top: 16px;
+}
+
+.mt-3 {
+  margin-top: 24px;
+}
+
+.mt-4 {
+  margin-top: 32px;
+}
+
+.mb-1 {
+  margin-bottom: 8px;
+}
+
+.mb-2 {
+  margin-bottom: 16px;
+}
+
+.mb-3 {
+  margin-bottom: 24px;
+}
+
+.mb-4 {
+  margin-bottom: 32px;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-1 {
+  gap: 8px;
+}
+
+.gap-2 {
+  gap: 16px;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -1832,6 +1946,6 @@ body {
   padding: 0;
   margin: -1px;
   overflow: hidden;
-  clip: rect(0,0,0,0);
+  clip: rect(0, 0, 0, 0);
   border: 0;
 }

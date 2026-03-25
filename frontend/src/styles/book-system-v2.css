@@ -11,63 +11,51 @@
    ============================================================= */
 
 .book-page {
-  background: radial-gradient(
-    ellipse 90% 80% at 52% 30%,
-    #FEFAF3 0%,
-    #F7F2E9 40%,
-    #EDE7D5 100%
-  ) !important;
+  background: radial-gradient(ellipse 90% 80% at 52% 30%,
+      #FEFAF3 0%,
+      #F7F2E9 40%,
+      #EDE7D5 100%) !important;
 }
 
 .book-page.page-left {
-  background: radial-gradient(
-    ellipse 90% 80% at 52% 30%,
-    #F5EFD8 0%,
-    #EDE7D5 45%,
-    #E3DBC6 100%
-  ) !important;
+  background: radial-gradient(ellipse 90% 80% at 52% 30%,
+      #F5EFD8 0%,
+      #EDE7D5 45%,
+      #E3DBC6 100%) !important;
 }
 
 [data-edition="night"] .book-page {
-  background: radial-gradient(
-    ellipse 90% 80% at 52% 30%,
-    #1C1714 0%,
-    #0F0D0B 50%,
-    #070503 100%
-  ) !important;
+  background: radial-gradient(ellipse 90% 80% at 52% 30%,
+      #1C1714 0%,
+      #0F0D0B 50%,
+      #070503 100%) !important;
 }
 
 [data-edition="night"] .book-page.page-left {
-  background: radial-gradient(
-    ellipse 90% 80% at 52% 30%,
-    #201B17 0%,
-    #13100E 50%,
-    #0A0705 100%
-  ) !important;
+  background: radial-gradient(ellipse 90% 80% at 52% 30%,
+      #201B17 0%,
+      #13100E 50%,
+      #0A0705 100%) !important;
 }
 
 /* Richer room/shell background */
 .book-shell {
-  background: linear-gradient(
-    145deg,
-    #160B04 0%,
-    #301808 30%,
-    #1F1008 60%,
-    #100804 100%
-  ) !important;
+  background: linear-gradient(145deg,
+      #160B04 0%,
+      #301808 30%,
+      #1F1008 60%,
+      #100804 100%) !important;
 }
 
 /* Spine/center shadow upgrade */
 .book-container::after {
   width: 6px !important;
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    rgba(0, 0, 0, 0.15) 25%,
-    rgba(0, 0, 0, 0.40) 50%,
-    rgba(0, 0, 0, 0.15) 75%,
-    transparent 100%
-  ) !important;
+  background: linear-gradient(to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.15) 25%,
+      rgba(0, 0, 0, 0.40) 50%,
+      rgba(0, 0, 0, 0.15) 75%,
+      transparent 100%) !important;
 }
 
 /* =============================================================
@@ -121,8 +109,13 @@
   flex: 1;
 }
 
-.page-pt-60 { padding-top: 60px; }
-.page-pt-25 { padding-top: 25px; }
+.page-pt-60 {
+  padding-top: 60px;
+}
+
+.page-pt-25 {
+  padding-top: 25px;
+}
 
 .page-footer {
   margin-top: auto;
@@ -214,13 +207,11 @@
 .ink-highlight {
   color: var(--ink-primary);
   font-weight: 600;
-  background: linear-gradient(
-    to bottom,
-    transparent 60%,
-    rgba(201, 169, 110, 0.35) 60%,
-    rgba(201, 169, 110, 0.35) 90%,
-    transparent 90%
-  );
+  background: linear-gradient(to bottom,
+      transparent 60%,
+      rgba(201, 169, 110, 0.35) 60%,
+      rgba(201, 169, 110, 0.35) 90%,
+      transparent 90%);
   padding: 0 1px;
 }
 
@@ -391,26 +382,22 @@
   resize: none;
   min-height: 0;
   /* Ruled lines via repeating gradient */
-  background-image: repeating-linear-gradient(
-    to bottom,
-    transparent 0px,
-    transparent calc(1.72em - 1px),
-    var(--border-ink) calc(1.72em - 1px),
-    var(--border-ink) 1.72em
-  );
+  background-image: repeating-linear-gradient(to bottom,
+      transparent 0px,
+      transparent calc(1.72em - 1px),
+      var(--border-ink) calc(1.72em - 1px),
+      var(--border-ink) 1.72em);
   background-size: 100% 1.72em;
   background-attachment: local;
   padding: 0 2px;
 }
 
 .invitation-textarea:focus {
-  background-image: repeating-linear-gradient(
-    to bottom,
-    transparent 0px,
-    transparent calc(1.72em - 1px),
-    var(--border-ink-heavy) calc(1.72em - 1px),
-    var(--border-ink-heavy) 1.72em
-  );
+  background-image: repeating-linear-gradient(to bottom,
+      transparent 0px,
+      transparent calc(1.72em - 1px),
+      var(--border-ink-heavy) calc(1.72em - 1px),
+      var(--border-ink-heavy) 1.72em);
 }
 
 /* Projects / Volume Entries */
@@ -541,30 +528,84 @@
    ============================================================= */
 
 @keyframes letter-crumple {
-  0%   { transform: scaleY(1) scaleX(1) rotate(0deg); opacity: 1; }
-  30%  { transform: scaleY(0.6) scaleX(0.9) rotate(-3deg); }
-  60%  { transform: scaleY(0.15) scaleX(0.7) rotate(-8deg); opacity: 0.8; }
-  100% { transform: scaleY(0) scaleX(0.5) rotate(-15deg); opacity: 0; }
+  0% {
+    transform: scaleY(1) scaleX(1) rotate(0deg);
+    opacity: 1;
+  }
+
+  30% {
+    transform: scaleY(0.6) scaleX(0.9) rotate(-3deg);
+  }
+
+  60% {
+    transform: scaleY(0.15) scaleX(0.7) rotate(-8deg);
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: scaleY(0) scaleX(0.5) rotate(-15deg);
+    opacity: 0;
+  }
 }
 
 @keyframes paper-airplane-fly {
-  0%   { transform: translate(0, 0) rotate(-15deg) scale(0.5); opacity: 0; }
-  5%   { opacity: 1; }
-  60%  { transform: translate(80px, -120px) rotate(-20deg) scale(0.7); opacity: 1; }
-  80%  { transform: translate(200px, -280px) rotate(-32deg) scale(0.5); opacity: 0.7; }
-  100% { transform: translate(380px, -500px) rotate(-45deg) scale(0.2); opacity: 0; }
+  0% {
+    transform: translate(0, 0) rotate(-15deg) scale(0.5);
+    opacity: 0;
+  }
+
+  5% {
+    opacity: 1;
+  }
+
+  60% {
+    transform: translate(80px, -120px) rotate(-20deg) scale(0.7);
+    opacity: 1;
+  }
+
+  80% {
+    transform: translate(200px, -280px) rotate(-32deg) scale(0.5);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: translate(380px, -500px) rotate(-45deg) scale(0.2);
+    opacity: 0;
+  }
 }
 
 @keyframes stamp-in {
-  0%   { transform: scale(3) rotate(-8deg); opacity: 0; filter: blur(4px); }
-  60%  { transform: scale(0.9) rotate(1deg); }
-  80%  { transform: scale(1.04) rotate(-0.5deg); }
-  100% { transform: scale(1) rotate(0deg); opacity: 1; filter: blur(0); }
+  0% {
+    transform: scale(3) rotate(-8deg);
+    opacity: 0;
+    filter: blur(4px);
+  }
+
+  60% {
+    transform: scale(0.9) rotate(1deg);
+  }
+
+  80% {
+    transform: scale(1.04) rotate(-0.5deg);
+  }
+
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+    filter: blur(0);
+  }
 }
 
 @keyframes success-text-in {
-  0%   { opacity: 0; transform: translateY(10px); }
-  100% { opacity: 1; transform: translateY(0); }
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .send-success-screen {
@@ -615,9 +656,11 @@
   .drop-cap::first-letter {
     font-size: 4rem !important;
   }
+
   .pull-quote {
     font-size: 1.2rem;
   }
+
   .foreword-name-display {
     font-size: 1.6rem;
   }
