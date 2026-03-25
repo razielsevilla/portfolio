@@ -138,28 +138,34 @@ const BookContainer = forwardRef(({ onSpreadChange }, ref) => {
                   {/* Decorative page wash - unique per page */}
                   <div className="page-wash" />
 
-                  <RunningHeader label={spread.chapterLabel} side="left" />
+                  <RunningHeader
+                    leftText="Raziel Sevilla"
+                    isLeftPage={true}
+                  />
                   <spread.Component
                     pageIndex={spread.pageIndex}
                     side="left"
                     currentSpread={idx}
                     onNavigate={onSpreadChange}
                   />
-                  <PageNum num={idx * 2 + 1} side="left" />
+                  <PageNum number={idx * 2 + 1} />
                 </div>
               </FlipPage>,
               <FlipPage key={`${key}-R`} className="book-page paper-texture page-right">
                 <div className="book-page-inner">
                   <div className="page-wash" />
 
-                  <RunningHeader label={spread.chapterLabel} side="right" />
+                  <RunningHeader
+                    rightText={spread.chapterLabel}
+                    isLeftPage={false}
+                  />
                   <spread.Component
                     pageIndex={spread.pageIndex}
                     side="right"
                     currentSpread={idx}
                     onNavigate={onSpreadChange}
                   />
-                  <PageNum num={idx * 2 + 2} side="right" />
+                  <PageNum number={idx * 2 + 2} />
                 </div>
               </FlipPage>,
             ];
