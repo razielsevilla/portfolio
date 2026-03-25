@@ -75,6 +75,27 @@
   --grid-line:        rgba(0, 212, 255, 0.04);  /* Cyan tint grid in night mode */
 }
 
+
+.book-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Relative coordinate system for the physical book object */
+.book-stage {
+  position: relative;
+  width: var(--book-width);
+  height: var(--book-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* =============================================================
    2. GLOBAL RESET & BASE
    ============================================================= */
@@ -584,16 +605,19 @@ body {
    ============================================================= */
 
 .bookmark-ribbon {
-  position: fixed;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  position: absolute;
+  right: -24px; /* Peaks out from the book edge */
+  top: 60px;
   z-index: 200;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0;
+  transition: right var(--transition-smooth);
+}
+
+.bookmark-ribbon:hover {
+  right: -28px;
 }
 
 .bookmark-ribbon-body {
@@ -640,107 +664,212 @@ body {
 }
 
 /* =============================================================
-   15. TABLE OF CONTENTS PANEL
+   15. TACTILE BOOKMARK TOC (Vertical Ribbon)
    ============================================================= */
 
-.toc-overlay {
+.toc-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  z-index: 300;
+  background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(2px);
+  z-index: 300;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-smooth);
 }
 
-.toc-panel {
+.toc-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.toc-ribbon {
   position: fixed;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 340px;
+  right: 50px;
+  top: -100%; /* Hidden above */
+  width: 260px;
+  max-height: 85vh;
   background: var(--bg-page);
-  border-left: 1px solid var(--border-ink-heavy);
+  border: 1px solid var(--border-ink-heavy);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
   z-index: 310;
   display: flex;
   flex-direction: column;
-  padding: 40px 36px;
-  overflow-y: auto;
-  box-shadow: -8px 0 40px var(--shadow-book);
+  padding: 40px 24px 60px;
+  transition: top 0.6s var(--transition-spring);
+  pointer-events: auto;
+}
+
+.toc-ribbon.open {
+  top: 0;
+}
+
+/* Paper texture for ribbon */
+.toc-ribbon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--paper-noise); /* If defined, or use raw SVG */
+  opacity: 0.04;
+  pointer-events: none;
+}
+
+/* Decorative Notch Bottom (V-shape) */
+.toc-ribbon-bottom {
+  position: absolute;
+  bottom: -30px;
+  left: -1px;
+  right: -1px;
+  height: 30px;
+  background: var(--bg-page);
+  border: 1px solid var(--border-ink-heavy);
+  border-top: none;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.toc-ribbon-top {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.toc-ribbon-string {
+  width: 2px;
+  height: 40px;
+  background: var(--accent-rust);
+}
+
+.toc-ribbon-seal {
+  position: absolute;
+  top: -10px;
+  font-size: 1.5rem;
+  color: var(--accent-rust);
+  background: var(--bg-page);
+  padding: 0 5px;
+}
+
+.toc-header {
+  text-align: center;
+  margin-bottom: 24px;
 }
 
 .toc-title {
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 1.4rem;
+  font-style: italic;
   font-weight: 700;
   color: var(--ink-primary);
-  margin-bottom: 8px;
 }
 
-.toc-subtitle {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 0.85rem;
-  color: var(--ink-muted);
-  margin-bottom: 32px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--border-ink);
+.toc-divider {
+  width: 40px;
+  height: 2px;
+  background: var(--accent-gold);
+  margin: 10px auto 0;
+  opacity: 0.6;
 }
 
 .toc-list {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
 }
 
 .toc-item {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  padding: 12px 8px;
-  cursor: pointer;
-  border-radius: 2px;
-  transition: background var(--transition-smooth);
+  background: none;
+  border: none;
   border-bottom: 1px solid var(--border-ink);
+  display: flex;
+  align-items: center; /* switched to center for better layout with tagline */
+  gap: 12px;
+  padding: 12px 4px;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+  position: relative;
 }
 
 .toc-item:hover {
-  background: var(--margin-note-bg);
+  padding-left: 15px;
+  color: var(--accent-rust);
 }
 
 .toc-item.active {
-  background: var(--margin-note-bg);
+  color: var(--accent-rust);
+}
+
+.toc-item-indicator {
+  position: absolute;
+  left: -12px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-rust);
+  opacity: 0;
+  transition: opacity var(--transition-smooth);
+}
+
+.toc-item.active .toc-item-indicator {
+  opacity: 1;
 }
 
 .toc-item-num {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.58rem;
   color: var(--ink-muted);
   min-width: 24px;
-  letter-spacing: 0.1em;
+}
+
+.toc-item-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .toc-item-title {
-  font-family: var(--font-display);
-  font-size: 1rem;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  font-weight: 500;
   color: var(--ink-primary);
-  font-weight: 600;
 }
 
-.toc-item-sub {
+.toc-item-tagline {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 0.78rem;
-  color: var(--ink-secondary);
-  margin-top: 2px;
+  font-size: 0.72rem;
+  color: var(--ink-muted);
+  opacity: 0.8;
 }
 
-.toc-item-pg {
+.toc-item-page {
   font-family: var(--font-mono);
   font-size: 0.6rem;
   color: var(--ink-muted);
-  margin-left: auto;
-  letter-spacing: 0.08em;
 }
+
+.toc-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--ink-muted);
+  cursor: pointer;
+  transition: color var(--transition-smooth);
+  z-index: 5;
+}
+
+.toc-close-btn:hover {
+  color: var(--accent-rust);
+}
+
 
 /* =============================================================
    16. EDITION TOGGLE (Day / Night)
@@ -1661,7 +1790,7 @@ body {
     gap: 16px;
   }
 
-  .toc-panel { width: 100vw; }
+  .toc-ribbon { width: 100vw; right: 0; }
   .edition-toggle { right: 12px; top: 12px; }
   .bookmark-ribbon { display: none; }
 

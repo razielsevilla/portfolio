@@ -73,14 +73,22 @@ const BookShell = () => {
           justifyContent: 'center',
         }}
       >
-        <BookContainer ref={bookRef} onSpreadChange={setCurrentSpread} />
+        <BookContainer
+          ref={bookRef}
+          onSpreadChange={(val) => {
+            if (val === 'open-toc') {
+              setTocOpen(true);
+            } else {
+              setCurrentSpread(val);
+            }
+          }}
+        />
       </div>
 
       {/* Fixed chrome — only visible once cover is gone */}
       {loaded && (
         <>
           <EditionToggle edition={edition} onToggle={toggleEdition} />
-          <BookmarkRibbon onClick={() => setTocOpen(true)} />
           <TableOfContents
             isOpen={tocOpen}
             onClose={() => setTocOpen(false)}

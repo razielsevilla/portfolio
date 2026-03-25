@@ -10,6 +10,7 @@ import HTMLFlipBook from 'react-pageflip';
 import InkCodeReveal from './InkCodeReveal';
 import SpineRibbon from './SpineRibbon';
 import { RunningHeader, PageNum } from './Page';
+import BookmarkRibbon from './BookmarkRibbon';
 import { SPREADS } from '../../data/spreads';
 import { BOOK_CONFIG } from '../../constants';
 import usePageSound from '../../hooks/usePageSound';
@@ -47,7 +48,11 @@ const BookContainer = forwardRef(({ onSpreadChange }, ref) => {
   useImperativeHandle(ref, () => ({
     goToSpread: (idx) => {
       if (bookRef.current) {
-        bookRef.current.pageFlip().flip(idx * 2);
+        // Use turnToPage for more robust jumping compared to flip()
+        const flipObj = bookRef.current.pageFlip();
+        if (flipObj) {
+          flipObj.turnToPage(idx * 2);
+        }
       }
     },
     nextPage: () => bookRef.current?.pageFlip().flipNext(),
@@ -101,62 +106,69 @@ const BookContainer = forwardRef(({ onSpreadChange }, ref) => {
         spreads={SPREADS}
       />
 
+      {/* Relative stage for the physical book + anchored bookmarks */}
+      <div className="book-stage">
+        {/* Physical bookmark ribbon on right edge of book */}
+        <BookmarkRibbon onClick={() => onSpreadChange('open-toc')} />
+
+        <HTMLFlipBook
+          width={BOOK_CONFIG.WIDTH}
+          height={BOOK_CONFIG.HEIGHT}
+          size="fixed"
+          minWidth={BOOK_CONFIG.MIN_WIDTH}
+          maxWidth={BOOK_CONFIG.MAX_WIDTH}
+          minHeight={BOOK_CONFIG.MIN_HEIGHT}
+          maxHeight={BOOK_CONFIG.MAX_HEIGHT}
+          flippingTime={BOOK_CONFIG.FLIP_TIME}
+          usePortrait={false}
+          startPage={0}
+          autoSize={true}
+          showCover={false}
+          mobileScrollSupport={true}
+          onFlip={handleFlip}
+          className="book-main-engine"
+          ref={bookRef}
+        >
+          {SPREADS.map((spread, idx) => {
+            const key = spread.key || `spread-${idx}`;
+
+            return [
+              <FlipPage key={`${key}-L`} className="book-page paper-texture page-left">
+                <div className="book-page-inner">
+                  {/* Decorative page wash - unique per page */}
+                  <div className="page-wash" />
+
+                  <RunningHeader label={spread.chapterLabel} side="left" />
+                  <spread.Component
+                    pageIndex={spread.pageIndex}
+                    side="left"
+                    currentSpread={idx}
+                    onNavigate={onSpreadChange}
+                  />
+                  <PageNum num={idx * 2 + 1} side="left" />
+                </div>
+              </FlipPage>,
+              <FlipPage key={`${key}-R`} className="book-page paper-texture page-right">
+                <div className="book-page-inner">
+                  <div className="page-wash" />
+
+                  <RunningHeader label={spread.chapterLabel} side="right" />
+                  <spread.Component
+                    pageIndex={spread.pageIndex}
+                    side="right"
+                    currentSpread={idx}
+                    onNavigate={onSpreadChange}
+                  />
+                  <PageNum num={idx * 2 + 2} side="right" />
+                </div>
+              </FlipPage>,
+            ];
+          })}
+        </HTMLFlipBook>
+      </div>
+
       <InkCodeReveal isActive={revealing} onComplete={handleRevealDone} />
 
-      <HTMLFlipBook
-        ref={bookRef}
-        width={BOOK_CONFIG.WIDTH}
-        height={BOOK_CONFIG.HEIGHT}
-        size="fixed"
-        minWidth={BOOK_CONFIG.MIN_WIDTH}
-        maxWidth={BOOK_CONFIG.MAX_WIDTH}
-        minHeight={BOOK_CONFIG.MIN_HEIGHT}
-        maxHeight={BOOK_CONFIG.MAX_HEIGHT}
-        maxShadowOpacity={BOOK_CONFIG.SHADOW_OPACITY}
-        showCover={false}
-        mobileScrollSupport={true}
-        onFlip={handleFlip}
-        className="book-flip-root"
-        startPage={0}
-        drawShadow={true}
-        flippingTime={BOOK_CONFIG.FLIP_TIME}
-        usePortrait={false}
-        startZIndex={0}
-        autoSize={false}
-        clickEventForward={true}
-        useMouseEvents={true}
-        swipeDistance={BOOK_CONFIG.SWIPE_DISTANCE}
-        showPageCorners={true}
-        disableFlipByClick={true}
-      >
-        {SPREADS.map((spread, idx) => {
-          const { Component, chapterLabel, pageIndex, key } = spread;
-          const leftPageNum = idx * 2 + 1;
-          const rightPageNum = idx * 2 + 2;
-
-          return [
-            <FlipPage key={`${key}-L`} className="book-page paper-texture page-left">
-              <div className="book-page-inner">
-                <RunningHeader isLeftPage={true} leftText="Raziel Sevilla" />
-                <div className="page-content-scroll">
-                  <Component side="left" pageIndex={pageIndex} />
-                </div>
-                <PageNum number={leftPageNum} />
-              </div>
-            </FlipPage>,
-
-            <FlipPage key={`${key}-R`} className="book-page paper-texture">
-              <div className="book-page-inner">
-                <RunningHeader isLeftPage={false} rightText={chapterLabel} />
-                <div className="page-content-scroll">
-                  <Component side="right" pageIndex={pageIndex} />
-                </div>
-                <PageNum number={rightPageNum} />
-              </div>
-            </FlipPage>,
-          ];
-        })}
-      </HTMLFlipBook>
 
       <nav className="book-nav" aria-label="Page navigation">
         <button
