@@ -73,6 +73,18 @@ const PageChapter3 = ({ side, pageIndex = 0 }) => {
         </div>
       );
     }
+
+    if (pageIndex === 3) {
+      {/* Spread 8 Left: Projects 11, 12 */}
+      const batch = projectData.slice(10, 12);
+      return (
+        <div className="page-flex-col">
+          {batch.map((project) => (
+            <ProjectEntry key={project.id} project={project} />
+          ))}
+        </div>
+      );
+    }
   }
 
   /**
@@ -105,6 +117,19 @@ const PageChapter3 = ({ side, pageIndex = 0 }) => {
   if (pageIndex === 2) {
     {/* Spread 7 Right: Projects 9, 10 */}
     const batch = projectData.slice(8, 10);
+    return (
+      <div className="page-flex-col">
+        {batch.map((project) => (
+          <ProjectEntry key={project.id} project={project} />
+        ))}
+      </div>
+    );
+  }
+
+  if (pageIndex === 3) {
+    {/* Spread 8 Right: Empty (Project 13+ if added) */}
+    const batch = projectData.slice(12, 14);
+    if (batch.length === 0) return <div className="page-empty" />;
     return (
       <div className="page-flex-col">
         {batch.map((project) => (

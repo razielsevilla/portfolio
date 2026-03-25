@@ -46,6 +46,10 @@ To update global colors, fonts, or component layouts, use the centralized CSS:
 2. Add a new object to the array.
 3. The book automatically handles the layout (it batches 2 projects per page).
 
+### Adding a New Spread (When Chapter Pages are Full)
+If you add more projects or experience than the current pages can fit, you need to add a new "Spread":
+1.  **Add Spread**: In [spreads.js](file:///c:/Users/Raziel/OneDrive/Documents/06_Projects/Portfolio/frontend/src/data/spreads.js), copy the last entry for that chapter and increment the `pageIndex` (e.g., from `2` to `3`).
+2.  **Update Logic**: In the corresponding page component (e.g., `PageChapter3.js`), add a new `if (pageIndex === 3)` block to slice the next batch of data (e.g., `slice(10, 12)`).
 ### Adding a New Experience
 1. Open [experienceData.js](file:///c:/Users/Raziel/OneDrive/Documents/06_Projects/Portfolio/frontend/src/data/experienceData.js).
 2. Add a new entry at the top of the array for the most recent role.

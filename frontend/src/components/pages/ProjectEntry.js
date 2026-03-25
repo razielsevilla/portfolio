@@ -31,7 +31,7 @@ const ProjectEntry = ({ project }) => {
             className="volume-preview-img"
           />
         ) : (
-          <div className="volume-preview-placeholder">// Image Preview Placeholder</div>
+          <div className="volume-preview-placeholder">{"// Image Preview Placeholder"}</div>
         )}
         <div className="volume-links">
           {project.repoLink && (

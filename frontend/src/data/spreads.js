@@ -84,6 +84,15 @@ export const SPREADS = [
     isChapterStart: false,
   },
   {
+    key: 'chapter3-3',
+    chapter: 'chapter3',
+    pageIndex: 3,
+    navLabel: 'Works Published',
+    chapterLabel: 'Chapter III — cont.',
+    Component: PageChapter3,
+    isChapterStart: false,
+  },
+  {
     key: 'invitation-0',
     chapter: 'invitation',
     pageIndex: 0,
