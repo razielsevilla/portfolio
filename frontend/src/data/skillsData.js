@@ -11,10 +11,10 @@ const skillsData = [
     icon: "fas fa-layer-group",
     tier: "core",          // 'core' | 'extended' | 'research'
     items: [
-      { name: "React", yoe: "2 YOE" },
-      { name: "JavaScript (ES6+)", yoe: "3 YOE" },
-      { name: "HTML5 / CSS3", yoe: "3 YOE" },
-      { name: "Bootstrap 5", yoe: "2 YOE" },
+      { name: "React", startDate: "2024-03" },
+      { name: "JavaScript (ES6+)", startDate: "2023-01" },
+      { name: "HTML5 / CSS3", startDate: "2023-01" },
+      { name: "Bootstrap 5", startDate: "2024-06" },
     ]
   },
   {
@@ -23,10 +23,10 @@ const skillsData = [
     icon: "fas fa-server",
     tier: "core",
     items: [
-      { name: "Laravel (PHP)", yoe: "2 YOE" },
-      { name: "MySQL / SQL", yoe: "3 YOE" },
-      { name: "REST API Design", yoe: "2 YOE" },
-      { name: "Git / GitHub", yoe: "3 YOE" },
+      { name: "Laravel (PHP)", startDate: "2024-02" },
+      { name: "MySQL / SQL", startDate: "2023-03" },
+      { name: "REST API Design", startDate: "2024-05" },
+      { name: "Git / GitHub", startDate: "2023-01" },
     ]
   },
   {
@@ -35,10 +35,10 @@ const skillsData = [
     icon: "fas fa-cloud",
     tier: "extended",
     items: [
-      { name: "AWS (EC2, S3, IAM)" },
-      { name: "Vercel / Netlify" },
-      { name: "Postman" },
-      { name: "Linux CLI" },
+      { name: "AWS (EC2, S3, IAM)", startDate: "2025-01" },
+      { name: "Vercel / Netlify", startDate: "2024-03" },
+      { name: "Postman", startDate: "2024-08" },
+      { name: "Linux CLI", startDate: "2023-05" },
     ]
   },
   {
@@ -47,10 +47,10 @@ const skillsData = [
     icon: "fas fa-flask",
     tier: "research",
     items: [
-      { name: "TensorFlow.js" },
-      { name: "Blockchain (Solidity basics)" },
-      { name: "Game Design / Narrative Systems" },
-      { name: "Cryptographic Algorithms" },
+      { name: "TensorFlow.js", startDate: "2025-09" },
+      { name: "Blockchain", startDate: "2025-11" },
+      { name: "Game Design", startDate: "2025-02" },
+      { name: "Cryptography", startDate: "2025-09" },
     ]
   }
 ];

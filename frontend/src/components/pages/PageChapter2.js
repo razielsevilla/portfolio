@@ -17,7 +17,7 @@ const PageChapter2 = ({ side, pageIndex = 0 }) => {
    */
   if (side === 'left') {
     if (pageIndex === 0) {
-      {/* Title page (Spread 3 Left) */}
+      {/* Title page (Spread 3 Left / Page 7) */}
       return (
         <div className="chapter-title-container-skills">
           <p className="chapter-label">Chapter II</p>
@@ -57,11 +57,11 @@ const PageChapter2 = ({ side, pageIndex = 0 }) => {
       );
     }
 
-    {/* Spread 4 Left (Page 9): Extended Skills */}
-    const extCat = skillsData.filter((c) => c.tier === 'extended');
+    {/* Spread 4 Left (Page 9): Infrastructure & Frontier */}
+    const otherCat = skillsData.filter((c) => c.tier === 'extended' || c.tier === 'research');
     return (
       <div className="pillar-category-container">
-        {extCat.map((category) => (
+        {otherCat.map((category) => (
           <PillarCategory key={category.category} category={category} />
         ))}
       </div>
@@ -72,7 +72,7 @@ const PageChapter2 = ({ side, pageIndex = 0 }) => {
    * Handle Right Page rendering.
    */
   if (pageIndex === 0) {
-    {/* Spread 3 Right (Page 8): Core Skills */}
+    {/* Spread 3 Right (Page 8): All Core Skills */}
     const coreCat = skillsData.filter((c) => c.tier === 'core');
     return (
       <div className="pillar-category-container">
@@ -83,13 +83,20 @@ const PageChapter2 = ({ side, pageIndex = 0 }) => {
     );
   }
 
-  {/* Spread 4 Right (Page 10): Frontier Skills */}
-  const rsCat = skillsData.filter((c) => c.tier === 'research');
+  {/* Spread 4 Right (Page 10): Now a Transition / Reflection Page */}
   return (
-    <div className="pillar-category-container">
-      {rsCat.map((category) => (
-        <PillarCategory key={category.category} category={category} />
-      ))}
+    <div className="chapter-transition-page">
+      <div className="prose">
+        <p className="drop-cap">
+          Technology is not a static edifice, but a living ecosystem. The tools listed here are 
+          the current instruments through which I shape the digital world. 
+        </p>
+        <p>
+          This ledger is intentionally modular; as the frontier expands, new instruments are 
+          adopted, while the core remains the bedrock of every solution.
+        </p>
+      </div>
+      <div className="chapter-ornament mt-4">✦</div>
     </div>
   );
 };
