@@ -236,6 +236,73 @@
   border-radius: 1px;
 }
 
+/* =============================================================
+   29b. CHAPTER I: MANUSCRIPT ENHANCEMENTS (Ink Thread & Marginalia)
+   ============================================================= */
+
+/* Vertical Ink Thread Timeline */
+.experience-timeline {
+  position: relative;
+  padding-left: 80px;
+}
+
+.experience-timeline::before {
+  content: '';
+  position: absolute;
+  left: 30px;
+  top: 10px;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, 
+    var(--accent-rust) 0%, 
+    var(--accent-gold) 50%, 
+    transparent 100%);
+  opacity: 0.25;
+  border-radius: 1px;
+}
+
+/* Roman Indexing */
+.manuscript-index {
+  position: absolute;
+  left: -32px;
+  top: 14px;
+  font-family: var(--font-serif);
+  font-size: 0.6rem;
+  font-style: italic;
+  font-weight: 700;
+  color: var(--accent-rust);
+  opacity: 0.4;
+  letter-spacing: 0.05em;
+  pointer-events: none;
+}
+
+/* Marginalia / Handwritten notes */
+.manuscript-marginalia {
+  position: absolute;
+  left: -130px;
+  top: 36px;
+  width: 75px;
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  color: var(--accent-rust);
+  opacity: 0.35;
+  transform: rotate(-6deg);
+  text-align: right;
+  line-height: 1.1;
+  pointer-events: none;
+  font-style: italic;
+  white-space: pre-wrap;
+}
+
+[data-edition="night"] .manuscript-marginalia {
+  opacity: 0.25;
+}
+
+/* Refined Entry Base */
+.manuscript-entry-container {
+  position: relative;
+}
+
 /* Skills / Pillar Categories */
 .pillar-category-container {
   display: flex;

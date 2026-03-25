@@ -52,9 +52,11 @@ const PageChapter1 = ({ side, pageIndex = 0 }) => {
     const batch = experienceData.slice(2, 4);
     return (
       <div className="page-flex-col">
-        {batch.map((job) => (
-          <ExperienceEntry key={job.id} job={job} />
-        ))}
+        <div className="experience-timeline">
+          {batch.map((job, idx) => (
+            <ExperienceEntry key={job.id} job={job} index={idx + 3} />
+          ))}
+        </div>
       </div>
     );
   }
@@ -67,9 +69,11 @@ const PageChapter1 = ({ side, pageIndex = 0 }) => {
     const batch = experienceData.slice(0, 2);
     return (
       <div className="page-flex-col">
-        {batch.map((job) => (
-          <ExperienceEntry key={job.id} job={job} />
-        ))}
+        <div className="experience-timeline">
+          {batch.map((job, idx) => (
+            <ExperienceEntry key={job.id} job={job} index={idx + 1} />
+          ))}
+        </div>
       </div>
     );
   }
@@ -78,9 +82,11 @@ const PageChapter1 = ({ side, pageIndex = 0 }) => {
   const batch = experienceData.slice(4, 5);
   return (
     <div className="page-flex-col">
-      {batch.map((job) => (
-        <ExperienceEntry key={job.id} job={job} />
-      ))}
+      <div className="experience-timeline">
+        {batch.map((job, idx) => (
+          <ExperienceEntry key={job.id} job={job} index={idx + 5} />
+        ))}
+      </div>
     </div>
   );
 };

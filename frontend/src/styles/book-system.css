@@ -795,7 +795,7 @@ body {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 14px;
 }
 
 .toc-item {
@@ -805,8 +805,8 @@ body {
   display: flex;
   align-items: center;
   /* switched to center for better layout with tagline */
-  gap: 12px;
-  padding: 12px 4px;
+  gap: 16px;
+  padding: 14px 8px;
   width: 100%;
   text-align: left;
   cursor: pointer;
