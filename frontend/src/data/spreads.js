@@ -1,10 +1,10 @@
 // src/data/spreads.js
 
-import PageForeword    from '../components/pages/PageForeword';
-import PageChapter1    from '../components/pages/PageChapter1';
-import PageChapter2    from '../components/pages/PageChapter2';
-import PageChapter3    from '../components/pages/PageChapter3';
-import PageInvitation  from '../components/pages/PageInvitation';
+import PageForeword from '../components/pages/PageForeword';
+import PageChapter1 from '../components/pages/PageChapter1';
+import PageChapter2 from '../components/pages/PageChapter2';
+import PageChapter3 from '../components/pages/PageChapter3';
+import PageInvitation from '../components/pages/PageInvitation';
 
 /**
  * 18-PAGE (9-SPREAD) MANIFEST
