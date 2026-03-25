@@ -6,7 +6,11 @@ const heroData = {
   title: "Full-Stack Developer",
 
   // Summary/Introduction Paragraph
-  description: "I build for the web, tinker with Machine Learning, and ship things that work. From AI-enhanced blockchain frameworks to gamified task management, I turn complex problems into functional, high-impact code.",
+  descriptionOne: "I build for the web, tinker with Machine Learning, and ship things that work. From AI-enhanced blockchain frameworks to gamified task management, I turn complex problems into functional, high-impact code.",
+
+  descriptionTwo: "Before being a developer, before being an engineer, I am a reader first. I am someone who reads — books, codebses, documentation, people. This portfolio is shaped in the image of that identity.",
+
+  descriptionThree: "What you navigate here is not a list of accomplishment. It is  story in progress — each chapter a different faces of how I think and what I build.",
 
   // Action Button Links
   resumeLink: "https://drive.google.com/file/d/10YNp2hVRkVbMhXxuDt5HebIJht6Bzmq1/view?usp=sharing",

@@ -10,12 +10,15 @@
   position: relative;
   overflow: hidden;
   min-height: 100vh;
-  min-height: 100dvh;  /* mobile browser address bar safe */
+  min-height: 100dvh;
+  /* mobile browser address bar safe */
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 80px 20px 40px; /* top padding clears fixed header */
-  background-color: transparent; /* inherit from .portfolio-app dot grid */
+  padding: 80px 20px 40px;
+  /* top padding clears fixed header */
+  background-color: transparent;
+  /* inherit from .portfolio-app dot grid */
   color: var(--text);
 }
 
@@ -24,18 +27,16 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: repeating-linear-gradient(
-    transparent 0,
-    rgba(0, 0, 0, 0.018) 1px,
-    transparent 2px
-  );
+  background: repeating-linear-gradient(transparent 0,
+      rgba(0, 0, 0, 0.018) 1px,
+      transparent 2px);
   pointer-events: none;
   z-index: 1;
   opacity: 0.6;
 }
 
 /* Content sits above scanlines */
-.hero-section > * {
+.hero-section>* {
   position: relative;
   z-index: 2;
 }
@@ -84,9 +85,17 @@
 
 /* Primary button glow pulse */
 @keyframes pulse {
-  0%   { box-shadow: 0 0  8px var(--accent-glow); }
-  50%  { box-shadow: 0 0 22px var(--accent-glow), 0 0 6px var(--accent-glow); }
-  100% { box-shadow: 0 0  8px var(--accent-glow); }
+  0% {
+    box-shadow: 0 0 8px var(--accent-glow);
+  }
+
+  50% {
+    box-shadow: 0 0 22px var(--accent-glow), 0 0 6px var(--accent-glow);
+  }
+
+  100% {
+    box-shadow: 0 0 8px var(--accent-glow);
+  }
 }
 
 .pulsing-glow {
@@ -131,27 +140,91 @@
 }
 
 @keyframes floatUp {
-  0%   { transform: translateY(0) rotate(0deg);    opacity: 0; }
-  10%  { opacity: 0.4; }
-  90%  { opacity: 0.4; }
-  100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.4;
+  }
+
+  90% {
+    opacity: 0.4;
+  }
+
+  100% {
+    transform: translateY(-120vh) rotate(360deg);
+    opacity: 0;
+  }
 }
 
-.shape-1 { left: 10%; width: 70px;  height: 70px;  border-color: var(--accent); opacity: 0.15; animation-duration: 14s; }
-.shape-2 { left: 45%; width: 44px;  height: 44px;  border-radius: 50%; border-color: var(--neon); animation-duration: 20s; animation-delay: 2s; }
-.shape-3 { left: 82%; width: 36px;  height: 36px;  border-color: var(--accent); animation-duration: 16s; animation-delay: 5s; }
-.shape-4 { left: 72%; width: 90px;  height: 90px;  border-radius: 50%; border-color: var(--text-muted); opacity: 0.08; animation-duration: 24s; animation-delay: 1s; }
-.shape-5 { left:  5%; width: 16px;  height: 16px;  background: var(--neon); border: none; opacity: 0.2; animation-duration: 22s; animation-delay: 7s; }
+.shape-1 {
+  left: 10%;
+  width: 70px;
+  height: 70px;
+  border-color: var(--accent);
+  opacity: 0.15;
+  animation-duration: 14s;
+}
+
+.shape-2 {
+  left: 45%;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border-color: var(--neon);
+  animation-duration: 20s;
+  animation-delay: 2s;
+}
+
+.shape-3 {
+  left: 82%;
+  width: 36px;
+  height: 36px;
+  border-color: var(--accent);
+  animation-duration: 16s;
+  animation-delay: 5s;
+}
+
+.shape-4 {
+  left: 72%;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border-color: var(--text-muted);
+  opacity: 0.08;
+  animation-duration: 24s;
+  animation-delay: 1s;
+}
+
+.shape-5 {
+  left: 5%;
+  width: 16px;
+  height: 16px;
+  background: var(--neon);
+  border: none;
+  opacity: 0.2;
+  animation-duration: 22s;
+  animation-delay: 7s;
+}
 
 /* ============================================================
    MOBILE
    ============================================================ */
 
 @media (max-width: 768px) {
-  .hero-section { padding: 100px 20px 60px; }
+  .hero-section {
+    padding: 100px 20px 60px;
+  }
 
-  .hero-section h1 { font-size: 2.4rem; }
-  .hero-section h2 { font-size: 1rem; }
+  .hero-section h1 {
+    font-size: 2.4rem;
+  }
+
+  .hero-section h2 {
+    font-size: 1rem;
+  }
 
   .hero-actions {
     flex-direction: column;
@@ -164,4 +237,47 @@
     width: 100%;
     display: block;
   }
+}
+
+/* Styling for the new Author's Note look */
+.author-note-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.author-note {
+  max-width: 600px;
+  background: rgba(255, 255, 255, 0.05);
+  /* Subtle dark glass look */
+  border-left: 4px solid #007bff;
+  /* Matches your Resume button blue */
+  padding: 1.5rem;
+  text-align: left;
+  border-radius: 4px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.note-header {
+  font-family: 'Courier New', Courier, monospace;
+  /* Typewriter feel */
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #007bff;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.note-body {
+  font-style: italic;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 0;
+  color: #444;
+  /* Darker grey for readability */
+}
+
+/* Ensure it looks good in dark mode if you use it */
+[data-theme='dark'] .note-body {
+  color: #ddd;
 }
