@@ -1,90 +1,95 @@
 // src/components/book/TableOfContents.js
-// Slide-in panel from the right — styled like a book's contents page.
-// Uses framer-motion for the slide animation.
-
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { CHAPTER_FIRST_SPREAD } from './BookContainer';
 
-const CHAPTERS = [
-  { num: '00',  title: 'Foreword',           sub: 'A Note from the Author',       page: 1  },
-  { num: 'I',   title: 'The Story So Far',   sub: 'Experience & Milestones',      page: 3  },
-  { num: 'II',  title: 'Tools of the Trade', sub: 'Skills & Arsenal',             page: 5  },
-  { num: 'III', title: 'Works Published',    sub: 'Projects & Prototypes',        page: 7  },
-  { num: 'IV',  title: 'The Codex',          sub: 'Philosophy & Beliefs',         page: 9  },
-  { num: '∞',   title: 'The Next Chapter',   sub: 'An Open Invitation',           page: 11 },
+const TOC_ITEMS = [
+  {
+    chapter: 'foreword',
+    num: '00',
+    title: 'Foreword',
+    tagline: 'A Note from the Author'
+  },
+  {
+    chapter: 'chapter1',
+    num: 'I',
+    title: 'The Story So Far',
+    tagline: 'Experience & Milestones'
+  },
+  {
+    chapter: 'chapter2',
+    num: 'II',
+    title: 'Tools of the Trade',
+    tagline: 'Skills & Pillars'
+  },
+  {
+    chapter: 'chapter3',
+    num: 'III',
+    title: 'Works Published',
+    tagline: 'Projects & Prototypes'
+  },
+  {
+    chapter: 'invitation',
+    num: 'IV',
+    title: 'The Next Chapter',
+    tagline: 'An Open Invitation'
+  }
 ];
 
-const TableOfContents = ({ isOpen, onClose, currentSpread, onNavigate }) => (
-  <AnimatePresence>
-    {isOpen && (
-      <>
-        {/* Backdrop */}
-        <motion.div
-          className="toc-overlay"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.25 }}
-          onClick={onClose}
-          aria-hidden="true"
-        />
+const TableOfContents = ({ isOpen, onClose, currentSpreadKey = 'foreword' }) => {
+  const handleJump = (chapterKey) => {
+    const spreadIdx = CHAPTER_FIRST_SPREAD[chapterKey];
+    if (spreadIdx !== undefined && window.__bookGoToSpread) {
+      window.__bookGoToSpread(spreadIdx);
+    }
+    // Always close ToC upon jumping
+    onClose();
+  };
 
-        {/* Panel */}
-        <motion.div
-          className="toc-panel paper-texture"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Table of Contents"
-          initial={{ x: '100%' }}
-          animate={{ x: 0 }}
-          exit={{ x: '100%' }}
-          transition={{ type: 'spring', stiffness: 300, damping: 35 }}
-        >
+  return (
+    <>
+      <div className={`toc-backdrop ${isOpen ? 'open' : ''}`} onClick={onClose} aria-hidden="true" />
+      
+      <aside className={`toc-drawer ${isOpen ? 'open' : ''}`} aria-label="Table of Contents">
+        <header className="toc-header">
           <h2 className="toc-title">Table of Contents</h2>
           <p className="toc-subtitle">Raziel Sevilla — A Living Codex</p>
+          <div style={{ height: 1, background: 'var(--border-ink)', marginTop: 16 }} />
+        </header>
 
-          <ul className="toc-list" role="list">
-            {CHAPTERS.map((ch, idx) => (
-              <li
-                key={ch.num}
-                className={`toc-item ${currentSpread === idx ? 'active' : ''}`}
-                role="listitem"
-                onClick={() => { onNavigate(idx); onClose(); }}
-                tabIndex={0}
-                onKeyDown={e => (e.key === 'Enter') && (onNavigate(idx), onClose())}
-              >
-                <span className="toc-item-num">{ch.num}</span>
-                <span>
-                  <div className="toc-item-title">{ch.title}</div>
-                  <div className="toc-item-sub">{ch.sub}</div>
-                </span>
-                <span className="toc-item-pg">{ch.page}</span>
-              </li>
-            ))}
+        <nav className="toc-nav">
+          <ul className="toc-list">
+            {TOC_ITEMS.map((item) => {
+              const spreadIdx = CHAPTER_FIRST_SPREAD[item.chapter];
+              const pageNum   = spreadIdx !== undefined ? (spreadIdx * 2 + 1) : '';
+              const isActive  = currentSpreadKey === item.chapter;
+
+              return (
+                <li key={item.chapter}>
+                  <button 
+                    className={`toc-item ${isActive ? 'active' : ''}`}
+                    onClick={() => handleJump(item.chapter)}
+                  >
+                    <span className="toc-item-num">{item.num}</span>
+                    <div className="toc-item-text">
+                      <div className="toc-item-title">{item.title}</div>
+                      <div className="toc-item-tagline">{item.tagline}</div>
+                    </div>
+                    {pageNum && <span className="toc-item-page">{pageNum}</span>}
+                  </button>
+                </li>
+              );
+            })}
           </ul>
+        </nav>
 
-          <button
-            onClick={onClose}
-            style={{
-              marginTop: 'auto',
-              paddingTop: '24px',
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              fontFamily: 'var(--font-mono)',
-              fontSize: '0.62rem',
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              color: 'var(--ink-muted)',
-            }}
-            aria-label="Close table of contents"
-          >
-            ← Close
+        <footer className="toc-footer">
+          <button onClick={onClose} className="toc-close-btn">
+            ← CLOSE
           </button>
-        </motion.div>
-      </>
-    )}
-  </AnimatePresence>
-);
+        </footer>
+      </aside>
+    </>
+  );
+};
 
 export default TableOfContents;

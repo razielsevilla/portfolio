@@ -1,83 +1,88 @@
-// src/components/pages/PageForeword.js — v2
-// Foreword with strong visual hook: large name display, pull-quote, bigger drop cap
-
+// src/components/pages/PageForeword.js
 import React from 'react';
-import heroData from '../../data/heroData';
-
-const { name, title, description, resumeLink } = heroData;
+import codexData from '../../data/codexData';
+import contactData from '../../data/contactData';
 
 const PageForeword = ({ side }) => {
   if (side === 'left') {
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flex: 1, textAlign: 'center', gap: 6, position: 'relative' }}>
-
-        {/* Ghost chapter number for depth */}
-        <div className="chapter-giant-num" aria-hidden="true">00</div>
-
-        <p className="chapter-label">— Foreword —</p>
-        <div className="chapter-ornament" aria-hidden="true">✦ ✦ ✦</div>
-
-        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '1.8rem', fontStyle: 'italic', fontWeight: 400, color: 'var(--ink-secondary)', marginBottom: 2 }}>
-          A Note from the Author
-        </h1>
-
-        <div className="chapter-divider" style={{ margin: '10px 0' }}>
-          <span className="chapter-divider-symbol">❧</span>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flex: 1, textAlign: 'center', gap: 10 }}>
+        <p className="chapter-label">Foreword</p>
+        <div className="chapter-ornament" aria-hidden="true">✦</div>
+        <h2 className="chapter-title">
+          A Note from<br />
+          <span className="chapter-title-italic">the Author</span>
+        </h2>
+        <div className="chapter-divider">
+          <span className="chapter-divider-symbol">✒</span>
         </div>
-
-        <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--ink-muted)', marginTop: 12 }}>
-          Written by
+        <p className="chapter-subtitle">
+          On engineering, <br />
+          systems thinking, <br />
+          and the craft of code.
         </p>
 
-        {/* Strong name hook */}
-        <span className="foreword-name-display">{name}</span>
-
-        <p style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: '0.95rem', color: 'var(--accent-rust)', marginTop: 10 }}>
-          {title}
-        </p>
-
-        {/* Pull quote — the immediate hook */}
-        <div className="pull-quote" style={{ marginTop: 16, fontSize: '1.1rem' }}>
-          I build for the web.<br />I read for the soul.
-        </div>
-
-        <div style={{ marginTop: 'auto', opacity: 0.25, fontSize: '1.5rem', color: 'var(--accent-gold)' }} aria-hidden="true">
-          ⁂
+        <div style={{ marginTop: 'auto', padding: '10px 0', borderTop: '1px solid var(--border-ink)', width: '100%', textAlign: 'left' }}>
+          <p className="code-comment">// This portfolio is a living document.</p>
+          <p className="code-comment">// It treats projects as published works</p>
+          <p className="code-comment">// and commits as draft revisions.</p>
         </div>
       </div>
     );
   }
 
+  // Right page
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', flex: 1, gap: 0 }}>
-      {/* Strong opening drop cap */}
-      <div className="prose drop-cap">
-        <p>
-          {description}
-        </p>
-        <p style={{ marginTop: '1.4em' }}>
-          I am a reader first. Before I am a developer, before I am an engineer,
-          I am someone who reads — <span className="ink-highlight">books, codebases, documentation, people</span>. This portfolio
-          is shaped in the image of that identity.
-        </p>
-        <p style={{ marginTop: '1.4em' }}>
-          What you navigate here is not a list of accomplishments.
-          It is a <span className="ink-highlight">story in progress</span> — each chapter a different facet of how I think and
-          what I build.
-        </p>
-        <p style={{ marginTop: '1.6em', fontFamily: 'var(--font-mono)', fontSize: '0.75em', color: 'var(--ink-code)', lineHeight: 1.6 }}>
-          {'// I build for the web, tinker with Machine Learning,'}<br />
-          {'// and ship things that work.'}
-        </p>
-      </div>
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+      <p className="prose" style={{ fontSize: '0.85rem' }}>
+        {codexData.intro}
+      </p>
 
-      {/* Resume footnote */}
-      <div style={{ marginTop: 'auto', paddingTop: 12, borderTop: '1px solid var(--border-ink)', display: 'flex', alignItems: 'center', gap: 10 }}>
-        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6rem', color: 'var(--ink-muted)' }}>¹</span>
-        <a href={resumeLink} target="_blank" rel="noopener noreferrer"
-          style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: '0.78rem', color: 'var(--accent-rust)', textDecoration: 'none' }}>
-          Full curriculum vitae available on request. →
+      {/* Prominent Access CV Button */}
+      <div style={{ marginTop: 40, textAlign: 'center' }}>
+        <a 
+          href={contactData.resumeUrl || "#"} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="invitation-seal"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 8,
+            padding: '12px 24px',
+            textDecoration: 'none',
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.75rem',
+            textTransform: 'uppercase',
+            letterSpacing: '0.15em',
+            color: 'var(--bg-page)',
+            background: 'var(--accent-rust)',
+            border: '1px solid var(--accent-rust)',
+            borderRadius: 2,
+            transition: 'all var(--transition-smooth)',
+            boxShadow: '0 4px 12px rgba(139, 69, 19, 0.15)',
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.background = 'transparent';
+            e.currentTarget.style.color = 'var(--accent-rust)';
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.background = 'var(--accent-rust)';
+            e.currentTarget.style.color = 'var(--bg-page)';
+          }}
+        >
+          <i className="fas fa-file-pdf" aria-hidden="true" />
+          Access Curriculum Vitae
         </a>
+        <p style={{
+          fontFamily: 'var(--font-mono)',
+          fontSize: '0.55rem',
+          color: 'var(--ink-muted)',
+          marginTop: 12,
+          letterSpacing: '0.1em'
+        }}>
+          // standard PDF format
+        </p>
       </div>
     </div>
   );

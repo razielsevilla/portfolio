@@ -11,10 +11,10 @@ const skillsData = [
     icon: "fas fa-layer-group",
     tier: "core",          // 'core' | 'extended' | 'research'
     items: [
-      { name: "React",        proficiency: 85 },
-      { name: "JavaScript (ES6+)", proficiency: 80 },
-      { name: "HTML5 / CSS3", proficiency: 90 },
-      { name: "Bootstrap 5",  proficiency: 80 },
+      { name: "React", yoe: "2 YOE" },
+      { name: "JavaScript (ES6+)", yoe: "3 YOE" },
+      { name: "HTML5 / CSS3", yoe: "3 YOE" },
+      { name: "Bootstrap 5", yoe: "2 YOE" },
     ]
   },
   {
@@ -23,10 +23,10 @@ const skillsData = [
     icon: "fas fa-server",
     tier: "core",
     items: [
-      { name: "Laravel (PHP)", proficiency: 75 },
-      { name: "MySQL / SQL",   proficiency: 70 },
-      { name: "REST API Design", proficiency: 72 },
-      { name: "Git / GitHub", proficiency: 85 },
+      { name: "Laravel (PHP)", yoe: "2 YOE" },
+      { name: "MySQL / SQL", yoe: "3 YOE" },
+      { name: "REST API Design", yoe: "2 YOE" },
+      { name: "Git / GitHub", yoe: "3 YOE" },
     ]
   },
   {
@@ -35,10 +35,10 @@ const skillsData = [
     icon: "fas fa-cloud",
     tier: "extended",
     items: [
-      { name: "AWS (EC2, S3, IAM)", proficiency: 55 },
-      { name: "Vercel / Netlify",   proficiency: 80 },
-      { name: "Postman",            proficiency: 70 },
-      { name: "Linux CLI",          proficiency: 50 },
+      { name: "AWS (EC2, S3, IAM)" },
+      { name: "Vercel / Netlify" },
+      { name: "Postman" },
+      { name: "Linux CLI" },
     ]
   },
   {
@@ -47,10 +47,10 @@ const skillsData = [
     icon: "fas fa-flask",
     tier: "research",
     items: [
-      { name: "TensorFlow.js",     proficiency: 45 },
-      { name: "Blockchain (Solidity basics)", proficiency: 40 },
-      { name: "Game Design / Narrative Systems", proficiency: 60 },
-      { name: "Cryptographic Algorithms", proficiency: 50 },
+      { name: "TensorFlow.js" },
+      { name: "Blockchain (Solidity basics)" },
+      { name: "Game Design / Narrative Systems" },
+      { name: "Cryptographic Algorithms" },
     ]
   }
 ];

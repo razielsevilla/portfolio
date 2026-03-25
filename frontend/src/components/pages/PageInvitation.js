@@ -1,7 +1,7 @@
-// src/components/pages/PageInvitation.js — v2
-// Final spread with interactive message form + flying paper airplane send animation.
-// Left: viewer types a name + message on ruled paper, sends it
-// Right: the open invitation prose + social links
+// src/components/pages/PageInvitation.js
+// Chapter IV — "The Next Chapter" (Invitation)
+// Left: Viewer types a name + message on ruled paper, sends it
+// Right: The open invitation prose + social links
 
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -9,7 +9,7 @@ import contactData from '../../data/contactData';
 
 const { email, socialLinks } = contactData;
 
-/* ── Animated SVG Quill (drawing itself) ─────────────────────── */
+/* ── Animated SVG Quill ─────────────────────── */
 const QuillSVG = ({ size = 50 }) => {
   const pathRef = useRef(null);
   useEffect(() => {
@@ -45,18 +45,17 @@ const PaperAirplane = ({ style }) => (
   </svg>
 );
 
-/* ── Interactive Left Page ───────────────────────────────────── */
+/* ── Left Page (Form) ───────────────────────────────────── */
 const LeftPage = () => {
   const [name,    setName]    = useState('');
   const [message, setMessage] = useState('');
-  const [phase,   setPhase]   = useState('writing'); // writing | sending | sent
+  const [phase,   setPhase]   = useState('writing');
 
   const handleSend = (e) => {
     e.preventDefault();
     if (!message.trim()) return;
     setPhase('sending');
 
-    // After airplane flies off, open mailto and show success
     setTimeout(() => {
       const subject = encodeURIComponent(`A message from your portfolio reader${name ? ` — ${name}` : ''}`);
       const body    = encodeURIComponent(`${name ? `From: ${name}\n\n` : ''}${message}`);
@@ -67,10 +66,8 @@ const LeftPage = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', flex: 1, position: 'relative' }}>
-
-      {/* Chapter heading */}
       <div style={{ textAlign: 'center', marginBottom: 16 }}>
-        <p className="chapter-label">Chapter V</p>
+        <p className="chapter-label">Chapter IV</p>
         <h2 className="chapter-title" style={{ fontSize: '1.5rem' }}>
           <span className="chapter-title-italic">[Your Name Here]</span>
         </h2>
@@ -79,7 +76,6 @@ const LeftPage = () => {
         </p>
       </div>
 
-      {/* Flying airplane animation overlay */}
       <AnimatePresence>
         {phase === 'sending' && (
           <motion.div
@@ -93,16 +89,17 @@ const LeftPage = () => {
         )}
       </AnimatePresence>
 
-      {/* Content: writing phase */}
       <AnimatePresence mode="wait">
         {(phase === 'writing' || phase === 'sending') && (
           <motion.form
             key="form"
             className="invitation-form"
             onSubmit={handleSend}
+            onMouseDownCapture={e => e.stopPropagation()}
+            onTouchStartCapture={e => e.stopPropagation()}
+            onPointerDownCapture={e => e.stopPropagation()}
             exit={{ opacity: 0, filter: 'blur(4px)', transition: { duration: 0.3 } }}
           >
-            {/* Name field */}
             <div>
               <div className="invitation-field-label">Your name</div>
               <input
@@ -117,7 +114,6 @@ const LeftPage = () => {
               />
             </div>
 
-            {/* Message field — ruled paper */}
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
               <div className="invitation-field-label">Your message</div>
               <textarea
@@ -126,12 +122,11 @@ const LeftPage = () => {
                 value={message}
                 onChange={e => setMessage(e.target.value)}
                 disabled={phase === 'sending'}
-                aria-label="Your message to Raziel"
+                aria-label="Your message"
                 style={{ flex: 1 }}
               />
             </div>
 
-            {/* Small quill icon */}
             <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
               <QuillSVG size={32} />
               <button
@@ -151,7 +146,6 @@ const LeftPage = () => {
           </motion.form>
         )}
 
-        {/* Success state */}
         {phase === 'sent' && (
           <motion.div
             key="success"
@@ -178,14 +172,13 @@ const LeftPage = () => {
   );
 };
 
-/* ── Right Page — the invitation prose ───────────────────────── */
+/* ── Right Page ───────────────────────── */
 const RightPage = () => (
   <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'center', gap: 16 }}>
     <div style={{ textAlign: 'center' }}>
       <div className="chapter-ornament" aria-hidden="true">❦</div>
     </div>
 
-    {/* Pull quote as the hook */}
     <div className="pull-quote" style={{ fontSize: '1.25rem', margin: '0 0 8px' }}>
       Every great story is a collaboration.
     </div>
@@ -203,7 +196,6 @@ const RightPage = () => (
 
     <div className="chapter-divider"><span className="chapter-divider-symbol">✉</span></div>
 
-    {/* Direct email */}
     <div style={{ textAlign: 'center' }}>
       <a href={`mailto:${email}`} className="invitation-seal">
         <i className="fas fa-envelope" aria-hidden="true" />
@@ -214,7 +206,6 @@ const RightPage = () => (
       </p>
     </div>
 
-    {/* Socials */}
     <div className="invitation-social-row">
       {socialLinks.map((link) => (
         <a key={link.name} href={link.url} target="_blank" rel="noopener noreferrer"
@@ -231,8 +222,6 @@ const RightPage = () => (
   </div>
 );
 
-/* ── Export ──────────────────────────────────────────────────── */
-const PageInvitation = ({ side }) =>
-  side === 'left' ? <LeftPage /> : <RightPage />;
+const PageInvitation = ({ side }) => side === 'left' ? <LeftPage /> : <RightPage />;
 
 export default PageInvitation;

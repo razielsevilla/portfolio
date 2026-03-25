@@ -2,7 +2,7 @@
 
 const contactData = {
   // Main contact information
-  email: "raziellloydsevilla32948@gmail.com",
+  email: "raziel.lloyd.sevilla.cs@gmail.com",
   message: "I am currently open to new opportunities. Let's build something great together!",
 
   // Social Media Links (Use your actual URLs here)
