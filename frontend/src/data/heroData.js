@@ -13,7 +13,7 @@ const heroData = {
   descriptionThree: "What you navigate here is not a list of accomplishment. It is  story in progress — each chapter a different faces of how I think and what I build.",
 
   // Action Button Links
-  resumeLink: "https://drive.google.com/file/d/10YNp2hVRkVbMhXxuDt5HebIJht6Bzmq1/view?usp=sharing",
+  resumeLink: "https://drive.google.com/file/d/133kdPh9hPlG-2MbrOccPnSAjT3RYVd1R/view?usp=sharing",
   contactAnchor: "#contact"
 };
 
