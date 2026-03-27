@@ -17,6 +17,7 @@ const projectData = [
     liveLink: null,
     repoLink: null,
     highlight: true,
+    image: null,
   },
   {
     id: 2,
@@ -28,6 +29,7 @@ const projectData = [
     liveLink: null,
     repoLink: null,
     highlight: false,
+    image: null,
   },
   {
     id: 3,
@@ -39,6 +41,7 @@ const projectData = [
     liveLink: null,
     repoLink: null,
     highlight: true,
+    image: null,
   },
   {
     id: 4,
@@ -50,6 +53,7 @@ const projectData = [
     liveLink: null,
     repoLink: null,
     highlight: false,
+    image: null,
   },
   {
     id: 5,
@@ -61,6 +65,7 @@ const projectData = [
     liveLink: null,
     repoLink: "null",
     highlight: false,
+    image: null,
   },
   {
     id: 6,
@@ -72,6 +77,7 @@ const projectData = [
     liveLink: null,
     repoLink: null,
     highlight: false,
+    image: null,
   },
   {
     id: 7,
@@ -83,6 +89,7 @@ const projectData = [
     liveLink: null,
     repoLink: "https://github.com/razielsevilla/cryption.git",
     highlight: true,
+    image: "/images/projects/cryption-preview.png",
   },
   {
     id: 8,
@@ -94,6 +101,7 @@ const projectData = [
     liveLink: null,
     repoLink: null,
     highlight: false,
+    image: null,
   },
   {
     id: 9,
@@ -105,6 +113,7 @@ const projectData = [
     liveLink: null,
     repoLink: null,
     highlight: false,
+    image: null,
   },
   {
     id: 10,
@@ -116,6 +125,7 @@ const projectData = [
     liveLink: null,
     repoLink: "null",
     highlight: false,
+    image: null,
   },
   {
     id: 11,
@@ -127,6 +137,7 @@ const projectData = [
     liveLink: null,
     repoLink: "null",
     highlight: false,
+    image: null,
   },
   {
     id: 12,
@@ -138,6 +149,7 @@ const projectData = [
     liveLink: null,
     repoLink: "null",
     highlight: false,
+    image: null,
   }
 ];
 

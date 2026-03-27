@@ -35,26 +35,26 @@ const ProjectEntry = ({ project }) => {
         )}
         <div className="volume-links">
           {project.repoLink && (
-            <a
-              href={project.repoLink}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
               className="volume-link-btn volume-link-repo"
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e) => {
+                e.stopPropagation();
+                window.open(project.repoLink, '_blank', 'noopener,noreferrer');
+              }}
             >
               <i className="fab fa-github" style={{ marginRight: 6 }}></i> View Repo
-            </a>
+            </button>
           )}
           {project.liveLink && (
-            <a
-              href={project.liveLink}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
               className="volume-link-btn volume-link-live"
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e) => {
+                e.stopPropagation();
+                window.open(project.liveLink, '_blank', 'noopener,noreferrer');
+              }}
             >
               <i className="fas fa-external-link-alt" style={{ marginRight: 6 }}></i> Live Demo
-            </a>
+            </button>
           )}
         </div>
       </div>

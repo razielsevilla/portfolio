@@ -491,6 +491,13 @@
   justify-content: center;
   gap: 12px;
   padding: 16px;
+  /* Prevent flip engine from hijacking clicks in this area */
+  pointer-events: none;
+}
+
+.vellum-overlay-container > * {
+  /* Restore events for children */
+  pointer-events: auto;
 }
 
 .volume-preview-img {
@@ -517,6 +524,8 @@
 .volume-links {
   display: flex;
   gap: 16px;
+  position: relative;
+  z-index: 10;
 }
 
 .volume-link-btn {
@@ -528,6 +537,9 @@
   border-radius: 2px;
   display: inline-flex;
   align-items: center;
+  cursor: pointer;
+  pointer-events: auto;
+  border: none;
 }
 
 .volume-link-repo {

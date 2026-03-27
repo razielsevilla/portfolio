@@ -128,6 +128,7 @@ const BookContainer = forwardRef(({ onSpreadChange }, ref) => {
           onFlip={handleFlip}
           className="book-main-engine"
           ref={bookRef}
+          clickEventForward={true}
         >
           {SPREADS.map((spread, idx) => {
             const key = spread.key || `spread-${idx}`;
